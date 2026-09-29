@@ -23,6 +23,7 @@ export interface EducationItem {
 export interface Certification {
   name: string;
   issuer?: string;
+  details?: string;
   url?: string;
   vendor?: 'microsoft' | 'databricks' | 'cncf' | 'edx' | 'maven' | 'credly';
 }
@@ -38,6 +39,7 @@ export interface Project {
   period?: string;
   description: string;
   tech: string[];
+  url?: string;
 }
 
 export const profile = {
@@ -69,7 +71,22 @@ I have built web, mobile and desktop applications across different platforms, an
 export const skills: SkillGroup[] = [
   {
     category: 'AI & Data Science',
-    items: ['Python', 'Machine Learning', 'scikit-learn', 'NLP', 'RAG', 'Vector Search', 'LLMs'],
+    items: [
+      'Python',
+      'Machine Learning',
+      'scikit-learn',
+      'NLP',
+      'Text Classification',
+      'Regression',
+      'TF-IDF',
+      'PyTorch',
+      'Transformers',
+      'Hugging Face',
+      'XGBoost',
+      'RAG',
+      'Vector Search',
+      'LLMs',
+    ],
   },
   {
     category: 'Knowledge & Big Data',
@@ -85,7 +102,21 @@ export const skills: SkillGroup[] = [
   },
   {
     category: 'Data & Tools',
-    items: ['SQL', 'Oracle', 'MongoDB', 'Docker', 'LaTeX'],
+    items: [
+      'Pandas',
+      'NumPy',
+      'Matplotlib',
+      'Seaborn',
+      'Optuna',
+      'Imbalanced-learn',
+      'TextBlob',
+      'Textstat',
+      'SQL',
+      'Oracle',
+      'MongoDB',
+      'Docker',
+      'LaTeX',
+    ],
   },
   {
     category: 'Languages',
@@ -105,8 +136,34 @@ export const projects: Project[] = [
     title: 'Detecting Human, AI-Generated and Mixed Text',
     period: 'Jan 2026 - Feb 2026',
     description:
-      'NLP project combining text classification (human, AI-generated or mixed content) with regression to predict the proportion of each text category.',
-    tech: ['Python', 'NLP', 'Classification', 'Regression'],
+      'NLP project that prepares and analyses paired human and generated text, then combines classification (human, AI-generated or mixed content) with regression to predict the proportion of each text category. The project compares classical machine learning and transformer-based models with imbalance handling, hyperparameter tuning and detailed evaluation.',
+    tech: [
+      'Python',
+      'Pandas',
+      'NLP',
+      'TF-IDF',
+      'Transformers',
+      'Classification',
+      'Regression',
+      'PyTorch',
+      'scikit-learn',
+    ],
+  },
+  {
+    title: 'Scientific Article Information Retrieval Challenge',
+    description:
+      'Information retrieval system for finding relevant scientific papers from a 20,000-document corpus using citation-based relevance. The project compares TF-IDF, BM25 and dense retrieval, then improves results with SPECTER2 embeddings, hybrid multi-signal fusion, cross-encoder reranking and evaluation with ranking metrics including NDCG, MAP, MRR, precision and recall.',
+    tech: [
+      'Python',
+      'Information Retrieval',
+      'TF-IDF',
+      'BM25',
+      'Dense Retrieval',
+      'SPECTER2',
+      'Cross-Encoder Reranking',
+      'NDCG',
+      'MAP',
+    ],
   },
   {
     title: 'SHACL Shape Generation and Validation Tool',
@@ -121,6 +178,54 @@ export const projects: Project[] = [
     description:
       'Local marketplace app for buying and selling used products nearby: search by price and category, contact sellers, make offers, rate transactions and boost listings.',
     tech: ['Google Maps API', 'Google Billing', 'Mobile'],
+  },
+  {
+    title: 'Cross-platform for Creative Multiplication for Children',
+    description:
+      'Educational cross-platform application built with JavaFX, Java and a Laravel API. It teaches mental arithmetic to children through a placement test, six stages of games and tests, videos, and a parent section to track progress and communicate with the administrator.',
+    tech: ['JavaFX', 'Java', 'Laravel API', 'Educational Software'],
+  },
+  {
+    title: 'Tasty healthy food - web Application',
+    description:
+      'Web application with a food database and reference, analytical and design studies, implementation, testing and documentation to help users choose their daily dishes in a healthy way while taking their diseases and required calories into account.',
+    tech: ['Web Application', 'Database', 'Health & Nutrition', 'Testing'],
+  },
+  {
+    title: 'Phone Generator - Desktop Application',
+    description:
+      'Java desktop application developed for a German customer to generate and save phone numbers based on country key, length, and desired quantity to the mobile phone\'s phonebook.',
+    tech: ['Java', 'Desktop Application', 'Phonebook Integration'],
+  },
+  {
+    title: 'OURAMAZONE - Distributed Microservices E-commerce Platform',
+    description:
+      'Distributed e-commerce platform built with Spring Boot microservices, including user, product, order, inventory and search services. The platform demonstrates service discovery, API gateways, load balancing, circuit breakers, distributed tracing, message queuing, persistence, caching and monitoring.',
+    tech: [
+      'Java',
+      'Spring Boot',
+      'Spring Cloud',
+      'Microservices',
+      'Eureka',
+      'API Gateway',
+      'Hystrix',
+      'RabbitMQ',
+      'Zipkin',
+      'Maven',
+    ],
+  },
+  {
+    title: 'Internet Download Manager',
+    description:
+      'Java desktop download manager with a Swing graphical interface for HTTP/HTTPS and FTP downloads. It supports multi-threaded downloading, real-time progress tracking, pause and resume, download queues, file management, and download history.',
+    tech: ['Java', 'Swing', 'HTTP/HTTPS', 'FTP', 'Multithreading', 'Observer Pattern'],
+  },
+  {
+    title: 'Automate DFA - Deterministic Finite Automata',
+    description:
+      'Java Swing desktop application for creating, visualizing and testing Deterministic Finite Automata. Users can add new DFAs, test existing DFA files, and visualize automata transitions through a graphical interface.',
+    tech: ['Java', 'Swing', 'Automata Theory', 'DFA Visualization'],
+    url: 'https://github.com/SalmaAlkhalily/automate-dfa',
   },
 ];
 
@@ -161,8 +266,28 @@ export const education: EducationItem[] = [
 
 export const certifications: Certification[] = [
   {
-    name: 'VI Summer School “Artificial Intelligence Technologies 2026”',
-    issuer: 'Ivan Franko National University of Lviv · Jul 2026',
+    name: 'Participation in the 6th Summer School “Artificial Intelligence Technologies 2026”',
+    issuer: 'Ivan Franko National University of Lviv · Issued Jul 2026 · Credential ID №AIT-2026-0497',
+    details:
+      'Successfully completed the VI Summer School “Artificial Intelligence Technologies 2026”, totaling 120 hours / 4 ECTS credits.',
+  },
+  {
+    name: 'AI Technologies Summer School 2026 — PolicyGap Project Competition',
+    issuer: 'Ivan Franko National University of Lviv · Issued Jul 2026',
+    details:
+      'Certificate confirming participation in the project competition with the project “PolicyGap”, as part of AI Technologies Summer School 2026.',
+  },
+  {
+    name: 'Git and GitHub · 01/2024 - Present',
+    issuer: 'IBM - Coursera',
+  },
+  {
+    name: 'Python for Data Science, AI & Development · 01/2024 - Present',
+    issuer: 'IBM - Coursera',
+  },
+  {
+    name: 'Mental arithmetic training certificate · 05/2022 - Present',
+    issuer: 'This certificate qualifies me to train children at foundational levels in the SD Math programme',
   },
 ];
 

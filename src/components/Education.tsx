@@ -148,6 +148,18 @@ export default function Education() {
                         {c.issuer}
                       </div>
                     )}
+                    {c.details && (
+                      <div
+                        style={{
+                          fontSize: '0.9rem',
+                          color: 'var(--color-text-muted)',
+                          lineHeight: 1.5,
+                          marginTop: '0.35rem',
+                        }}
+                      >
+                        {c.details}
+                      </div>
+                    )}
                   </>
                 );
 
