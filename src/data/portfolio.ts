@@ -48,7 +48,7 @@ export const profile = {
   tagline:
     'Machine learning, data science and knowledge engineering, built on a solid software engineering foundation.',
   location: 'Paris, France',
-  github: 'https://github.com/salmaalkhalily',
+  github: 'https://github.com/SalmaAlkhalily',
   linkedin: 'https://www.linkedin.com/in/salmaalkhalily',
   facts: [
     { label: 'Studying', value: 'M2 Data, Knowledge & Hybrid AI (DKAI), Université Paris-Saclay' },

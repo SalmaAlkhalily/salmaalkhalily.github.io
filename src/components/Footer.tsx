@@ -26,7 +26,7 @@ export default function Footer() {
           ❖
         </div>
         <div style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
-          © {new Date().getFullYear()} {profile.name}
+          © <span suppressHydrationWarning>{new Date().getFullYear()}</span> {profile.name}
         </div>
         <div
           style={{

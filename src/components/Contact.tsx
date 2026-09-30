@@ -13,7 +13,7 @@ function SocialLink({ href, label, icon }: SocialProps) {
     <a
       href={href}
       target="_blank"
-      rel="noreferrer"
+      rel="me noopener noreferrer"
       aria-label={label}
       style={{
         display: 'inline-flex',
@@ -84,7 +84,7 @@ export default function Contact() {
           />
           <SocialLink
             href={profile.github}
-            label="GitHub"
+            label={`${profile.name} on GitHub`}
             icon={<GitHubIcon width={18} height={18} />}
           />
         </div>

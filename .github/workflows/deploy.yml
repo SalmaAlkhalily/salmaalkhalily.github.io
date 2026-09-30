@@ -37,7 +37,7 @@ jobs:
         run: npm run build
 
       - name: Verify production output
-        run: test -f dist/index.html && grep -q '/assets/' dist/index.html
+        run: node scripts/check-build.mjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
