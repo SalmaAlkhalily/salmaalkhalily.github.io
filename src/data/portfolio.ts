@@ -134,6 +134,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Detecting Human, AI-Generated and Mixed Text',
+    url: 'https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection',
     period: 'Jan 2026 - Feb 2026',
     description:
       'NLP project that prepares and analyses paired human and generated text, then combines classification (human, AI-generated or mixed content) with regression to predict the proportion of each text category. The project compares classical machine learning and transformer-based models with imbalance handling, hyperparameter tuning and detailed evaluation.',
@@ -193,6 +194,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Phone Generator - Desktop Application',
+    url: 'https://github.com/SalmaAlkhalily/phone-generator',
     description:
       'Java desktop application developed for a German customer to generate and save phone numbers based on country key, length, and desired quantity to the mobile phone\'s phonebook.',
     tech: ['Java', 'Desktop Application', 'Phonebook Integration'],
@@ -216,6 +218,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Internet Download Manager',
+    url: 'https://github.com/SalmaAlkhalily/files-downloader',
     description:
       'Java desktop download manager with a Swing graphical interface for HTTP/HTTPS and FTP downloads. It supports multi-threaded downloading, real-time progress tracking, pause and resume, download queues, file management, and download history.',
     tech: ['Java', 'Swing', 'HTTP/HTTPS', 'FTP', 'Multithreading', 'Observer Pattern'],

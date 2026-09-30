@@ -15,9 +15,18 @@ assert.ok(html.includes('Salma Alkhalily on GitHub'), 'The profile link must hav
 assert.ok(html.includes(`<link rel="canonical" href="${homepage}"`), 'Incorrect canonical URL.');
 assert.doesNotMatch(html, /noindex|nofollow/i, 'The homepage must allow indexing and link discovery.');
 
-const schema = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1] ?? 'null');
+const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+  .map((match) => JSON.parse(match[1]));
+const schema = schemas.find((item) => item['@type'] === 'ProfilePage');
 assert.equal(schema?.mainEntity?.name, 'Salma Alkhalily');
 assert.ok(schema?.mainEntity?.sameAs?.includes(github), 'Structured data must identify the GitHub profile.');
+const website = schemas.find((item) => item['@type'] === 'WebSite');
+assert.equal(website?.name, 'Salma Alkhalily');
+assert.equal(website?.url, homepage);
+assert.equal(schema?.isPartOf?.['@id'], website?.['@id']);
+assert.equal(website?.author?.['@id'], schema?.mainEntity?.['@id']);
+assert.match(html, /<h3\b[^>]*><a href="https:\/\/github.com\/SalmaAlkhalily\/NLP-Project-AI-Detection"[^>]*>Detecting Human, AI-Generated and Mixed Text<\/a><\/h3>/,
+  'Project repository links must be present in the prerendered HTML.');
 
 const robots = await readFile(new URL('robots.txt', output), 'utf8');
 const sitemap = await readFile(new URL('sitemap.xml', output), 'utf8');

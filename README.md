@@ -35,6 +35,13 @@ using Google's HTML file (place it in `public/` and redeploy) or the HTML meta t
 `https://salmaalkhalily.github.io/sitemap.xml`, then inspect the homepage URL and
 request indexing. Leave the verification file or tag in place.
 
+The HTML-file verification method is configured with
+`public/googlef3f50f4a7d46d6b6.html`. Keep this file deployed so Google can recheck
+ownership. After verification, inspect `https://salmaalkhalily.github.io/` in Search
+Console, use **Test live URL**, and then **Request indexing** if the live test
+passes. Submit `sitemap.xml` in the **Sitemaps** section. The verification file is
+not a portfolio page and should not be added to the sitemap.
+
 Search Console verification for this site does not grant control over
 `github.com/SalmaAlkhalily`. The GitHub profile has its own indexing status. Keep its
 bio, website link, and profile README current, and link to it from relevant public

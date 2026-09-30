@@ -28,7 +28,13 @@ export default function Projects() {
                 <span style={{ color: 'var(--color-accent)' }}>{String(idx + 1).padStart(2, '0')}</span>
                 {p.period && <span style={{ color: 'var(--color-text-muted)' }}>{p.period}</span>}
               </div>
-              <h3 style={{ lineHeight: 1.3, marginBottom: '0.7rem' }}>{p.title}</h3>
+              <h3 style={{ lineHeight: 1.3, marginBottom: '0.7rem' }}>
+                {p.url ? (
+                  <a href={p.url} target="_blank" rel="noopener noreferrer">
+                    {p.title}
+                  </a>
+                ) : p.title}
+              </h3>
               <p style={{ flex: 1, fontSize: '0.95rem' }}>{p.description}</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginTop: '0.5rem' }}>
                 {p.tech.map((t) => (
