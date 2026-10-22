@@ -21,7 +21,7 @@ export default function Education() {
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
-                fontSize: '1.35rem',
+                fontSize: 'var(--text-xl)',
                 marginBottom: '1.5rem',
                 color: 'var(--color-text)',
                 display: 'flex',
@@ -46,9 +46,8 @@ export default function Education() {
                   <div
                     style={{
                       fontFamily: 'var(--font-mono)',
-                      fontSize: '0.75rem',
+                      fontSize: 'var(--text-xs)',
                       color: 'var(--color-accent)',
-                      letterSpacing: '0.06em',
                       marginBottom: '0.25rem',
                     }}
                   >
@@ -57,7 +56,7 @@ export default function Education() {
                   <div
                     style={{
                       fontFamily: 'var(--font-serif)',
-                      fontSize: '1.05rem',
+                      fontSize: 'var(--text-lg)',
                       fontWeight: 600,
                       color: 'var(--color-text)',
                       marginBottom: '0.15rem',
@@ -66,14 +65,14 @@ export default function Education() {
                     {e.degree}
                   </div>
                   {e.field && (
-                    <div style={{ color: 'var(--color-text-soft)', fontStyle: 'italic', fontSize: '0.92rem' }}>
+                    <div style={{ color: 'var(--color-text-soft)', fontStyle: 'italic', fontSize: 'var(--text-sm)' }}>
                       {e.field}
                     </div>
                   )}
                   <div
                     style={{
                       color: 'var(--color-text-muted)',
-                      fontSize: '0.88rem',
+                      fontSize: 'var(--text-sm)',
                       marginTop: '0.4rem',
                       display: 'inline-flex',
                       alignItems: 'center',
@@ -96,7 +95,7 @@ export default function Education() {
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
-                fontSize: '1.35rem',
+                fontSize: 'var(--text-xl)',
                 marginBottom: '1.5rem',
                 color: 'var(--color-text)',
                 display: 'flex',
@@ -116,7 +115,7 @@ export default function Education() {
                     <div
                       style={{
                         fontFamily: 'var(--font-serif)',
-                        fontSize: '1rem',
+                        fontSize: 'var(--text-base)',
                         fontWeight: 600,
                         color: 'var(--color-text)',
                         display: 'flex',
@@ -139,9 +138,8 @@ export default function Education() {
                       <div
                         style={{
                           fontFamily: 'var(--font-mono)',
-                          fontSize: '0.75rem',
+                          fontSize: 'var(--text-xs)',
                           color: 'var(--color-text-muted)',
-                          letterSpacing: '0.03em',
                           marginTop: '0.2rem',
                         }}
                       >
@@ -151,7 +149,7 @@ export default function Education() {
                     {c.details && (
                       <div
                         style={{
-                          fontSize: '0.9rem',
+                          fontSize: 'var(--text-sm)',
                           color: 'var(--color-text-muted)',
                           lineHeight: 1.5,
                           marginTop: '0.35rem',
@@ -181,7 +179,7 @@ export default function Education() {
                         rel="noreferrer"
                         style={style}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.borderLeftColor = 'var(--color-accent)';
+                          e.currentTarget.style.borderLeftColor = 'var(--color-primary)';
                           e.currentTarget.style.transform = 'translateX(3px)';
                         }}
                         onMouseLeave={(e) => {
@@ -208,7 +206,7 @@ export default function Education() {
                   style={{
                     fontFamily: 'var(--font-serif)',
                     fontStyle: 'italic',
-                    fontSize: '1.35rem',
+                    fontSize: 'var(--text-xl)',
                     marginTop: '2.5rem',
                     marginBottom: '1rem',
                     color: 'var(--color-text)',
@@ -239,7 +237,7 @@ export default function Education() {
                           style={{
                             fontFamily: 'var(--font-serif)',
                             fontStyle: 'italic',
-                            fontSize: '1rem',
+                            fontSize: 'var(--text-base)',
                             color: 'var(--color-text)',
                             borderBottom: '1px solid var(--color-accent)',
                           }}
@@ -261,9 +259,8 @@ export default function Education() {
                         <div
                           style={{
                             fontFamily: 'var(--font-mono)',
-                            fontSize: '0.72rem',
+                            fontSize: 'var(--text-xs)',
                             color: 'var(--color-text-muted)',
-                            letterSpacing: '0.05em',
                             marginTop: '0.2rem',
                           }}
                         >

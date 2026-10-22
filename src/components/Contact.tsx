@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { profile } from '../data/portfolio';
 import SectionTitle from './SectionTitle';
-import { EnvelopeIcon, GitHubIcon, LinkedInIcon } from './icons';
+import { CheckIcon, CopyIcon, DownloadIcon, EnvelopeIcon, GitHubIcon, LinkedInIcon } from './icons';
 
 interface SocialProps {
   href: string;
@@ -25,14 +26,13 @@ function SocialLink({ href, label, icon }: SocialProps) {
         background: 'var(--color-surface)',
         color: 'var(--color-text)',
         fontFamily: 'var(--font-sans)',
-        fontSize: '0.9rem',
+        fontSize: 'var(--text-sm)',
         fontWeight: 500,
-        letterSpacing: '0.02em',
         transition: 'all 220ms ease',
         borderBottom: '1px solid var(--color-border-strong)',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'var(--color-accent)';
+        e.currentTarget.style.borderColor = 'var(--color-primary)';
         e.currentTarget.style.color = 'var(--color-primary)';
         e.currentTarget.style.transform = 'translateY(-2px)';
       }}
@@ -59,15 +59,40 @@ function SocialLink({ href, label, icon }: SocialProps) {
 }
 
 export default function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${profile.email}`;
+    }
+  };
+
   return (
     <section id="contact">
       <div className="container">
         <SectionTitle
-          eyebrow="Correspondence"
+          eyebrow="Contact"
           title="Get in Touch"
-          subtitle="Always happy to connect and discuss new opportunities"
+          subtitle={`Open to a ${profile.availability}. Based in ${profile.location}.`}
           icon={<EnvelopeIcon />}
         />
+
+        <div className="email-row">
+          <a href={`mailto:${profile.email}`} className="email-address">
+            {profile.email}
+          </a>
+          <button type="button" className="btn btn-outline" onClick={copyEmail}>
+            {copied ? <CheckIcon width={16} height={16} /> : <CopyIcon width={16} height={16} />}
+            {copied ? 'Copied' : 'Copy email'}
+          </button>
+          <span className="sr-only" aria-live="polite">
+            {copied ? 'Email address copied to clipboard' : ''}
+          </span>
+        </div>
 
         <div
           style={{
@@ -77,6 +102,10 @@ export default function Contact() {
             flexWrap: 'wrap',
           }}
         >
+          <a href={profile.cv} download className="btn btn-primary">
+            <DownloadIcon width={16} height={16} />
+            Download CV (PDF)
+          </a>
           <SocialLink
             href={profile.linkedin}
             label="LinkedIn"

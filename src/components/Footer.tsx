@@ -9,8 +9,7 @@ export default function Footer() {
         padding: '2.5rem 0',
         textAlign: 'center',
         color: 'var(--color-text-muted)',
-        fontSize: '0.85rem',
-        letterSpacing: '0.03em',
+        fontSize: 'var(--text-sm)',
       }}
     >
       <div className="container">
@@ -19,8 +18,8 @@ export default function Footer() {
           style={{
             color: 'var(--color-accent)',
             marginBottom: '1rem',
-            fontSize: '0.7rem',
-            letterSpacing: '0.3em',
+            fontSize: 'var(--text-xs)',
+            letterSpacing: 'var(--tracking-wide)',
           }}
         >
           ❖
@@ -28,6 +27,16 @@ export default function Footer() {
         <div style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
           © <span suppressHydrationWarning>{new Date().getFullYear()}</span> {profile.name}
         </div>
+        <p style={{ margin: '0.5rem 0 0', color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)' }}>
+          Open to a {profile.availability}.
+        </p>
+        <p style={{ margin: '0.5rem 0 0', fontSize: 'var(--text-sm)' }}>
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <span aria-hidden> · </span>
+          <a href={profile.cv} download>
+            CV (PDF)
+          </a>
+        </p>
         <div
           style={{
             display: 'flex',
@@ -63,7 +72,7 @@ export default function Footer() {
             <GitHubIcon width={18} height={18} />
           </a>
         </div>
-        <div style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+        <div style={{ marginTop: '0.75rem', fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)' }}>
           Crafted with React &amp; Vite · Hosted on GitHub Pages
         </div>
       </div>

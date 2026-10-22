@@ -12,7 +12,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main" tabIndex={-1} style={{ outline: 'none' }}>
         <Hero />
         <About />
         <Projects />

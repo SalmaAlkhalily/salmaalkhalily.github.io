@@ -9,7 +9,7 @@ export default function Experience() {
         <SectionTitle
           eyebrow="Professional Journey"
           title="Experience"
-          subtitle="Roles and impact over the years"
+          subtitle="Professional software engineering"
           icon={<ScrollIcon />}
         />
         <div className="timeline">

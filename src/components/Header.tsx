@@ -38,6 +38,9 @@ export default function Header() {
         transition: 'all 220ms ease',
       }}
     >
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <div
         className="container"
         style={{
@@ -52,7 +55,7 @@ export default function Header() {
           style={{
             fontFamily: 'var(--font-serif)',
             fontWeight: 600,
-            fontSize: '1.2rem',
+            fontSize: 'var(--text-xl)',
             color: 'var(--color-text)',
             border: 'none',
           }}
@@ -61,16 +64,19 @@ export default function Header() {
           <span style={{ color: 'var(--color-primary)' }}>{rest.join(' ')}</span>
         </a>
 
-        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+        <nav
+          className="desktop-nav"
+          aria-label="Main"
+          style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}
+        >
           {NAV.map((n) => (
             <a
               key={n.href}
               href={n.href}
               style={{
                 color: 'var(--color-text-soft)',
-                fontSize: '0.88rem',
+                fontSize: 'var(--text-sm)',
                 fontWeight: 500,
-                letterSpacing: '0.03em',
                 border: 'none',
               }}
             >
@@ -79,7 +85,7 @@ export default function Header() {
           ))}
           <button
             onClick={toggleTheme}
-            aria-label="Toggle theme"
+            aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
             style={{
               background: 'transparent',
               border: '1px solid var(--color-border-strong)',
@@ -88,7 +94,7 @@ export default function Header() {
               height: '36px',
               cursor: 'pointer',
               color: 'var(--color-text)',
-              fontSize: '0.9rem',
+              fontSize: 'var(--text-sm)',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -102,6 +108,8 @@ export default function Header() {
         <button
           className="mobile-toggle"
           aria-label="Menu"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
           onClick={() => setMobileOpen((v) => !v)}
           style={{
             display: 'none',
@@ -118,7 +126,9 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div
+        <nav
+          id="mobile-menu"
+          aria-label="Main"
           className="mobile-menu"
           style={{
             display: 'none',
@@ -137,7 +147,7 @@ export default function Header() {
                 padding: '0.6rem 0',
                 color: 'var(--color-text)',
                 border: 'none',
-                fontSize: '0.95rem',
+                fontSize: 'var(--text-base)',
               }}
             >
               {n.label}
@@ -146,7 +156,7 @@ export default function Header() {
           <button onClick={toggleTheme} className="btn btn-outline" style={{ marginTop: '0.75rem' }}>
             {theme === 'light' ? '☾ Dark mode' : '☀ Light mode'}
           </button>
-        </div>
+        </nav>
       )}
 
       <style>{`

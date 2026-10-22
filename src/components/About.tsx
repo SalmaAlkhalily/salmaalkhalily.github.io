@@ -7,16 +7,16 @@ export default function About() {
     <section id="about" style={{ background: 'var(--color-bg-subtle)' }}>
       <div className="container">
         <SectionTitle eyebrow="About" title="Background & focus" icon={<BookIcon />} />
-        <div className="about-grid">
-          <div>
+        <div className="grid" style={{ columnGap: 'calc(var(--gutter) * 2)', alignItems: 'start' }}>
+          <div className="span-7">
             {profile.bio.split('\n\n').map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} style={{ fontSize: '1.08rem', lineHeight: 1.8 }}>
+              <p key={paragraph.slice(0, 24)} style={{ fontSize: 'var(--text-lg)', lineHeight: 1.8 }}>
                 {paragraph}
               </p>
             ))}
           </div>
 
-          <div className="card">
+          <div className="card span-5">
             <h3 style={{ marginBottom: '1.1rem' }}>Currently exploring</h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '0.8rem' }}>
               {profile.interests.map((interest) => (

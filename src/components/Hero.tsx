@@ -1,6 +1,6 @@
 import { profile } from '../data/portfolio';
 import FlowingWaves from './FlowingWaves';
-import { GitHubIcon, LinkedInIcon } from './icons';
+import { DownloadIcon, GitHubIcon, LinkedInIcon } from './icons';
 
 const initials = profile.name
   .split(' ')
@@ -12,72 +12,56 @@ export default function Hero() {
     <section id="top" className="hero">
       <FlowingWaves />
 
-      <div className="container hero-grid">
-        <div>
-          <span className="eyebrow">Hello, I'm</span>
-          <h1 style={{ margin: '1rem 0 0.6rem', lineHeight: 1.05 }}>{profile.name}</h1>
-          <p
-            className="gradient-text"
-            style={{
-              fontFamily: 'var(--font-serif)',
-              fontStyle: 'italic',
-              fontSize: 'clamp(1.25rem, 2.4vw, 1.6rem)',
-              fontWeight: 500,
-              margin: '0 0 1.5rem',
-              display: 'inline-block',
-            }}
-          >
-            {profile.title}
-          </p>
-          <p style={{ fontSize: '1.08rem', maxWidth: '540px', marginBottom: '2.25rem' }}>
+      <div className="container grid hero-grid">
+        <div className="span-7">
+          <h1 style={{ margin: '0 0 0.6rem' }}>{profile.name}</h1>
+          <p className="hero-role">{profile.title}</p>
+
+          <ul className="profile-links">
+            <li>
+              <a href={profile.github} target="_blank" rel="me noopener noreferrer">
+                <GitHubIcon />
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer">
+                <LinkedInIcon />
+                LinkedIn
+              </a>
+            </li>
+            <li>
+              <a href={profile.cv} download>
+                <DownloadIcon />
+                CV (PDF)
+              </a>
+            </li>
+          </ul>
+
+          <p style={{ fontSize: 'var(--text-lg)', maxWidth: '540px', marginBottom: '2rem' }}>
             {profile.tagline}
           </p>
 
-          <div style={{ display: 'flex', gap: '0.9rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            <a href="#projects" className="btn btn-primary">
-              View Projects
+          <div style={{ display: 'flex', gap: '0.9rem', flexWrap: 'wrap' }}>
+            <a href="#contact" className="btn btn-primary">
+              Get in touch
             </a>
-            <a href="#contact" className="btn btn-outline">
-              Get in Touch
+            <a href="#projects" className="btn btn-outline">
+              View projects
             </a>
-            <span style={{ display: 'inline-flex', gap: '0.4rem', marginLeft: '0.4rem' }}>
-              {[
-                { href: profile.linkedin, label: 'LinkedIn', icon: <LinkedInIcon width={18} height={18} /> },
-                { href: profile.github, label: 'GitHub', icon: <GitHubIcon width={18} height={18} /> },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={s.label}
-                  style={{
-                    width: '42px',
-                    height: '42px',
-                    borderRadius: '50%',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'var(--color-text-soft)',
-                  }}
-                >
-                  {s.icon}
-                </a>
-              ))}
-            </span>
           </div>
         </div>
 
-        <aside className="card" style={{ padding: '2rem' }}>
+        <aside className="card span-5" style={{ padding: '2rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <span className="monogram" aria-hidden>
               {initials}
             </span>
             <div>
-              <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 600, fontSize: '1.1rem' }}>
+              <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 600, fontSize: 'var(--text-lg)' }}>
                 At a glance
               </div>
-              <div style={{ color: 'var(--color-text-muted)', fontSize: '0.88rem' }}>{profile.location}</div>
+              <div style={{ color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)' }}>{profile.location}</div>
             </div>
           </div>
           <dl className="facts">

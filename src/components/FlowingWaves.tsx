@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
 /**
- * Hero background: soft blurred colour glows plus layered, slowly flowing
- * wave lines drawn in a plum-to-sage gradient. Respects prefers-reduced-motion.
+ * Hero background: layered, slowly flowing wave lines in the primary color.
+ * Pauses off-screen and respects prefers-reduced-motion.
  */
 export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,6 +22,7 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
     let width = 0;
     let height = 0;
     let raf = 0;
+    let visible = true;
 
     const resize = () => {
       width = container.clientWidth;
@@ -36,11 +37,8 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
     const draw = (time: number) => {
       ctx.clearRect(0, 0, width, height);
 
-      // Read colours at draw time so they follow the active theme.
-      const gradient = ctx.createLinearGradient(0, 0, width, 0);
-      gradient.addColorStop(0, rootStyles.getPropertyValue('--color-primary').trim());
-      gradient.addColorStop(1, rootStyles.getPropertyValue('--color-accent').trim());
-      ctx.strokeStyle = gradient;
+      // Read the color at draw time so it follows the active theme.
+      ctx.strokeStyle = rootStyles.getPropertyValue('--color-primary').trim();
       ctx.lineWidth = 1.1;
 
       for (let i = 0; i < lines; i++) {
@@ -64,11 +62,18 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
       }
       ctx.globalAlpha = 1;
 
-      if (!reduceMotion) raf = window.requestAnimationFrame(draw);
+      if (!reduceMotion && visible) raf = window.requestAnimationFrame(draw);
     };
 
     resize();
     raf = window.requestAnimationFrame(draw);
+
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      window.cancelAnimationFrame(raf);
+      if (visible) raf = window.requestAnimationFrame(draw);
+    });
+    observer.observe(container);
 
     const handleResize = () => {
       resize();
@@ -78,6 +83,7 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
 
     return () => {
       window.cancelAnimationFrame(raf);
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
     };
   }, [lines, theme]);
@@ -88,8 +94,6 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
       aria-hidden
       style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}
     >
-      <div className="hero-glow hero-glow--one" />
-      <div className="hero-glow hero-glow--two" />
       <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0 }} />
     </div>
   );

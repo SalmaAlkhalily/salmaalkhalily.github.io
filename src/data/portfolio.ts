@@ -37,23 +37,36 @@ export interface Publication {
 export interface Project {
   title: string;
   period?: string;
+  /** Two or three sentences: the problem and what was built. */
   description: string;
+  role?: string;
+  /** One measurable outcome, e.g. a metric or ranking. */
+  result?: string;
   tech: string[];
-  url?: string;
+  /** Main stages of the system, shown as a small diagram on the card. */
+  pipeline?: string[];
+  repo?: string;
+  live?: string;
 }
+
+const availability =
+  '6-month final-year internship from 2027 in AI, ML, Data Science or Data Engineering';
 
 export const profile = {
   name: 'Salma Alkhalily',
   title: 'AI & Data Science Engineer',
   tagline:
-    'Machine learning, data science and knowledge engineering, built on a solid software engineering foundation.',
+    'I build machine learning, NLP and retrieval systems, backed by 2+ years of professional software engineering.',
   location: 'Paris, France',
+  availability,
+  email: 'salma.alkhalily96@gmail.com',
+  cv: '/Salma-Alkhalily-CV.pdf',
   github: 'https://github.com/SalmaAlkhalily',
   linkedin: 'https://www.linkedin.com/in/salmaalkhalily',
   facts: [
     { label: 'Studying', value: 'M2 Data, Knowledge & Hybrid AI (DKAI), Université Paris-Saclay' },
     { label: 'Focus', value: 'Machine Learning · NLP · RAG · Knowledge Graphs' },
-    { label: 'Open to', value: '6-month final-year internship from 2027 in AI, ML, Data Science or Data Engineering' },
+    { label: 'Open to', value: availability },
     { label: 'Languages', value: 'English · French' },
   ],
   interests: [
@@ -124,111 +137,81 @@ export const skills: SkillGroup[] = [
   },
 ];
 
+// Featured projects (2-4). Older or smaller work goes in projectArchive.
 export const projects: Project[] = [
   {
     title: 'PolicyGap - AITSS Project Competition',
     period: 'Jun 2026 - Jul 2026',
     description:
-      'RAG-based system that analyses policy documents and identifies gaps between stated objectives and available evidence, using document embeddings, vector search and LLM-based analysis to produce structured results.',
+      'Policy documents often state objectives without the evidence to support them. PolicyGap is a RAG system that finds these gaps, combining document embeddings, vector search and LLM-based analysis to produce structured results.',
     tech: ['RAG', 'Embeddings', 'Vector Search', 'LLMs'],
+    pipeline: ['Policy documents', 'Embeddings', 'Vector search', 'LLM analysis', 'Gap report'],
   },
   {
     title: 'Detecting Human, AI-Generated and Mixed Text',
-    url: 'https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection',
+    repo: 'https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection',
     period: 'Jan 2026 - Feb 2026',
     description:
-      'NLP project that prepares and analyses paired human and generated text, then combines classification (human, AI-generated or mixed content) with regression to predict the proportion of each text category. The project compares classical machine learning and transformer-based models with imbalance handling, hyperparameter tuning and detailed evaluation.',
-    tech: [
-      'Python',
-      'Pandas',
-      'NLP',
-      'TF-IDF',
-      'Transformers',
-      'Classification',
-      'Regression',
-      'PyTorch',
-      'scikit-learn',
-    ],
+      'Classifies a text as human-written, AI-generated or mixed, and uses regression to estimate the share of each. Compares classical machine learning with transformer models, including imbalance handling and hyperparameter tuning.',
+    tech: ['Python', 'NLP', 'TF-IDF', 'Transformers', 'PyTorch', 'scikit-learn'],
+    pipeline: ['Text', 'TF-IDF + transformers', 'Class: human, AI, mixed', 'Share of each'],
   },
   {
     title: 'Scientific Article Information Retrieval Challenge',
     description:
-      'Information retrieval system for finding relevant scientific papers from a 20,000-document corpus using citation-based relevance. The project compares TF-IDF, BM25 and dense retrieval, then improves results with SPECTER2 embeddings, hybrid multi-signal fusion, cross-encoder reranking and evaluation with ranking metrics including NDCG, MAP, MRR, precision and recall.',
-    tech: [
-      'Python',
-      'Information Retrieval',
-      'TF-IDF',
-      'BM25',
-      'Dense Retrieval',
-      'SPECTER2',
-      'Cross-Encoder Reranking',
-      'NDCG',
-      'MAP',
-    ],
+      'Finds relevant scientific papers in a 20,000-document corpus using citation-based relevance. Compares TF-IDF, BM25 and dense retrieval, then adds SPECTER2 embeddings, hybrid fusion and cross-encoder reranking, evaluated with NDCG, MAP and MRR.',
+    tech: ['Python', 'BM25', 'Dense Retrieval', 'SPECTER2', 'Cross-Encoder Reranking'],
+    pipeline: ['Query paper', 'BM25 + SPECTER2', 'Hybrid fusion', 'Cross-encoder rerank', 'Ranked papers'],
   },
   {
     title: 'SHACL Shape Generation and Validation Tool',
     period: 'Mar 2024 - May 2024',
     description:
-      'Generates SHACL shapes with uniqueness and sameAs rules from RDF keys and validates them against RDF sources with equivalent keys, producing detailed violation reports through a JavaFX interface.',
+      'Generates SHACL shapes with uniqueness and sameAs rules from RDF keys, then validates RDF sources against them. Violations are reported in detail through a JavaFX interface.',
     tech: ['Apache Jena', 'RDF', 'SHACL', 'JavaFX'],
+    pipeline: ['RDF keys', 'SHACL shapes', 'Validate sources', 'Violation report'],
   },
+];
+
+export const projectArchive: Project[] = [
   {
     title: 'ListedNearMe',
     period: 'Apr 2020 - Mar 2023',
-    description:
-      'Local marketplace app for buying and selling used products nearby: search by price and category, contact sellers, make offers, rate transactions and boost listings.',
-    tech: ['Google Maps API', 'Google Billing', 'Mobile'],
+    description: 'Local marketplace app for buying and selling used products nearby.',
+    tech: ['Mobile', 'Google Maps API', 'Google Billing'],
   },
   {
-    title: 'Cross-platform for Creative Multiplication for Children',
-    description:
-      'Educational cross-platform application built with JavaFX, Java and a Laravel API. It teaches mental arithmetic to children through a placement test, six stages of games and tests, videos, and a parent section to track progress and communicate with the administrator.',
-    tech: ['JavaFX', 'Java', 'Laravel API', 'Educational Software'],
+    title: 'OURAMAZONE',
+    description: 'Distributed e-commerce platform built from Spring Boot microservices.',
+    tech: ['Spring Boot', 'Spring Cloud', 'RabbitMQ', 'Zipkin'],
   },
   {
-    title: 'Tasty healthy food - web Application',
-    description:
-      'Web application with a food database and reference, analytical and design studies, implementation, testing and documentation to help users choose their daily dishes in a healthy way while taking their diseases and required calories into account.',
-    tech: ['Web Application', 'Database', 'Health & Nutrition', 'Testing'],
+    title: 'Creative Multiplication for Children',
+    description: 'Cross-platform app that teaches mental arithmetic through staged games and tests.',
+    tech: ['JavaFX', 'Java', 'Laravel API'],
   },
   {
-    title: 'Phone Generator - Desktop Application',
-    url: 'https://github.com/SalmaAlkhalily/phone-generator',
-    description:
-      'Java desktop application developed for a German customer to generate and save phone numbers based on country key, length, and desired quantity to the mobile phone\'s phonebook.',
-    tech: ['Java', 'Desktop Application', 'Phonebook Integration'],
-  },
-  {
-    title: 'OURAMAZONE - Distributed Microservices E-commerce Platform',
-    description:
-      'Distributed e-commerce platform built with Spring Boot microservices, including user, product, order, inventory and search services. The platform demonstrates service discovery, API gateways, load balancing, circuit breakers, distributed tracing, message queuing, persistence, caching and monitoring.',
-    tech: [
-      'Java',
-      'Spring Boot',
-      'Spring Cloud',
-      'Microservices',
-      'Eureka',
-      'API Gateway',
-      'Hystrix',
-      'RabbitMQ',
-      'Zipkin',
-      'Maven',
-    ],
+    title: 'Tasty Healthy Food',
+    description: 'Web app that suggests daily dishes based on health conditions and calorie needs.',
+    tech: ['Web Application', 'Database'],
   },
   {
     title: 'Internet Download Manager',
-    url: 'https://github.com/SalmaAlkhalily/files-downloader',
-    description:
-      'Java desktop download manager with a Swing graphical interface for HTTP/HTTPS and FTP downloads. It supports multi-threaded downloading, real-time progress tracking, pause and resume, download queues, file management, and download history.',
-    tech: ['Java', 'Swing', 'HTTP/HTTPS', 'FTP', 'Multithreading', 'Observer Pattern'],
+    repo: 'https://github.com/SalmaAlkhalily/files-downloader',
+    description: 'Multi-threaded HTTP/HTTPS and FTP download manager with pause, resume and queues.',
+    tech: ['Java', 'Swing', 'Multithreading'],
   },
   {
-    title: 'Automate DFA - Deterministic Finite Automata',
-    description:
-      'Java Swing desktop application for creating, visualizing and testing Deterministic Finite Automata. Users can add new DFAs, test existing DFA files, and visualize automata transitions through a graphical interface.',
-    tech: ['Java', 'Swing', 'Automata Theory', 'DFA Visualization'],
-    url: 'https://github.com/SalmaAlkhalily/automate-dfa',
+    title: 'Automate DFA',
+    repo: 'https://github.com/SalmaAlkhalily/automate-dfa',
+    description: 'Desktop tool for creating, testing and visualizing deterministic finite automata.',
+    tech: ['Java', 'Swing', 'Automata Theory'],
+  },
+  {
+    title: 'Phone Generator',
+    repo: 'https://github.com/SalmaAlkhalily/phone-generator',
+    description: 'Desktop app built for a client to generate phone numbers and save them to a phonebook.',
+    tech: ['Java', 'Desktop Application'],
   },
 ];
 
