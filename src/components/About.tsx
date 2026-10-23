@@ -29,7 +29,7 @@ export default function About() {
 
           <aside className="about-focus" aria-labelledby="focus-title">
             <span className="eyebrow">Current focus</span>
-            <h3 id="focus-title">What I work on</h3>
+            <h3 id="focus-title">What I focus on</h3>
             <dl className="focus-list">
               {profile.focusAreas.map((area, index) => (
                 <div key={area.title}>

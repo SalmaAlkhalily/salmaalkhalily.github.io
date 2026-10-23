@@ -90,11 +90,11 @@ export const profile = {
     { label: 'Languages', value: 'Arabic (native) · English · French' },
   ],
   focusAreas: [
-    { title: 'Software engineering', description: 'Turning requirements into web, mobile and desktop applications.' },
-    { title: 'Machine learning & NLP', description: 'Working with text, retrieval and model evaluation.' },
-    { title: 'Knowledge & hybrid AI', description: 'Exploring graphs, constraints and explainable systems.' },
+    { title: 'Machine learning & NLP', description: 'Text classification, regression and model evaluation.' },
+    { title: 'Information retrieval & RAG', description: 'Retrieving scientific papers and grounding policy analysis in evidence.' },
+    { title: 'Knowledge & hybrid AI', description: 'Knowledge graphs, constraint programming and explainable AI.' },
   ],
-  bio: `I'm Salma, a software engineer in Paris and an M2 student in Data, Knowledge and Hybrid Artificial Intelligence (DKAI) at Université Paris-Saclay. My 2+ years in software development and implementation include work on web, mobile and desktop applications.
+  bio: `I'm Salma, an M2 student in Data, Knowledge and Hybrid Artificial Intelligence (DKAI) at Université Paris-Saclay, based in Paris. My background includes 2+ years in software development and implementation, working on web, mobile and desktop applications.
 
 I earned my BSc in Information Technology Engineering at Damascus University, specialising in Software Engineering. My coursework included algorithms, data structures, databases, information retrieval, information systems security and web applications.
 
