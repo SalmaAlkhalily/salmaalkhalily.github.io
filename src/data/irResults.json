@@ -1,0 +1,37 @@
+{
+  "source": {
+    "repository": "https://github.com/naghamabuwarda/IR_Challenge",
+    "commit": "9828a5a7ff94cef682af61774c65f3646d827586",
+    "notebook": "challenge with-score-ndcg- 0.7547.ipynb",
+    "notebookUrl": "https://github.com/naghamabuwarda/IR_Challenge/blob/9828a5a7ff94cef682af61774c65f3646d827586/challenge%20with-score-ndcg-%200.7547.ipynb",
+    "publicQueries": 100,
+    "resultCells": [103, 120, 124, 137, 143],
+    "weightCell": 137,
+    "cellIndexing": "zero-based"
+  },
+  "comparison": [
+    { "model": "TF-IDF · title + abstract", "ndcg10": 0.4841, "recall100": 0.7512, "map": 0.3804 },
+    { "model": "BM25 · title + abstract, tuned", "ndcg10": 0.4630, "recall100": 0.7251, "map": 0.3561 },
+    { "model": "BM25 · body text, tuned", "ndcg10": 0.5171, "recall100": 0.7961, "map": 0.4171 },
+    { "model": "Dense MiniLM", "ndcg10": 0.5073, "recall100": 0.8104, "map": 0.4080 },
+    { "model": "RRF · body BM25 + dense", "ndcg10": 0.5525, "recall100": 0.8398, "map": 0.4438 },
+    { "model": "3-way interpolation", "ndcg10": 0.5916, "recall100": 0.8502, "map": 0.4774 },
+    { "model": "Domain-filtered TF-IDF", "ndcg10": 0.6423, "recall100": 0.8863, "map": 0.5493 },
+    { "model": "Optimised 8-signal fusion", "ndcg10": 0.7501, "recall100": 0.9181, "map": 0.6656 }
+  ],
+  "weights": [
+    { "signal": "GTE-large", "weight": 0.308, "type": "Dense", "description": "Cosine similarity of full-text embeddings." },
+    { "signal": "Domain match", "weight": 0.228, "type": "Metadata", "description": "Binary match between query and candidate research domains." },
+    { "signal": "TF-IDF · full query", "weight": 0.120, "type": "Sparse", "description": "Full query text against a full-text corpus index." },
+    { "signal": "BGE-small", "weight": 0.119, "type": "Dense", "description": "Cosine similarity of precomputed BGE embeddings." },
+    { "signal": "TF-IDF · title + abstract query", "weight": 0.095, "type": "Sparse", "description": "Title and abstract query against the full-text corpus index." },
+    { "signal": "BM25 · full-text corpus", "weight": 0.066, "type": "Sparse", "description": "Full query text, k1 = 3.0 and b = 0.85." },
+    { "signal": "BM25 · body corpus", "weight": 0.042, "type": "Sparse", "description": "Full query text, k1 = 3.0 and b = 0.95." },
+    { "signal": "Venue match", "weight": 0.022, "type": "Metadata", "description": "Binary venue match, excluding empty venue names." }
+  ],
+  "failures": [
+    { "query": "CardioID: device pairing", "domain": "Computer Science", "relevant": 2, "ndcg10": 0.0, "recall100": 0.5, "explanation": "Top results cover security and wearable devices, but miss the cited signal-processing work in the top ten." },
+    { "query": "Posttranscriptional regulation of insulin resistance", "domain": "Medicine", "relevant": 2, "ndcg10": 0.0, "recall100": 0.0, "explanation": "Topical matches are retrieved, but neither citation-gold document appears in the top hundred." },
+    { "query": "Predicting disease-related microRNA", "domain": "Computer Science", "relevant": 3, "ndcg10": 0.0, "recall100": 1.0, "explanation": "All three gold papers are retrieved in the top hundred, but none reaches the top ten." }
+  ]
+}

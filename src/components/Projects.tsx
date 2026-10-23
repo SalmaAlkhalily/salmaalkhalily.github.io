@@ -1,114 +1,58 @@
-import { projectArchive, projects } from '../data/portfolio';
+import { projects } from '../data/portfolio';
 import SectionTitle from './SectionTitle';
+import ProjectPreview from './ProjectPreview';
 import { GitHubIcon, LinkExternalIcon, StarIcon } from './icons';
 
 export default function Projects() {
   return (
     <section id="projects">
       <div className="container">
-        <SectionTitle
-          eyebrow="Selected Work"
-          title="Projects"
-          subtitle="Recent AI and knowledge engineering work. Earlier projects are listed in the archive below."
-          icon={<StarIcon />}
-        />
-        <div className="grid grid-cols-2">
-          {projects.map((p, idx) => (
-            <article key={p.title} className="card" style={{ display: 'flex', flexDirection: 'column' }}>
-              <div
-                className="meta"
-                style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.9rem' }}
-              >
-                <span style={{ color: 'var(--color-accent)' }}>{String(idx + 1).padStart(2, '0')}</span>
-                {p.period && <span>{p.period}</span>}
-              </div>
-              <h3 style={{ marginBottom: '0.7rem' }}>
-                {p.repo ? (
-                  <a href={p.repo} target="_blank" rel="noopener noreferrer">
-                    {p.title}
-                  </a>
-                ) : p.title}
-              </h3>
-              {p.pipeline && (
-                <figure className="pipeline" aria-label={`Pipeline: ${p.pipeline.join(', then ')}`}>
-                  <ol aria-hidden>
-                    {p.pipeline.map((step) => (
-                      <li key={step}>{step}</li>
-                    ))}
-                  </ol>
-                </figure>
-              )}
-              <p style={{ flex: 1 }}>{p.description}</p>
-              {(p.role || p.result) && (
-                <dl className="project-details">
-                  {p.role && (
-                    <div>
-                      <dt>Role</dt>
-                      <dd>{p.role}</dd>
-                    </div>
-                  )}
-                  {p.result && (
-                    <div>
-                      <dt>Result</dt>
-                      <dd style={{ color: 'var(--color-primary)', fontWeight: 600 }}>{p.result}</dd>
-                    </div>
-                  )}
-                </dl>
-              )}
-              <ul
-                aria-label="Stack"
-                style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', listStyle: 'none', margin: 0, padding: 0 }}
-              >
-                {p.tech.map((t) => (
-                  <li key={t} className="tag">
-                    {t}
-                  </li>
-                ))}
-              </ul>
-              {(p.repo || p.live) && (
-                <div className="project-links">
-                  {p.repo && (
-                    <a href={p.repo} target="_blank" rel="noopener noreferrer">
-                      <GitHubIcon />
-                      Code
-                    </a>
-                  )}
-                  {p.live && (
-                    <a href={p.live} target="_blank" rel="noopener noreferrer">
-                      <LinkExternalIcon />
-                      Live
-                    </a>
-                  )}
+        <SectionTitle eyebrow="01 / Selected work" title="Projects"
+          subtitle="Five projects in retrieval, model evaluation and knowledge engineering."
+          icon={<StarIcon />} />
+        <div className="project-list">
+          {projects.map((project, index) => (
+            <article key={project.title} className="project-row" aria-labelledby={`project-${index}`}>
+              <div className="project-overview">
+                <div className="project-meta">
+                  <span className="project-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  <span>{project.context}</span>
+                  {project.period && <span className="project-period">{project.period}</span>}
                 </div>
-              )}
+                <h3 id={`project-${index}`}>
+                  {project.caseStudy ? <a href={project.caseStudy}>
+                    {project.title}<span className="case-title-arrow" aria-hidden> →</span>
+                  </a> : project.repo ? <a href={project.repo} target="_blank" rel="noopener noreferrer">
+                    {project.title}<LinkExternalIcon width={17} height={17} />
+                  </a> : project.title}
+                </h3>
+                <p className="project-description">{project.description}</p>
+                {project.result && <p className="project-result"><span>{project.resultLabel ?? 'Result'}</span><strong>{project.result}</strong></p>}
+                <ul className="project-stack" aria-label="Technologies and methods">
+                  {project.tech.map((tech) => <li key={tech} className="tag">{tech}</li>)}
+                </ul>
+                <div className="project-links">
+                  {project.caseStudy && <a href={project.caseStudy} aria-label={`Read about ${project.title}`}>Read project <span aria-hidden>→</span></a>}
+                  {project.repo && <a href={project.repo} target="_blank" rel="noopener noreferrer" aria-label={`View code for ${project.title}`}>
+                    <GitHubIcon /> View repository
+                  </a>}
+                  {project.live && <a href={project.live} target="_blank" rel="noopener noreferrer"><LinkExternalIcon /> Live project</a>}
+                  {project.event && <a href={project.event.url} target="_blank" rel="noopener noreferrer"><LinkExternalIcon /> {project.event.label}</a>}
+                </div>
+              </div>
+              {project.preview ? <ProjectPreview project={project} /> : project.pipeline && <figure className="project-process">
+                <figcaption className="eyebrow">The approach</figcaption>
+                <ol>{project.pipeline.map((step, stepIndex) => <li key={step}>
+                  <span className="process-node" aria-hidden="true">{stepIndex + 1}</span><span>{step}</span>
+                </li>)}</ol>
+              </figure>}
             </article>
           ))}
         </div>
-
-        <h3 style={{ margin: '4rem 0 1rem' }}>Archive</h3>
-        <ul className="archive">
-          {projectArchive.map((p) => (
-            <li key={p.title}>
-              <span className="archive-title">
-                {p.repo ? (
-                  <a href={p.repo} target="_blank" rel="noopener noreferrer">
-                    {p.title}
-                    <LinkExternalIcon />
-                  </a>
-                ) : (
-                  p.title
-                )}
-                {p.period && (
-                  <span className="meta" style={{ marginLeft: '0.6rem', fontWeight: 400 }}>
-                    {p.period}
-                  </span>
-                )}
-                <span className="archive-summary">{p.description}</span>
-              </span>
-              <span className="archive-stack">{p.tech.join(' · ')}</span>
-            </li>
-          ))}
-        </ul>
+        <a href="/archive.html" className="archive-link">
+          <span><span className="eyebrow">More to explore</span><strong>Earlier software projects</strong></span>
+          <span className="text-link">View the archive <LinkExternalIcon width={18} height={18} /></span>
+        </a>
       </div>
     </section>
   );

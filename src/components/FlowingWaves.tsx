@@ -3,11 +3,14 @@ import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Hero background: layered, slowly flowing wave lines in the primary color.
- * Pauses off-screen and respects prefers-reduced-motion.
+ * A four-second introduction, then static art. Pauses off-screen and respects
+ * prefers-reduced-motion without restarting on resize, theme or visibility changes.
  */
 export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationStartedAt = useRef<number | null>(null);
+  const lastPhaseTime = useRef(0);
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -16,13 +19,18 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
     const ctx = canvas?.getContext('2d');
     if (!container || !canvas || !ctx) return;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reduceMotion = motionPreference.matches;
     const rootStyles = getComputedStyle(document.documentElement);
     const dpr = window.devicePixelRatio || 1;
     let width = 0;
     let height = 0;
-    let raf = 0;
+    let raf: number | null = null;
     let visible = true;
+    // These refs survive effect restarts, including theme changes and Strict Mode.
+    animationStartedAt.current ??= window.performance.now();
+    const startedAt = animationStartedAt.current;
+    const animationEndsAt = startedAt + 4000;
 
     const resize = () => {
       width = container.clientWidth;
@@ -35,6 +43,11 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
     };
 
     const draw = (time: number) => {
+      raf = null;
+      if (!visible) return;
+      const animate = !reduceMotion && time < animationEndsAt;
+      if (animate) lastPhaseTime.current = Math.max(0, time - startedAt);
+      const phaseTime = lastPhaseTime.current;
       ctx.clearRect(0, 0, width, height);
 
       // Read the color at draw time so it follows the active theme.
@@ -46,7 +59,7 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
         const baseY = height * (0.58 + p * 0.3);
         const amplitude = 16 + p * 28;
         const frequency = ((1.1 + p * 0.5) * Math.PI * 2) / Math.max(width, 1);
-        const phase = time * (0.00022 + p * 0.00012) + i * 0.75;
+        const phase = phaseTime * (0.00022 + p * 0.00012) + i * 0.75;
 
         ctx.globalAlpha = 0.1 + (1 - p) * 0.22;
         ctx.beginPath();
@@ -62,29 +75,39 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
       }
       ctx.globalAlpha = 1;
 
-      if (!reduceMotion && visible) raf = window.requestAnimationFrame(draw);
+      if (animate) raf = window.requestAnimationFrame(draw);
+    };
+
+    const scheduleDraw = () => {
+      if (raf !== null) window.cancelAnimationFrame(raf);
+      raf = visible ? window.requestAnimationFrame(draw) : null;
     };
 
     resize();
-    raf = window.requestAnimationFrame(draw);
+    scheduleDraw();
 
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
-      window.cancelAnimationFrame(raf);
-      if (visible) raf = window.requestAnimationFrame(draw);
+      scheduleDraw();
     });
     observer.observe(container);
 
     const handleResize = () => {
       resize();
-      if (reduceMotion) raf = window.requestAnimationFrame(draw);
+      scheduleDraw();
+    };
+    const handleMotionChange = () => {
+      reduceMotion = motionPreference.matches;
+      scheduleDraw();
     };
     window.addEventListener('resize', handleResize);
+    motionPreference.addEventListener('change', handleMotionChange);
 
     return () => {
-      window.cancelAnimationFrame(raf);
+      if (raf !== null) window.cancelAnimationFrame(raf);
       observer.disconnect();
       window.removeEventListener('resize', handleResize);
+      motionPreference.removeEventListener('change', handleMotionChange);
     };
   }, [lines, theme]);
 

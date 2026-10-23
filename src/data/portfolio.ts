@@ -1,16 +1,22 @@
-// All site content lives here, based on Salma's CV (cv/Salma ALKHALILY.pdf).
+// Portfolio summary content; detailed project pages are in caseStudies.ts.
+import { caseStudies } from './caseStudies';
+import nlpResults from './nlpResults.json';
 
 export interface ExperienceItem {
   role: string;
   company: string;
   period: string;
+  status?: string;
   location?: string;
+  roles?: { title: string; period: string }[];
   highlights: string[];
+  links?: { label: string; url: string }[];
 }
 
 export interface SkillGroup {
   category: string;
   items: string[];
+  secondary?: boolean;
 }
 
 export interface EducationItem {
@@ -18,6 +24,7 @@ export interface EducationItem {
   field?: string;
   institution: string;
   period: string;
+  activity?: { title: string; description: string; url: string };
 }
 
 export interface Certification {
@@ -25,6 +32,8 @@ export interface Certification {
   issuer?: string;
   details?: string;
   url?: string;
+  credentialId?: string;
+  linkLabel?: string;
   vendor?: 'microsoft' | 'databricks' | 'cncf' | 'edx' | 'maven' | 'credly';
 }
 
@@ -37,48 +46,62 @@ export interface Publication {
 export interface Project {
   title: string;
   period?: string;
+  context?: string;
   /** Two or three sentences: the problem and what was built. */
   description: string;
-  role?: string;
-  /** One measurable outcome, e.g. a metric or ranking. */
+  /** One supported outcome or scope figure, labelled to distinguish them. */
   result?: string;
+  resultLabel?: string;
+  preview?: 'policygap' | 'vlm' | 'nlp' | 'ir' | 'shacl';
   tech: string[];
   /** Main stages of the system, shown as a small diagram on the card. */
   pipeline?: string[];
   repo?: string;
   live?: string;
+  caseStudy?: string;
+  event?: { label: string; url: string };
 }
 
 const availability =
   '6-month final-year internship from 2027 in AI, ML, Data Science or Data Engineering';
 
+const summerSchool = {
+  name: 'AI Technologies Summer School 2026',
+  url: 'https://ai.lnu.edu.ua/',
+};
+
 export const profile = {
   name: 'Salma Alkhalily',
   title: 'AI & Data Science Engineer',
   tagline:
-    'I build machine learning, NLP and retrieval systems, backed by 2+ years of professional software engineering.',
+    'I build machine learning and NLP systems, with a focus on information retrieval, RAG and knowledge graphs.',
   location: 'Paris, France',
   availability,
   email: 'salma.alkhalily96@gmail.com',
   cv: '/Salma-Alkhalily-CV.pdf',
   github: 'https://github.com/SalmaAlkhalily',
   linkedin: 'https://www.linkedin.com/in/salmaalkhalily',
+  summerSchool,
   facts: [
     { label: 'Studying', value: 'M2 Data, Knowledge & Hybrid AI (DKAI), Université Paris-Saclay' },
     { label: 'Focus', value: 'Machine Learning · NLP · RAG · Knowledge Graphs' },
     { label: 'Open to', value: availability },
-    { label: 'Languages', value: 'English · French' },
+    { label: 'Languages', value: 'Arabic (native) · English · French' },
   ],
-  interests: [
-    'Graph analytics & knowledge discovery',
-    'Hybrid & explainable AI',
-    'Adaptive & agentic AI',
-    'Symbolic to neurosymbolic AI',
-    'Retrieval-augmented generation',
+  focusAreas: [
+    { title: 'Software engineering', description: 'Turning requirements into web, mobile and desktop applications.' },
+    { title: 'Machine learning & NLP', description: 'Working with text, retrieval and model evaluation.' },
+    { title: 'Knowledge & hybrid AI', description: 'Exploring graphs, constraints and explainable systems.' },
   ],
-  bio: `M2 student in Data, Knowledge and Hybrid Artificial Intelligence (DKAI) at Université Paris-Saclay, with professional experience in software development and implementation. My background combines strong software engineering with hands-on training in machine learning, data science, knowledge engineering and big data.
+  bio: `I'm Salma, a software engineer in Paris and an M2 student in Data, Knowledge and Hybrid Artificial Intelligence (DKAI) at Université Paris-Saclay. My 2+ years in software development and implementation include work on web, mobile and desktop applications.
 
-I have built web, mobile and desktop applications across different platforms, and I am now applying that engineering foundation to AI: retrieval-augmented generation, NLP, knowledge graphs and hybrid, explainable AI.`,
+I earned my BSc in Information Technology Engineering at Damascus University, specialising in Software Engineering. My coursework included algorithms, data structures, databases, information retrieval, information systems security and web applications.
+
+At Blue Smart Apps, I built one Android app with Kotlin, Jetpack Compose and Firebase, from business requirements through design and implementation. My M1 Data Science studies covered machine learning, NLP, information retrieval and large-scale data processing. In M2, I study knowledge engineering, graph analytics, constraint programming, data mining, hybrid and explainable AI.
+
+Through my M1 programme, I attended the ${summerSchool.name}. Our four-person team developed PolicyGap for its project competition, using RAG to find gaps between policy objectives and supporting evidence.
+
+My other projects include the Scientific Article Information Retrieval Challenge, an NLP project on detecting human, AI-generated and mixed text, and SHACL-based RDF validation. I also contributed to a group research project examining how face accessories affect vision-language model evaluation. I'm seeking a six-month final-year internship from 2027 in AI, Machine Learning, Data Science or Data Engineering.`,
 };
 
 export const skills: SkillGroup[] = [
@@ -89,16 +112,10 @@ export const skills: SkillGroup[] = [
       'Machine Learning',
       'scikit-learn',
       'NLP',
-      'Text Classification',
-      'Regression',
-      'TF-IDF',
       'PyTorch',
       'Transformers',
-      'Hugging Face',
-      'XGBoost',
       'RAG',
       'Vector Search',
-      'LLMs',
     ],
   },
   {
@@ -107,15 +124,23 @@ export const skills: SkillGroup[] = [
   },
   {
     category: 'Software Engineering',
-    items: ['Java', 'Kotlin', 'PHP', 'Laravel', 'OOP', 'Design Patterns', 'UML', 'REST APIs', 'Git'],
+    items: ['Java', 'Kotlin', 'Laravel', 'REST APIs', 'Git'],
   },
   {
     category: 'Mobile, Web & Desktop',
-    items: ['Android', 'Jetpack Compose', 'iOS (Swift, SwiftUI)', 'Firebase', 'Web Development', 'JavaFX'],
+    secondary: true,
+    items: ['Android', 'Jetpack Compose', 'iOS (Swift, SwiftUI)', 'Firebase', 'Web Development', 'JavaFX', 'PHP', 'OOP', 'Design Patterns', 'UML'],
   },
   {
     category: 'Data & Tools',
+    secondary: true,
     items: [
+      'Text Classification',
+      'Regression',
+      'TF-IDF',
+      'Hugging Face',
+      'XGBoost',
+      'LLMs',
       'Pandas',
       'NumPy',
       'Matplotlib',
@@ -133,41 +158,78 @@ export const skills: SkillGroup[] = [
   },
   {
     category: 'Languages',
-    items: ['English (professional working)', 'French (professional working)'],
+    items: ['Arabic (native)', 'English (professional working)', 'French (professional working)'],
   },
 ];
 
-// Featured projects (2-4). Older or smaller work goes in projectArchive.
+// Featured projects. Older or smaller work goes in projectArchive.
 export const projects: Project[] = [
   {
-    title: 'PolicyGap - AITSS Project Competition',
+    title: 'PolicyGap',
+    caseStudy: caseStudies.policygap.path,
+    preview: 'policygap',
+    context: 'M1 · AI Technologies Summer School · Team of 4',
+    event: { label: 'Summer school', url: 'https://ai.lnu.edu.ua/' },
+    repo: 'https://github.com/SalmaAlkhalily/ai-compliance',
     period: 'Jun 2026 - Jul 2026',
     description:
-      'Policy documents often state objectives without the evidence to support them. PolicyGap is a RAG system that finds these gaps, combining document embeddings, vector search and LLM-based analysis to produce structured results.',
-    tech: ['RAG', 'Embeddings', 'Vector Search', 'LLMs'],
+      'PolicyGap uses retrieval-augmented generation to find gaps between policy objectives and supporting evidence. I wrote the complete codebase, from embeddings and vector search to LLM analysis and structured reports, for our four-person team at the M1 summer school project competition.',
+    resultLabel: 'Implementation scope',
+    result: '3 framework families · PDF, DOCX & TXT inputs',
+    tech: ['Python', 'FastAPI', 'React', 'ChromaDB', 'RAG', 'Groq'],
     pipeline: ['Policy documents', 'Embeddings', 'Vector search', 'LLM analysis', 'Gap report'],
   },
   {
+    title: 'Face accessories and VLM evaluation',
+    preview: 'vlm',
+    caseStudy: caseStudies.vlm.path,
+    context: 'M2 · Data Readiness and Evaluation in AI · Group research project',
+    repo: 'https://github.com/SalmaAlkhalily/examining-the-effect-of-face-accessories-on-vlm-evaluation',
+    description:
+      'We studied how caps, glasses and masks change vision-language model outputs for the same face. In this M2 group research project, I worked on human review and the subjective track, and analysed data and evaluation results across both tracks.',
+    resultLabel: 'Study scale',
+    result: '720 identities · 2,880 images',
+    tech: ['Vision-Language Models', 'Human Evaluation', 'Data Analysis', 'MiniCPM', 'SigLIP2'],
+    pipeline: ['Portraits + accessories', 'VLM evaluation', 'Human review', 'Subjective + objective analysis'],
+  },
+  {
     title: 'Detecting Human, AI-Generated and Mixed Text',
+    preview: 'nlp',
+    caseStudy: caseStudies.nlp.path,
+    context: 'M1 · Natural Language Processing · Group project',
     repo: 'https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection',
     period: 'Jan 2026 - Feb 2026',
     description:
-      'Classifies a text as human-written, AI-generated or mixed, and uses regression to estimate the share of each. Compares classical machine learning with transformer models, including imbalance handling and hyperparameter tuning.',
+      'Our M1 NLP group compared classical models with transformers to classify human, AI-generated and mixed text and estimate the human-written share. We shared the work, including class balancing, model tuning and error analysis.',
+    resultLabel: 'Saved test result',
+    result: `${nlpResults.classification.find((row) => row.model === 'Tuned XGBoost')!.f1Macro.toFixed(4)} macro F1 · TF-IDF + source distance`,
     tech: ['Python', 'NLP', 'TF-IDF', 'Transformers', 'PyTorch', 'scikit-learn'],
-    pipeline: ['Text', 'TF-IDF + transformers', 'Class: human, AI, mixed', 'Share of each'],
+    pipeline: ['Text', 'TF-IDF + transformers', 'Class: human, AI, mixed', 'Human-written share'],
   },
   {
     title: 'Scientific Article Information Retrieval Challenge',
+    preview: 'ir',
+    caseStudy: caseStudies.ir.path,
+    context: 'M1 · Information Retrieval · Team of 3',
+    repo: 'https://github.com/naghamabuwarda/IR_Challenge',
     description:
-      'Finds relevant scientific papers in a 20,000-document corpus using citation-based relevance. Compares TF-IDF, BM25 and dense retrieval, then adds SPECTER2 embeddings, hybrid fusion and cross-encoder reranking, evaluated with NDCG, MAP and MRR.',
-    tech: ['Python', 'BM25', 'Dense Retrieval', 'SPECTER2', 'Cross-Encoder Reranking'],
-    pipeline: ['Query paper', 'BM25 + SPECTER2', 'Hybrid fusion', 'Cross-encoder rerank', 'Ranked papers'],
+      'We combined lexical retrieval, dense embeddings and metadata to find cited papers in a corpus of 20,000 scientific articles. I contributed throughout this three-person M1 course project, from retrieval experiments to the final eight-signal fusion.',
+    resultLabel: 'Challenge result',
+    result: '1st place at the submission deadline',
+    tech: ['Python', 'BM25', 'TF-IDF', 'GTE-large', 'BGE-small', 'Score Fusion'],
+    pipeline: ['Query paper', 'Dense + sparse + metadata', 'Normalise scores', 'Weighted fusion', 'Top 100 papers'],
   },
   {
-    title: 'SHACL Shape Generation and Validation Tool',
-    period: 'Mar 2024 - May 2024',
+    title: 'Key-based SHACL generation and validation',
+    preview: 'shacl',
+    caseStudy: caseStudies.shacl.path,
+    context: 'M1 · TER research project · Individual project',
+    repo: 'https://github.com/SalmaAlkhalily/Key-Based-SHACL-Shape-Generation-and-Validation-for-RDF-Datasets-with-Property-Mapping-Support',
+    period: 'Mar 2025 - May 2025',
     description:
-      'Generates SHACL shapes with uniqueness and sameAs rules from RDF keys, then validates RDF sources against them. Violations are reported in detail through a JavaFX interface.',
+      'I built this M1 TER project in full under Professor Fatiha Sais. The JavaFX tool generates SHACL shapes from RDF keys, maps properties across datasets and reports validation violations.',
+    resultLabel: 'Validation scope',
+    result: '2 scenarios · shared and mapped properties',
     tech: ['Apache Jena', 'RDF', 'SHACL', 'JavaFX'],
     pipeline: ['RDF keys', 'SHACL shapes', 'Validate sources', 'Violation report'],
   },
@@ -176,13 +238,16 @@ export const projects: Project[] = [
 export const projectArchive: Project[] = [
   {
     title: 'ListedNearMe',
+    live: 'https://listednearme.com/',
     period: 'Apr 2020 - Mar 2023',
     description: 'Local marketplace app for buying and selling used products nearby.',
     tech: ['Mobile', 'Google Maps API', 'Google Billing'],
   },
   {
     title: 'OURAMAZONE',
-    description: 'Distributed e-commerce platform built from Spring Boot microservices.',
+    caseStudy: caseStudies.ouramazone.path,
+    repo: caseStudies.ouramazone.repo,
+    description: 'E-commerce backend prototype built from Spring Boot microservices.',
     tech: ['Spring Boot', 'Spring Cloud', 'RabbitMQ', 'Zipkin'],
   },
   {
@@ -197,20 +262,23 @@ export const projectArchive: Project[] = [
   },
   {
     title: 'Internet Download Manager',
+    caseStudy: caseStudies.downloader.path,
     repo: 'https://github.com/SalmaAlkhalily/files-downloader',
-    description: 'Multi-threaded HTTP/HTTPS and FTP download manager with pause, resume and queues.',
+    description: 'Multi-connection HTTP download manager with a progress table and pause, resume and cancel controls.',
     tech: ['Java', 'Swing', 'Multithreading'],
   },
   {
     title: 'Automate DFA',
+    caseStudy: caseStudies.dfa.path,
     repo: 'https://github.com/SalmaAlkhalily/automate-dfa',
-    description: 'Desktop tool for creating, testing and visualizing deterministic finite automata.',
+    description: 'Desktop tool for defining and testing deterministic finite automata, with diagrams for bundled examples.',
     tech: ['Java', 'Swing', 'Automata Theory'],
   },
   {
     title: 'Phone Generator',
+    caseStudy: caseStudies.phone.path,
     repo: 'https://github.com/SalmaAlkhalily/phone-generator',
-    description: 'Desktop app built for a client to generate phone numbers and save them to a phonebook.',
+    description: 'Desktop client utility for generating sequential phone-number lists and exporting vCard contacts.',
     tech: ['Java', 'Desktop Application'],
   },
 ];
@@ -219,20 +287,33 @@ export const experience: ExperienceItem[] = [
   {
     role: 'Software Engineer (Remote)',
     company: 'Blue Smart Apps',
-    period: 'Apr 2020 - Present',
+    // Dates and roles verified from Salma's LinkedIn experience, 23 October 2026.
+    period: 'Apr 2020 – Mar 2023',
     location: 'Damascus, Syria',
-    highlights: [
-      'Analyse, design and implement functional and non-functional requirements raised by business stakeholders.',
-      'Build Android applications with Kotlin and Jetpack Compose, backed by Firebase and Firebase Functions.',
-      'Integrate web APIs including Google Maps, Algolia and Google Analytics.',
+    roles: [
+      { title: 'Full-stack Developer', period: 'Apr 2020 – Mar 2023' },
+      { title: 'Android Developer', period: 'Oct 2020 – Mar 2023' },
+      { title: 'iOS Developer', period: 'Aug 2021 – Jun 2022' },
     ],
+    links: [{ label: 'ListedNearMe website', url: 'https://listednearme.com/' }],
+    highlights: [
+      'Designed and implemented functional and non-functional requirements from business stakeholders.',
+      'Built the ListedNearMe Android app with Kotlin and Jetpack Compose, backed by Firebase and Firebase Functions.',
+      'Integrated web APIs including Google Maps, Algolia and Google Analytics.',
+    ],
+  },
+  {
+    role: 'Freelance Software Engineer',
+    company: 'Freelance',
+    period: 'Mar 2020 – Sep 2022',
+    highlights: ['Developed desktop applications using Java.'],
   },
 ];
 
 export const education: EducationItem[] = [
   {
     degree: 'M2 Data, Knowledge and Hybrid Artificial Intelligence (DKAI)',
-    field: 'Graph analytics, hybrid & explainable AI, adaptive & agentic AI, neurosymbolic AI',
+    field: 'Knowledge engineering, graph analytics, constraint programming, data mining, hybrid & explainable AI, adaptive & agentic AI, neurosymbolic AI',
     institution: 'Université Paris-Saclay',
     period: 'Sep 2026 - Present',
   },
@@ -241,6 +322,11 @@ export const education: EducationItem[] = [
     field: 'Machine learning, NLP, large-scale distributed data processing, information retrieval',
     institution: 'Université Paris-Saclay',
     period: 'Sep 2025 - Jul 2026',
+    activity: {
+      title: 'Artificial Intelligence Technologies Summer School 2026',
+      description: 'Attended as part of my M1 master\'s programme and participated in the project competition with our team project, PolicyGap.',
+      url: 'https://ai.lnu.edu.ua/',
+    },
   },
   {
     degree: 'BSc Information Technology Engineering',
@@ -253,23 +339,31 @@ export const education: EducationItem[] = [
 export const certifications: Certification[] = [
   {
     name: 'Participation in the 6th Summer School “Artificial Intelligence Technologies 2026”',
+    url: '/images/certificates/summer-school-participation.jpg',
+    linkLabel: 'View certificate',
     issuer: 'Ivan Franko National University of Lviv · Issued Jul 2026 · Credential ID №AIT-2026-0497',
     details:
-      'Successfully completed the VI Summer School “Artificial Intelligence Technologies 2026”, totaling 120 hours / 4 ECTS credits.',
+      'Completed the summer school as part of my M1 master\'s programme at Université Paris-Saclay: 120 hours / 4 ECTS credits. I also participated in its project competition with PolicyGap.',
   },
   {
     name: 'AI Technologies Summer School 2026 — PolicyGap Project Competition',
+    url: '/images/certificates/summer-school-policygap-competition.jpg',
+    linkLabel: 'View certificate',
     issuer: 'Ivan Franko National University of Lviv · Issued Jul 2026',
     details:
-      'Certificate confirming participation in the project competition with the project “PolicyGap”, as part of AI Technologies Summer School 2026.',
+      'Participated in the summer school project competition during M1 with PolicyGap, developed by our team of four. I wrote the entire codebase.',
   },
   {
-    name: 'Git and GitHub · 01/2024 - Present',
-    issuer: 'IBM - Coursera',
+    name: 'Getting Started with Git and GitHub',
+    issuer: 'IBM · Coursera · Issued Jan 2024',
+    credentialId: 'ARBK5C3CRRUS',
+    url: 'https://www.coursera.org/account/accomplishments/records/ARBK5C3CRRUS',
   },
   {
-    name: 'Python for Data Science, AI & Development · 01/2024 - Present',
-    issuer: 'IBM - Coursera',
+    name: 'Python for Data Science, AI & Development',
+    issuer: 'IBM · Coursera · Issued Jan 2024',
+    credentialId: 'G7NRB8VKSTPW',
+    url: 'https://www.coursera.org/account/accomplishments/records/G7NRB8VKSTPW',
   },
   {
     name: 'Mental arithmetic training certificate · 05/2022 - Present',

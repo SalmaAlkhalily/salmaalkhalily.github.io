@@ -8,8 +8,8 @@ export default function Education() {
     <section id="education" style={{ background: 'var(--color-bg-subtle)' }}>
       <div className="container">
         <SectionTitle
-          eyebrow="Formation & Recognition"
-          title="Education & Credentials"
+          eyebrow="Education"
+          title="Education & credentials"
           subtitle="Academic background and professional certifications"
           icon={<GraduationIcon />}
         />
@@ -84,6 +84,14 @@ export default function Education() {
                     </span>
                     {e.institution}
                   </div>
+                  {e.activity && (
+                    <div className="education-activity">
+                      <a href={e.activity.url} target="_blank" rel="noopener noreferrer">
+                        {e.activity.title} <LinkExternalIcon width={14} height={14} />
+                      </a>
+                      <p>{e.activity.description}</p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -125,7 +133,7 @@ export default function Education() {
                       }}
                     >
                       <span>{c.name}</span>
-                      {c.url && (
+                      {c.url && !c.credentialId && !c.linkLabel && (
                         <span
                           className="inline-icon"
                           style={{ color: 'var(--color-accent)', opacity: 0.7 }}
@@ -146,6 +154,7 @@ export default function Education() {
                         {c.issuer}
                       </div>
                     )}
+                    {c.credentialId && <div className="credential-id">Credential ID: {c.credentialId}</div>}
                     {c.details && (
                       <div
                         style={{
@@ -158,6 +167,10 @@ export default function Education() {
                         {c.details}
                       </div>
                     )}
+                    {(c.credentialId || c.linkLabel) && c.url && <span className="credential-link">
+                      {c.linkLabel ?? 'Show credential'} <LinkExternalIcon width={14} height={14} />
+                      <span className="sr-only"> for {c.name} (opens in a new tab)</span>
+                    </span>}
                   </>
                 );
 

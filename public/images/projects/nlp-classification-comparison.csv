@@ -1,0 +1,6 @@
+model,input,accuracy,f1Macro,f1Weighted,precisionMacro,recallMacro
+Logistic regression,TF-IDF + source distance,0.8613,0.8564,0.8577,0.8614,0.8592
+SVM,TF-IDF + source distance,0.8857,0.8796,0.8838,0.8793,0.8834
+Tuned XGBoost,TF-IDF + source distance,0.9203,0.9121,0.9201,0.9127,0.9117
+DistilBERT,Text only,0.806,0.8157,0.8048,0.812,0.8204
+RoBERTa,Text only,0.8355,0.8436,0.8342,0.8397,0.8494

@@ -1,0 +1,24 @@
+{
+  "humanReview": {
+    "source": { "report": "/reports/vlm-face-accessories-report.pdf", "pdfPage": 4, "section": "4.2" },
+    "rows": [
+      { "accessory": "Mask", "reviewed": 303, "accepted": 270 },
+      { "accessory": "Cap", "reviewed": 303, "accepted": 263 },
+      { "accessory": "Glasses", "reviewed": 84, "accepted": 84 }
+    ]
+  },
+  "accuracyChanges": {
+    "source": { "report": "/reports/vlm-face-accessories-report.pdf", "pdfPage": 6, "figure": "2", "unit": "percentage points" },
+    "rows": [
+      { "attribute": "Ethnicity", "accessory": "Cap", "miniCPM": -6.3, "siglip": -4.3 },
+      { "attribute": "Ethnicity", "accessory": "Glasses", "miniCPM": -1.0, "siglip": -2.9 },
+      { "attribute": "Ethnicity", "accessory": "Mask", "miniCPM": -6.7, "siglip": -4.4 },
+      { "attribute": "Gender", "accessory": "Cap", "miniCPM": -6.1, "siglip": -4.6 },
+      { "attribute": "Gender", "accessory": "Glasses", "miniCPM": -0.6, "siglip": -0.8 },
+      { "attribute": "Gender", "accessory": "Mask", "miniCPM": -0.8, "siglip": -1.1 },
+      { "attribute": "Age", "accessory": "Cap", "miniCPM": -4.0, "siglip": -5.7 },
+      { "attribute": "Age", "accessory": "Glasses", "miniCPM": -1.7, "siglip": -2.5 },
+      { "attribute": "Age", "accessory": "Mask", "miniCPM": -17.2, "siglip": -17.6 }
+    ]
+  }
+}

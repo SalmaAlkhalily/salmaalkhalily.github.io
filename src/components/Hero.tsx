@@ -1,5 +1,6 @@
 import { profile } from '../data/portfolio';
 import FlowingWaves from './FlowingWaves';
+import CopyEmailButton from './CopyEmailButton';
 import { DownloadIcon, GitHubIcon, LinkedInIcon } from './icons';
 
 const initials = profile.name
@@ -14,8 +15,10 @@ export default function Hero() {
 
       <div className="container grid hero-grid">
         <div className="span-7">
+          <p className="eyebrow hero-intro">M2 DKAI student · Université Paris-Saclay</p>
           <h1 style={{ margin: '0 0 0.6rem' }}>{profile.name}</h1>
           <p className="hero-role">{profile.title}</p>
+          <p className="hero-description">{profile.tagline}</p>
 
           <ul className="profile-links">
             <li>
@@ -38,21 +41,26 @@ export default function Hero() {
             </li>
           </ul>
 
-          <p style={{ fontSize: 'var(--text-lg)', maxWidth: '540px', marginBottom: '2rem' }}>
-            {profile.tagline}
+          <p className="availability-note">
+            <span className="status-dot" aria-hidden />
+            Seeking a 6-month final-year internship · 2027
           </p>
 
-          <div style={{ display: 'flex', gap: '0.9rem', flexWrap: 'wrap' }}>
-            <a href="#contact" className="btn btn-primary">
+          <div className="hero-actions">
+            <a href="#projects" className="btn btn-primary">
+              View projects <span aria-hidden>↓</span>
+            </a>
+            <a href={`mailto:${profile.email}`} className="btn btn-outline">
               Get in touch
             </a>
-            <a href="#projects" className="btn btn-outline">
-              View projects
-            </a>
+          </div>
+          <div className="hero-email">
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            <CopyEmailButton compact />
           </div>
         </div>
 
-        <aside className="card span-5" style={{ padding: '2rem' }}>
+        <aside className="profile-panel span-5">
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <span className="monogram" aria-hidden>
               {initials}
@@ -65,7 +73,7 @@ export default function Hero() {
             </div>
           </div>
           <dl className="facts">
-            {profile.facts.map((f) => (
+            {profile.facts.filter((f) => f.label !== 'Open to').map((f) => (
               <div key={f.label}>
                 <dt>{f.label}</dt>
                 <dd>{f.value}</dd>

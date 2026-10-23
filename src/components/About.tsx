@@ -1,34 +1,45 @@
 import { profile } from '../data/portfolio';
 import SectionTitle from './SectionTitle';
-import { BookIcon, CheckIcon } from './icons';
+import { BookIcon, DownloadIcon, LinkExternalIcon } from './icons';
 
 export default function About() {
   return (
-    <section id="about" style={{ background: 'var(--color-bg-subtle)' }}>
+    <section id="about" className="about-section">
       <div className="container">
-        <SectionTitle eyebrow="About" title="Background & focus" icon={<BookIcon />} />
-        <div className="grid" style={{ columnGap: 'calc(var(--gutter) * 2)', alignItems: 'start' }}>
-          <div className="span-7">
-            {profile.bio.split('\n\n').map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} style={{ fontSize: 'var(--text-lg)', lineHeight: 1.8 }}>
-                {paragraph}
-              </p>
-            ))}
+        <SectionTitle eyebrow="02 / About" title="My background" icon={<BookIcon />} />
+        <div className="about-layout">
+          <div className="about-copy">
+            {profile.bio.split('\n\n').map((paragraph) => {
+              const [before, after] = paragraph.split(profile.summerSchool.name);
+              return <p key={paragraph.slice(0, 24)}>
+                {before}
+                {after !== undefined && <>
+                  <a className="bio-link" href={profile.summerSchool.url} target="_blank" rel="noopener noreferrer">
+                    {profile.summerSchool.name}<LinkExternalIcon width={14} height={14} />
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                  {after}
+                </>}
+              </p>;
+            })}
+            <a href={profile.cv} className="text-link" download>
+              <DownloadIcon width={17} height={17} /> Read my CV (PDF)
+            </a>
           </div>
 
-          <div className="card span-5">
-            <h3 style={{ marginBottom: '1.1rem' }}>Currently exploring</h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '0.8rem' }}>
-              {profile.interests.map((interest) => (
-                <li key={interest} style={{ display: 'flex', gap: '0.6rem', alignItems: 'baseline' }}>
-                  <span className="inline-icon" style={{ transform: 'translateY(2px)' }}>
-                    <CheckIcon />
-                  </span>
-                  <span style={{ color: 'var(--color-text-soft)' }}>{interest}</span>
-                </li>
+          <aside className="about-focus" aria-labelledby="focus-title">
+            <span className="eyebrow">Current focus</span>
+            <h3 id="focus-title">What I work on</h3>
+            <dl className="focus-list">
+              {profile.focusAreas.map((area, index) => (
+                <div key={area.title}>
+                  <dt><span aria-hidden>{String(index + 1).padStart(2, '0')}</span> {area.title}</dt>
+                  <dd>{area.description}</dd>
+                </div>
               ))}
-            </ul>
-          </div>
+            </dl>
+            <p className="about-languages">{profile.facts.find((fact) => fact.label === 'Languages')?.value}</p>
+          </aside>
         </div>
       </div>
     </section>

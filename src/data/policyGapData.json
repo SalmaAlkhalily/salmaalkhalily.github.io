@@ -1,0 +1,41 @@
+{
+  "source": {
+    "repository": "https://github.com/SalmaAlkhalily/ai-compliance",
+    "commit": "3c4a4880eaa4ebb2eec0e6b235e6474a3375fb27",
+    "scorerUrl": "https://github.com/SalmaAlkhalily/ai-compliance/blob/3c4a4880eaa4ebb2eec0e6b235e6474a3375fb27/backend/app/services/scorer.py",
+    "chunkerUrl": "https://github.com/SalmaAlkhalily/ai-compliance/blob/3c4a4880eaa4ebb2eec0e6b235e6474a3375fb27/backend/app/services/chunker.py",
+    "pipelineUrl": "https://github.com/SalmaAlkhalily/ai-compliance/blob/3c4a4880eaa4ebb2eec0e6b235e6474a3375fb27/backend/app/services/pipeline.py",
+    "classifierUrl": "https://github.com/SalmaAlkhalily/ai-compliance/blob/3c4a4880eaa4ebb2eec0e6b235e6474a3375fb27/backend/app/services/classifier.py"
+  },
+  "documentation": {
+    "version": "1.0",
+    "date": "June 2026",
+    "sections": {
+      "overview": { "section": "1.1–1.2", "pages": [3] },
+      "architecture": { "section": "3", "pages": [5, 6] },
+      "chunking": { "section": "9.2", "pages": [21, 22] },
+      "scoring": { "section": "9.4 and 12.3", "pages": [22, 23, 24, 34] },
+      "reviewAndExport": { "section": "10.2–11.2", "pages": [28, 29, 30, 31] }
+    }
+  },
+  "chunking": {
+    "nominalTokens": 400,
+    "overlapTokens": 80,
+    "charactersPerToken": 4,
+    "note": "Character-based approximation, not a model-tokenizer count. Chart windows are illustrative; actual cuts align to words."
+  },
+  "retrieval": { "model": "all-MiniLM-L6-v2", "dimensions": 384, "topK": 5, "cosineDistanceThreshold": 0.65 },
+  "priorityExample": { "businessImpact": 1, "weight": 1, "confidence": 0.9 },
+  "statuses": [
+    { "id": "implemented", "label": "Implemented", "score": 1, "meaning": "The retrieved evidence explicitly supports the control." },
+    { "id": "partially_implemented", "label": "Partially implemented", "score": 0.5, "meaning": "The evidence covers part of the requirement." },
+    { "id": "not_implemented", "label": "Not implemented", "score": 0, "meaning": "The assessment finds insufficient relevant evidence." },
+    { "id": "not_applicable", "label": "Not applicable", "score": null, "meaning": "Excluded from the framework-score denominator." },
+    { "id": "needs_human_review", "label": "Needs human review", "score": 0, "meaning": "An unresolved finding receives zero credit until reviewed." }
+  ],
+  "frameworks": [
+    { "name": "NIST CSF 2.0", "organisation": "Govern, Identify, Protect, Detect, Respond and Recover" },
+    { "name": "ISO/IEC 27001:2022", "organisation": "Information security controls from Annex A" },
+    { "name": "CIS Controls v8.1", "organisation": "Cybersecurity controls and safeguards" }
+  ]
+}

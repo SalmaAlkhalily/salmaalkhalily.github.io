@@ -1,0 +1,4 @@
+model,input,mse,rmse,mae,r2
+Ridge regression,TF-IDF + source distance,0.052652,0.229459,0.179416,0.675935
+Tuned XGBoost,TF-IDF + source distance,0.029579,0.171984,0.108779,0.817947
+RoBERTa,Text only,0.031238,0.176742,0.114256,0.807736

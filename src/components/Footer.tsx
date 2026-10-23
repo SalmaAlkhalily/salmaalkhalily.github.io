@@ -1,12 +1,13 @@
 import { profile } from '../data/portfolio';
 import { GitHubIcon, LinkedInIcon } from './icons';
+import CopyEmailButton from './CopyEmailButton';
 
 export default function Footer() {
   return (
     <footer
       style={{
         borderTop: '1px solid var(--color-border)',
-        padding: '2.5rem 0',
+        padding: '1.5rem 0',
         textAlign: 'center',
         color: 'var(--color-text-muted)',
         fontSize: 'var(--text-sm)',
@@ -30,13 +31,14 @@ export default function Footer() {
         <p style={{ margin: '0.5rem 0 0', color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)' }}>
           Open to a {profile.availability}.
         </p>
-        <p style={{ margin: '0.5rem 0 0', fontSize: 'var(--text-sm)' }}>
+        <div className="footer-contact">
           <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <CopyEmailButton compact />
           <span aria-hidden> · </span>
           <a href={profile.cv} download>
             CV (PDF)
           </a>
-        </p>
+        </div>
         <div
           style={{
             display: 'flex',
@@ -73,7 +75,7 @@ export default function Footer() {
           </a>
         </div>
         <div style={{ marginTop: '0.75rem', fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)' }}>
-          Crafted with React &amp; Vite · Hosted on GitHub Pages
+          Built with React &amp; Vite · Hosted on GitHub Pages
         </div>
       </div>
     </footer>

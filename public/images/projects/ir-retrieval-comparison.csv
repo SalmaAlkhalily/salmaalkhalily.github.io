@@ -1,0 +1,9 @@
+model,ndcg10,recall100,map
+TF-IDF · title + abstract,0.4841,0.7512,0.3804
+"BM25 · title + abstract, tuned",0.463,0.7251,0.3561
+"BM25 · body text, tuned",0.5171,0.7961,0.4171
+Dense MiniLM,0.5073,0.8104,0.408
+RRF · body BM25 + dense,0.5525,0.8398,0.4438
+3-way interpolation,0.5916,0.8502,0.4774
+Domain-filtered TF-IDF,0.6423,0.8863,0.5493
+Optimised 8-signal fusion,0.7501,0.9181,0.6656

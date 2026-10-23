@@ -1,171 +1,101 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { profile } from '../data/portfolio';
+import { DownloadIcon } from './icons';
 
 const NAV = [
-  { href: '#about', label: 'About' },
   { href: '#projects', label: 'Projects' },
-  { href: '#education', label: 'Education' },
+  { href: '#about', label: 'About' },
   { href: '#experience', label: 'Experience' },
+  { href: '#education', label: 'Education' },
   { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },
 ];
 
-export default function Header() {
+export default function Header({ innerPage = false }: { innerPage?: boolean }) {
   const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const prefix = innerPage ? '/' : '';
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    let frame = 0;
+    const update = () => {
+      setScrolled(window.scrollY > 12);
+      if (!innerPage) {
+        const current = NAV.filter(({ href }) => {
+          const section = document.querySelector(href);
+          return section && section.getBoundingClientRect().top <= 160;
+        }).pop();
+        const atBottom = window.scrollY > 100 && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+        setActive(atBottom ? '#contact' : current?.href ?? '');
+      }
+    };
+    const onScroll = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [innerPage]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    const closeOnDesktop = () => {
+      if (window.innerWidth > 1040) setMobileOpen(false);
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    window.addEventListener('resize', closeOnDesktop);
+    return () => {
+      document.removeEventListener('keydown', closeOnEscape);
+      window.removeEventListener('resize', closeOnDesktop);
+    };
+  }, [mobileOpen]);
 
   const [firstName, ...rest] = profile.name.split(' ');
+  const navigation = NAV.map(({ href, label }) => (
+    <a key={href} href={`${prefix}${href}`} aria-current={active === href ? 'location' : undefined}
+      onClick={() => setMobileOpen(false)}>{label}</a>
+  ));
+  const themeLabel = theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
 
   return (
-    <header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        backdropFilter: 'saturate(1.4) blur(10px)',
-        WebkitBackdropFilter: 'saturate(1.4) blur(10px)',
-        background: scrolled ? 'var(--color-header-bg)' : 'transparent',
-        borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
-        transition: 'all 220ms ease',
-      }}
-    >
-      <a href="#main" className="skip-link">
-        Skip to content
-      </a>
-      <div
-        className="container"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: '72px',
-        }}
-      >
-        <a
-          href="#top"
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontWeight: 600,
-            fontSize: 'var(--text-xl)',
-            color: 'var(--color-text)',
-            border: 'none',
-          }}
-        >
-          <span style={{ fontStyle: 'italic' }}>{firstName}</span>{' '}
-          <span style={{ color: 'var(--color-primary)' }}>{rest.join(' ')}</span>
+    <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <div className="container header-inner">
+        <a href={`${prefix}#top`} className="wordmark" aria-label={`${profile.name}, home`}>
+          <span>{firstName}</span> {rest.join(' ')}
         </a>
-
-        <nav
-          className="desktop-nav"
-          aria-label="Main"
-          style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}
-        >
-          {NAV.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              style={{
-                color: 'var(--color-text-soft)',
-                fontSize: 'var(--text-sm)',
-                fontWeight: 500,
-                border: 'none',
-              }}
-            >
-              {n.label}
-            </a>
-          ))}
-          <button
-            onClick={toggleTheme}
-            aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-            style={{
-              background: 'transparent',
-              border: '1px solid var(--color-border-strong)',
-              borderRadius: '50%',
-              width: '36px',
-              height: '36px',
-              cursor: 'pointer',
-              color: 'var(--color-text)',
-              fontSize: 'var(--text-sm)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 220ms ease',
-            }}
-          >
-            {theme === 'light' ? '☾' : '☀'}
+        <nav className="desktop-nav" aria-label="Main">{navigation}</nav>
+        <div className="header-actions">
+          <a href={profile.cv} download className="header-cv"><DownloadIcon width={15} height={15} /> CV</a>
+          <button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={themeLabel}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+              {theme === 'light' ? <path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z" /> : <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></>}
+            </svg>
           </button>
-        </nav>
-
-        <button
-          className="mobile-toggle"
-          aria-label="Menu"
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-menu"
-          onClick={() => setMobileOpen((v) => !v)}
-          style={{
-            display: 'none',
-            background: 'transparent',
-            border: '1px solid var(--color-border-strong)',
-            borderRadius: '4px',
-            padding: '0.4rem 0.7rem',
-            color: 'var(--color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          ☰
-        </button>
+          <button ref={menuButton} type="button" className="mobile-toggle" aria-expanded={mobileOpen}
+            aria-controls="mobile-menu" aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileOpen((value) => !value)}>
+            {mobileOpen ? 'Close' : 'Menu'}
+          </button>
+        </div>
       </div>
-
-      {mobileOpen && (
-        <nav
-          id="mobile-menu"
-          aria-label="Main"
-          className="mobile-menu"
-          style={{
-            display: 'none',
-            padding: '0.5rem 1.5rem 1.5rem',
-            background: 'var(--color-surface)',
-            borderBottom: '1px solid var(--color-border)',
-          }}
-        >
-          {NAV.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              onClick={() => setMobileOpen(false)}
-              style={{
-                display: 'block',
-                padding: '0.6rem 0',
-                color: 'var(--color-text)',
-                border: 'none',
-                fontSize: 'var(--text-base)',
-              }}
-            >
-              {n.label}
-            </a>
-          ))}
-          <button onClick={toggleTheme} className="btn btn-outline" style={{ marginTop: '0.75rem' }}>
-            {theme === 'light' ? '☾ Dark mode' : '☀ Light mode'}
-          </button>
-        </nav>
-      )}
-
-      <style>{`
-        @media (max-width: 820px) {
-          .desktop-nav { display: none !important; }
-          .mobile-toggle { display: inline-flex !important; }
-          .mobile-menu { display: block !important; }
-        }
-      `}</style>
+      <nav id="mobile-menu" className="mobile-menu" aria-label="Mobile" hidden={!mobileOpen}>{navigation}</nav>
     </header>
   );
 }

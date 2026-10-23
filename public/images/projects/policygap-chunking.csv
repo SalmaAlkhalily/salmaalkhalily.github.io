@@ -1,0 +1,4 @@
+chunk,start_character,end_character,overlap_with_previous
+1,0,1600,0
+2,1280,2880,320
+3,2560,4160,320

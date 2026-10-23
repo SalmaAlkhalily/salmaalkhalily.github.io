@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { profile } from '../data/portfolio';
 import SectionTitle from './SectionTitle';
-import { CheckIcon, CopyIcon, DownloadIcon, EnvelopeIcon, GitHubIcon, LinkedInIcon } from './icons';
+import { DownloadIcon, EnvelopeIcon, GitHubIcon, LinkedInIcon } from './icons';
+import CopyEmailButton from './CopyEmailButton';
 
 interface SocialProps {
   href: string;
@@ -16,31 +16,7 @@ function SocialLink({ href, label, icon }: SocialProps) {
       target="_blank"
       rel="me noopener noreferrer"
       aria-label={label}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '0.65rem',
-        padding: '0.85rem 1.5rem',
-        border: '1px solid var(--color-border-strong)',
-        borderRadius: '999px',
-        background: 'var(--color-surface)',
-        color: 'var(--color-text)',
-        fontFamily: 'var(--font-sans)',
-        fontSize: 'var(--text-sm)',
-        fontWeight: 500,
-        transition: 'all 220ms ease',
-        borderBottom: '1px solid var(--color-border-strong)',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'var(--color-primary)';
-        e.currentTarget.style.color = 'var(--color-primary)';
-        e.currentTarget.style.transform = 'translateY(-2px)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'var(--color-border-strong)';
-        e.currentTarget.style.color = 'var(--color-text)';
-        e.currentTarget.style.transform = 'translateY(0)';
-      }}
+      className="btn btn-outline social-link"
     >
       <span
         style={{
@@ -59,24 +35,12 @@ function SocialLink({ href, label, icon }: SocialProps) {
 }
 
 export default function Contact() {
-  const [copied, setCopied] = useState(false);
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(profile.email);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      window.location.href = `mailto:${profile.email}`;
-    }
-  };
-
   return (
     <section id="contact">
       <div className="container">
         <SectionTitle
           eyebrow="Contact"
-          title="Get in Touch"
+          title="Get in touch"
           subtitle={`Open to a ${profile.availability}. Based in ${profile.location}.`}
           icon={<EnvelopeIcon />}
         />
@@ -85,13 +49,7 @@ export default function Contact() {
           <a href={`mailto:${profile.email}`} className="email-address">
             {profile.email}
           </a>
-          <button type="button" className="btn btn-outline" onClick={copyEmail}>
-            {copied ? <CheckIcon width={16} height={16} /> : <CopyIcon width={16} height={16} />}
-            {copied ? 'Copied' : 'Copy email'}
-          </button>
-          <span className="sr-only" aria-live="polite">
-            {copied ? 'Email address copied to clipboard' : ''}
-          </span>
+          <CopyEmailButton />
         </div>
 
         <div

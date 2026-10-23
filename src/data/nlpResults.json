@@ -1,0 +1,41 @@
+{
+  "source": {
+    "repository": "https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection",
+    "commit": "2b76a5548ae23ba46e49633a3c1e86f36e58a2ba",
+    "notebookUrl": "https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection/blob/2b76a5548ae23ba46e49633a3c1e86f36e58a2ba/NLP_Project_AI_Detection.ipynb",
+    "processingUrl": "https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection/blob/2b76a5548ae23ba46e49633a3c1e86f36e58a2ba/1.Data-Processing.ipynb",
+    "visualizationUrl": "https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection/blob/2b76a5548ae23ba46e49633a3c1e86f36e58a2ba/visualization.ipynb",
+    "dataset": "iitolstykh/LLMTrace_detection",
+    "splitCell": 20,
+    "classificationCells": [40, 44, 66, 80],
+    "regressionCells": [103, 107, 114, 115],
+    "confusionCell": 46,
+    "note": "Saved main-notebook test outputs, not new runs. Classification metrics rounded to four decimals; regression metrics rounded to six. The classical models use TF-IDF plus source-paired cosine distance; transformers use text alone."
+  },
+  "splits": [
+    { "split": "Train", "human": 8225, "mixed": 8013, "ai": 5447, "total": 21685 },
+    { "split": "Validation", "human": 1008, "mixed": 1014, "ai": 689, "total": 2711 },
+    { "split": "Test", "human": 1008, "mixed": 1020, "ai": 683, "total": 2711 }
+  ],
+  "classification": [
+    { "model": "Logistic regression", "input": "TF-IDF + source distance", "accuracy": 0.8613, "f1Macro": 0.8564, "f1Weighted": 0.8577, "precisionMacro": 0.8614, "recallMacro": 0.8592 },
+    { "model": "SVM", "input": "TF-IDF + source distance", "accuracy": 0.8857, "f1Macro": 0.8796, "f1Weighted": 0.8838, "precisionMacro": 0.8793, "recallMacro": 0.8834 },
+    { "model": "Tuned XGBoost", "input": "TF-IDF + source distance", "accuracy": 0.9203, "f1Macro": 0.9121, "f1Weighted": 0.9201, "precisionMacro": 0.9127, "recallMacro": 0.9117 },
+    { "model": "DistilBERT", "input": "Text only", "accuracy": 0.8060, "f1Macro": 0.8157, "f1Weighted": 0.8048, "precisionMacro": 0.8120, "recallMacro": 0.8204 },
+    { "model": "RoBERTa", "input": "Text only", "accuracy": 0.8355, "f1Macro": 0.8436, "f1Weighted": 0.8342, "precisionMacro": 0.8397, "recallMacro": 0.8494 }
+  ],
+  "confusion": {
+    "model": "Tuned XGBoost",
+    "labels": ["Human", "Mixed", "AI"],
+    "rows": [
+      { "actual": "Human", "human": 1008, "mixed": 0, "ai": 0 },
+      { "actual": "Mixed", "human": 6, "mixed": 914, "ai": 100 },
+      { "actual": "AI", "human": 1, "mixed": 109, "ai": 573 }
+    ]
+  },
+  "regression": [
+    { "model": "Ridge regression", "input": "TF-IDF + source distance", "mse": 0.052652, "rmse": 0.229459, "mae": 0.179416, "r2": 0.675935 },
+    { "model": "Tuned XGBoost", "input": "TF-IDF + source distance", "mse": 0.029579, "rmse": 0.171984, "mae": 0.108779, "r2": 0.817947 },
+    { "model": "RoBERTa", "input": "Text only", "mse": 0.031238, "rmse": 0.176742, "mae": 0.114256, "r2": 0.807736 }
+  ]
+}

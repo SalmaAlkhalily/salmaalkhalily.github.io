@@ -1,0 +1,9 @@
+signal,weight,type,description
+GTE-large,0.308,Dense,Cosine similarity of full-text embeddings.
+Domain match,0.228,Metadata,Binary match between query and candidate research domains.
+TF-IDF · full query,0.12,Sparse,Full query text against a full-text corpus index.
+BGE-small,0.119,Dense,Cosine similarity of precomputed BGE embeddings.
+TF-IDF · title + abstract query,0.095,Sparse,Title and abstract query against the full-text corpus index.
+BM25 · full-text corpus,0.066,Sparse,"Full query text, k1 = 3.0 and b = 0.85."
+BM25 · body corpus,0.042,Sparse,"Full query text, k1 = 3.0 and b = 0.95."
+Venue match,0.022,Metadata,"Binary venue match, excluding empty venue names."
