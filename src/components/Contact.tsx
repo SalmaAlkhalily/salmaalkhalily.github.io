@@ -45,13 +45,6 @@ export default function Contact() {
           icon={<EnvelopeIcon />}
         />
 
-        <div className="email-row">
-          <a href={`mailto:${profile.email}`} className="email-address">
-            {profile.email}
-          </a>
-          <CopyEmailButton />
-        </div>
-
         <div
           style={{
             display: 'flex',
@@ -60,7 +53,12 @@ export default function Contact() {
             flexWrap: 'wrap',
           }}
         >
-          <a href={profile.cv} download className="btn btn-primary">
+          <a href={`mailto:${profile.email}`} className="btn btn-primary">
+            <EnvelopeIcon width={16} height={16} />
+            Email me
+          </a>
+          <CopyEmailButton />
+          <a href={profile.cv} download className="btn btn-outline">
             <DownloadIcon width={16} height={16} />
             Download CV (PDF)
           </a>

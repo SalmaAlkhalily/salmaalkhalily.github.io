@@ -117,7 +117,7 @@ export default function Education() {
               Certifications
             </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '1rem' }}>
-              {certifications.map((c) => {
+              {certifications.filter((c) => !c.hidden).map((c) => {
                 const inner = (
                   <>
                     <div

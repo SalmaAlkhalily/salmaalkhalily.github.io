@@ -43,8 +43,8 @@ export default function App({ pathname = '/', projectPage }: { pathname?: string
         ) : (
           <>
             <Hero />
-            <Projects />
             <About />
+            <Projects />
             <Experience />
             <Education />
             <Skills />

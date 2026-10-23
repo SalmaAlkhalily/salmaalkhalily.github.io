@@ -32,9 +32,8 @@ export default function Footer() {
           Open to a {profile.availability}.
         </p>
         <div className="footer-contact">
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          <CopyEmailButton compact />
-          <span aria-hidden> · </span>
+          <a href={`mailto:${profile.email}`}>Email me</a>
+          <CopyEmailButton />
           <a href={profile.cv} download>
             CV (PDF)
           </a>

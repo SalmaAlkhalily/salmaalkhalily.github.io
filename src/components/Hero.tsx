@@ -1,6 +1,5 @@
 import { profile } from '../data/portfolio';
 import FlowingWaves from './FlowingWaves';
-import CopyEmailButton from './CopyEmailButton';
 import { DownloadIcon, GitHubIcon, LinkedInIcon } from './icons';
 
 const initials = profile.name
@@ -51,12 +50,8 @@ export default function Hero() {
               View projects <span aria-hidden>↓</span>
             </a>
             <a href={`mailto:${profile.email}`} className="btn btn-outline">
-              Get in touch
+              Email me
             </a>
-          </div>
-          <div className="hero-email">
-            <a href={`mailto:${profile.email}`}>{profile.email}</a>
-            <CopyEmailButton compact />
           </div>
         </div>
 

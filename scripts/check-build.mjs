@@ -67,7 +67,7 @@ for (const page of pages) {
   assert.match(html, /src="\/assets\/[^"<>]+\.js"/, `${label}: missing production JavaScript.`);
   assert.match(html, /href="\/assets\/[^"<>]+\.css"/, `${label}: missing production CSS.`);
 
-  for (const match of html.matchAll(/<(?:img|a|link|script|source)\b[^>]*>/g)) {
+  for (const match of html.matchAll(/<(?:img|a|link|script|source|video)\b[^>]*>/g)) {
     const tag = match[0];
     if (tag.startsWith('<img')) {
       assert.notEqual(attribute(tag, 'alt'), undefined, `${label}: image without alt text.`);
@@ -77,7 +77,7 @@ for (const page of pages) {
       const rel = attribute(tag, 'rel')?.split(/\s+/) ?? [];
       assert.ok(rel.includes('noopener') || rel.includes('noreferrer'), `${label}: external window without opener protection.`);
     }
-    const references = [attribute(tag, 'href'), attribute(tag, 'src')].filter((value) => value !== undefined);
+    const references = [attribute(tag, 'href'), attribute(tag, 'src'), attribute(tag, 'poster')].filter((value) => value !== undefined);
     const srcset = attribute(tag, 'srcset');
     if (srcset) references.push(...srcset.split(',').map((item) => item.trim().split(/\s+/)[0]));
     for (const reference of references) {
@@ -100,6 +100,29 @@ for (const page of pages) {
       }
     }
   }
+}
+
+const demoHtml = files.get('/projects/policygap.html').html;
+const demoVideos = [...demoHtml.matchAll(/<video\b[^>]*>[\s\S]*?<\/video>/g)];
+assert.equal(demoVideos.length, 1, 'PolicyGap needs one demo video.');
+const video = demoVideos[0][0];
+assert.equal(attribute(video, 'aria-hidden'), 'true', 'Initial preview should expose only its play button.');
+assert.equal(attribute(video, 'tabindex'), '-1', 'Video should join the keyboard order after play.');
+assert.doesNotMatch(video, /\bcontrols(?:\s|=|>)/, 'Native controls should appear after the preview is played.');
+assert.match(video, /\bplaysinline(?:\s|=|>)/i, 'Demo must play inline on mobile.');
+assert.equal(attribute(video, 'preload'), 'none', 'Demo must wait for the visitor to play it.');
+assert.doesNotMatch(video, /\b(?:autoplay|loop)(?:\s|=|>)/i, 'Demo should not autoplay or loop.');
+assert.equal(attribute(video, 'aria-labelledby'), 'demo-title', 'Demo needs its visible title as an accessible label.');
+assert.equal(attribute(video, 'aria-describedby'), 'demo-description', 'Demo needs a text description.');
+assert.ok(Number(attribute(video, 'width')) > 0 && Number(attribute(video, 'height')) > 0, 'Demo needs dimensions.');
+assert.equal(attribute(video, 'poster'), '/images/projects/policygap-demo-poster.webp');
+assert.equal(attribute(video, 'src'), '/videos/policygap-demo.mp4', 'Demo needs a playable MP4 source.');
+assert.ok(demoHtml.includes('aria-label="Play the 1-minute demo"'), 'Demo needs an explicit play button.');
+assert.ok(demoHtml.includes('href="#demo"'), 'Missing demo navigation link.');
+assert.ok(demoHtml.includes('https://drive.google.com/file/d/1Z8wLoTA40ImgABdwph1qTX1In7jqzzrS/view'), 'Missing Drive backup link.');
+assert.ok(demoHtml.includes('This recording has no audio.') && demoHtml.includes('Read the demo walkthrough'), 'Silent demo needs a text alternative.');
+for (const [pathname, page] of files) {
+  if (pathname !== '/projects/policygap.html') assert.doesNotMatch(page.html, /<video\b/, `${pathname}: unexpected demo video.`);
 }
 
 const { html } = files.get('/');

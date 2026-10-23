@@ -7,7 +7,7 @@ export default function Projects() {
   return (
     <section id="projects">
       <div className="container">
-        <SectionTitle eyebrow="01 / Selected work" title="Projects"
+        <SectionTitle eyebrow="02 / Selected work" title="Projects"
           subtitle="Five projects in retrieval, model evaluation and knowledge engineering."
           icon={<StarIcon />} />
         <div className="project-list">

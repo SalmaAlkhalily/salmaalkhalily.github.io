@@ -55,6 +55,17 @@ The human-review chart and accuracy table share the numbers in
 SHACL diagram, human-review chart (PNG/SVG) and CSV downloads, run
 `python scripts/generate-project-visuals.py` with matplotlib and PyMuPDF installed.
 
+The SHACL page also includes two captures of the running JavaFX app, in
+`public/images/projects/shacl-*.jpg`. The saved building keys generate 40 shapes;
+the nine-triple validation sample returns nine constraint findings. The gallery
+uses the original JPEG captures with full-size links. Source, runtime setup and
+sample details are in [the SHACL run notes](docs/shacl-interface-run.md).
+
+The VLM human-review section includes the supplied review flow, recreated in
+`src/components/HumanReviewFlow.tsx`. Its paired inputs, four checks, separate
+review decision and combined CSV output use real text and the shared theme
+colours, with a stacked layout on smaller screens.
+
 The IR page uses the markdown, code and saved outputs of `IR_Challenge` at commit
 `9828a5a7ff94cef682af61774c65f3646d827586`. Its source links point to that snapshot.
 The comparison table and regenerated charts share `src/data/irResults.json`;
@@ -83,6 +94,16 @@ example uses `src/lib/policyGapScoring.ts`. No assessment service is called from
 the portfolio. Documentation/code differences are described in the page's source
 notes. The source PDF is never copied by the chart generator or website build.
 
+PolicyGap also has a 60-second recorded demo after its overview. Its cropped
+H.264 MP4 lives in `public/videos/policygap-demo.mp4`; a WebP dashboard preview
+appears before playback. The video loads when the visitor presses Play, with
+native controls, a written walkthrough for the silent recording and a Google
+Drive backup link. Media metadata is in `src/data/caseStudies.ts`.
+Run `python scripts/prepare-policygap-demo.py "path/to/PolicyGap_demo_1min.mp4"`
+with ffmpeg and ffprobe installed to regenerate the video and poster from the
+external original. See [the demo notes](docs/policygap-demo.md) for crop and
+verification details.
+
 The layout follows [Joseph Rollin's portfolio course](https://portfoliocourse-josephrollin.framer.website/)
 and takes inspiration from [Brittany Chiang's portfolio](https://brittanychiang.com/):
 a one-line introduction, five selected projects with short summaries and previews,
@@ -90,7 +111,8 @@ visible contact and CV links, and a separate archive. Contributions stay within
 each project description. All five projects link to longer case studies, with
 repository links available alongside them.
 
-Selected projects follow the introduction, with the full About section below.
+About follows the introduction, with selected projects next. Navigation links
+and the numbered section labels follow the same order.
 The main skills list keeps AI, knowledge/data methods, software engineering and
 languages visible; a native disclosure holds the additional development and data
 tools. The navigation follows the same order.
@@ -108,8 +130,10 @@ The source-distance qualifier for NLP and public-set tuning note for retrieval
 stay visible beside those scores.
 
 Following the [contact guidance](https://portfoliocourse-josephrollin.framer.website/services/the-site-itself-is-proof),
-the introduction and footer show the email address with a copy button, with GitHub,
-LinkedIn, a PDF CV and internship availability nearby. Keyboard focus, reduced
+the introduction, Contact and footer offer an Email me link. Contact and the
+footer also provide a labelled Copy email button, with GitHub, LinkedIn, a PDF
+CV and internship availability nearby. The address is hidden from visible text
+at Salma's request; it remains in the email links and clipboard action. Keyboard focus, reduced
 motion support, light/dark contrast and responsive layouts follow the
 [site guidance](https://portfoliocourse-josephrollin.framer.website/services/personality-should-demonstrate-skill).
 The serif/sans type scale and plum/sage palette are retained. No invented project

@@ -40,7 +40,7 @@ export default function CopyEmailButton({ compact = false }: { compact?: boolean
       {!compact && (copied ? 'Copied' : 'Copy email')}
     </button>
     <span className={status === 'failed' ? 'copy-email-feedback' : 'sr-only'} role="status">
-      {copied ? 'Email address copied to clipboard' : status === 'failed' ? 'Couldn’t copy. Select the email address to copy it.' : ''}
+      {copied ? 'Email address copied to clipboard' : status === 'failed' ? 'Couldn’t copy. Use Email me or contact me on LinkedIn.' : ''}
     </span>
   </>;
 }

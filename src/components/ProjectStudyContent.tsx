@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import projectResults from '../data/projectResults.json';
+import HumanReviewFlow from './HumanReviewFlow';
 
 export function StudySection({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return <section id={id} className="case-section" aria-labelledby={`${id}-title`}><h2 id={`${id}-title`}>{title}</h2>{children}</section>;
@@ -82,6 +83,18 @@ export function ShaclStudy() {
       </details>
     </StudySection>
 
+    <StudySection id="interface" title="The running application">
+      <p>These captures show the JavaFX application running locally with the building example included in the repository. Its 40 saved keys produced 40 SHACL shapes. The test sample contains nine triples describing four resources; validation returned nine findings.</p>
+      <div className="case-interface-gallery">
+        <StudyFigure src="/images/projects/shacl-shape-generation.jpg" width={679} height={754}
+          alt="JavaFX shape-generation tab showing saved building keys and the generated SHACL shapes in Turtle."
+          caption="SHACL shapes generated from the repository's saved building keys. The output includes property constraints and SPARQL checks for repeated key values." />
+        <StudyFigure src="/images/projects/shacl-validation-results.jpg" width={679} height={754}
+          alt="JavaFX validation tab showing the building test data, SHACL shapes and nine validation findings."
+          caption="Validation of the building sample returned nine findings. The output groups findings by constraint and identifies the affected resources." />
+      </div>
+    </StudySection>
+
     <StudySection id="property-mapping" title="Two ways to reuse a discovered key">
       <PropertyMappingDiagram />
       <div className="case-panels">
@@ -107,18 +120,19 @@ export function ShaclStudy() {
       <dl className="case-definitions">
         <div><dt>Uniqueness</dt><dd>Detect distinct resources that share the same values for every property in a key.</dd></div>
         <div><dt>Identity links</dt><dd>Generate an <code>owl:sameAs</code> rule for duplicate resources and a constraint that flags duplicates missing the expected link.</dd></div>
-        <div><dt>Property structure</dt><dd>Check datatype and cardinality constraints, including missing values and more than one value where <code>maxCount = 1</code>.</dd></div>
+        <div><dt>Property structure</dt><dd>Check datatype and cardinality constraints for the resources selected by each shape, including missing values and more than one value where <code>maxCount = 1</code>.</dd></div>
       </dl>
+      <p>The generated SPARQL targets select resources that share key values. The shapes also include an <code>owl:sameAs</code> rule, but Apache Jena's validation call does not execute that rule to create identity links.</p>
       <h3>Output that explains the failure</h3>
       <p>The JavaFX interface lets users run the workflow, view outputs and save them to files. Validation output includes the affected data instances, the key involved, an error message, a count for each breached constraint and the total findings.</p>
       <div className="case-table-wrap" role="region" aria-label="Validation findings example" tabIndex={0}>
         <table className="case-table">
-          <caption>Types of findings in the worked validation example.</caption>
-          <thead><tr><th scope="col">Finding</th><th scope="col">Meaning</th></tr></thead>
+          <caption>Nine validation findings from the building test sample. Counts are validation entries; one resource can appear under more than one constraint.</caption>
+          <thead><tr><th scope="col">Finding</th><th scope="col">Count</th><th scope="col">Meaning</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Duplicate key values</th><td>Two resources share the same combination of key-property values.</td></tr>
-            <tr><th scope="row">Missing <code>owl:sameAs</code></th><td>Duplicate resources lack the expected identity link.</td></tr>
-            <tr><th scope="row">Invalid cardinality</th><td>A resource has two values for a property constrained to at most one.</td></tr>
+            <tr><th scope="row">Duplicate key values</th><td>4</td><td>Two resources share the same combination of key-property values.</td></tr>
+            <tr><th scope="row">Missing <code>owl:sameAs</code></th><td>4</td><td>Duplicate resources lack the expected identity link.</td></tr>
+            <tr><th scope="row">Invalid cardinality</th><td>1</td><td>A resource has two values for a property constrained to at most one.</td></tr>
           </tbody>
         </table>
       </div>
@@ -130,6 +144,7 @@ export function ShaclStudy() {
         <li>The key-discovery setup assumes input instances belong to a single class.</li>
         <li>Property equivalences must be supplied before validating a dataset with different property names.</li>
         <li>Converting N-Quads to N-Triples merges named graphs, so graph names are not preserved.</li>
+        <li>Before validation, the prototype lowercases property names and normalises the sample data to an example namespace and string values. This changes the original RDF representation.</li>
         <li>A key discovered in the source data is a candidate for the target data, not a guarantee of uniqueness there.</li>
       </ul>
     </StudySection>
@@ -166,6 +181,7 @@ export function VlmStudy() {
 
     <StudySection id="human-review" title="Checking the generated images">
       <p>Reviewers compared a random subset of edits with their originals. Four checks covered accessory presence, natural placement, preservation of the portrait and visual defects. Each check allowed Yes, No or Uncertain, followed by an overall Accept, Reject or Uncertain decision.</p>
+      <HumanReviewFlow />
       <StudyFigure src="/images/projects/vlm-human-review.png" width={1748} height={867} page={4}
         alt="Acceptance of reviewed generated edits: masks 89.1 percent, 270 of 303; caps 86.8 percent, 263 of 303; glasses 100 percent, 84 of 84."
         caption="Acceptance in the reviewed subset. The remaining decisions combine rejected and uncertain cases; the report does not give separate counts. Chart recreated from section 4.2."

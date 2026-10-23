@@ -35,6 +35,7 @@ export default function ProjectPage({ studyKey }: { studyKey: CaseStudyKey }) {
           </dl>
           <div className="case-actions">
             <a href={study.repo} className="btn btn-primary" target="_blank" rel="noopener noreferrer"><GitHubIcon width={17} height={17} /> View repository</a>
+            {study.demo && <a href="#demo" className="btn btn-outline"><span aria-hidden>▶</span> Watch the 1-minute demo</a>}
             {study.notebook && <a href={study.notebook} className="btn btn-outline" target="_blank" rel="noopener noreferrer"><BookIcon width={17} height={17} /> Read notebook</a>}
             {studyKey === 'vlm' && study.report && <a href={study.report} className="btn btn-outline" target="_blank" rel="noopener noreferrer"><BookIcon width={17} height={17} /> Read report (PDF)</a>}
           </div>

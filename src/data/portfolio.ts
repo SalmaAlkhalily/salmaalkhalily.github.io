@@ -29,6 +29,7 @@ export interface EducationItem {
 
 export interface Certification {
   name: string;
+  hidden?: boolean;
   issuer?: string;
   details?: string;
   url?: string;
@@ -367,6 +368,7 @@ export const certifications: Certification[] = [
   },
   {
     name: 'Mental arithmetic training certificate · 05/2022 - Present',
+    hidden: true,
     issuer: 'This certificate qualifies me to train children at foundational levels in the SD Math programme',
   },
 ];

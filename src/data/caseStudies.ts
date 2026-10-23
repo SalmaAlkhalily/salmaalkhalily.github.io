@@ -17,6 +17,7 @@ export interface CaseStudy {
   repo: string;
   report?: string;
   reportPages?: number;
+  demo?: { src: string; poster: string; width: number; height: number; backupUrl: string };
   notebook?: string;
   sourceIntro?: string;
   sourceTitle?: string;
@@ -37,6 +38,13 @@ export const caseStudies = {
     description: 'PolicyGap, an M1 summer school competition project: document ingestion, evidence retrieval, LLM findings, human review and gap scoring. Architecture and explanatory charts.',
     team: 'Group project · Team of 4',
     repo: policyGapData.source.repository,
+    demo: {
+      src: '/videos/policygap-demo.mp4',
+      poster: '/images/projects/policygap-demo-poster.webp',
+      width: 1920,
+      height: 870,
+      backupUrl: 'https://drive.google.com/file/d/1Z8wLoTA40ImgABdwph1qTX1In7jqzzrS/view',
+    },
     sourceTitle: 'Code & summer school',
     sourceIntro: 'This case study follows the project’s technical documentation, version 1.0 from June 2026. The links below point to the public implementation and the summer school where we developed the competition project.',
     additionalSources: [
@@ -53,6 +61,7 @@ export const caseStudies = {
     ],
     contents: [
       { id: 'overview', label: 'Problem & context' },
+      { id: 'demo', label: '1-minute demo' },
       { id: 'architecture', label: 'Architecture' },
       { id: 'pipeline', label: 'Evidence pipeline' },
       { id: 'scoring', label: 'Gap scoring' },
@@ -82,6 +91,7 @@ export const caseStudies = {
     contents: [
       { id: 'overview', label: 'Overview' },
       { id: 'workflow', label: 'Workflow' },
+      { id: 'interface', label: 'Running application' },
       { id: 'property-mapping', label: 'Property mapping' },
       { id: 'validation', label: 'Validation & outputs' },
       { id: 'scope', label: 'Scope & limits' },

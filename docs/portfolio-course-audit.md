@@ -8,7 +8,7 @@ Reviewed on 23 October 2026 against the [course website](https://portfoliocourse
 | [Projects](https://portfoliocourse-josephrollin.framer.website/services/show-projects-as-case-studies): show 3–6 projects with problem, contribution and stack | Five selected projects, two-sentence descriptions, contribution within the description and technology tags. | Present |
 | A measurable result for each project | IR ranking, NLP saved test F1, VLM study scale and SHACL validation scope are shown. PolicyGap shows 3 framework families and PDF/DOCX/TXT inputs, explicitly labelled as implementation scope. | Present; scope figures are not performance benchmarks |
 | Project links, longer write-ups and older-work archive | All selected projects link to a detailed portfolio page and repository; earlier work has a separate archive. ListedNearMe links to its verified website. | Present; no deployed academic application is claimed |
-| [Contact](https://portfoliocourse-josephrollin.framer.website/services/the-site-itself-is-proof): visible/copied email, GitHub, LinkedIn, PDF CV and availability | Footer includes each item; hero and Contact also expose email and copy controls. | Present |
+| [Contact](https://portfoliocourse-josephrollin.framer.website/services/the-site-itself-is-proof): an email address visible or copied in one click, GitHub, LinkedIn, PDF CV and availability | Footer includes a labelled Copy email button, Email me, social links, CV and availability. The printed address is hidden at Salma's request. Contact also has Email me and Copy email; the hero has Email me. | Present |
 | [Site quality](https://portfoliocourse-josephrollin.framer.website/services/personality-should-demonstrate-skill): fast, mobile, readable and keyboard accessible | Prerendered routes, separate page code, responsive grids, light/dark tokens, skip link, focus styles, semantic controls, Escape handling and reduced-motion support. | Representative browser checks completed; full keyboard audit remains pending |
 | Avoid skill percentages and unskippable intros; demonstrate relevant skills | Skills use text tags. Preview bars represent model metrics. Project pages include sourced charts, mapping diagrams and an interactive scoring explanation. | Present |
 | [Typography](https://portfoliocourse-josephrollin.framer.website/services/property-management): organized sizes and spacing | Lora, DM Sans and DM Mono; shared type, line-height and tracking variables; responsive headings. | Present |
@@ -33,7 +33,7 @@ The dedicated project page recommends **3–6 projects**, while the homepage FAQ
 
 All eleven production-preview routes returned HTTP 200 with prerendered headings. Responsive logo sources are present in both generated pages; decoded WebP pixels match the resized RGB assets. Sampled semantic text colors meet 4.5:1 in token calculations for both themes (minimum sampled ratios: 4.80:1 light, 6.25:1 dark).
 
-The Computer Use skill allowed a desktop review of the DFA page and representative homepage and Contact checks at 320px and 400px. Mobile navigation, Escape dismissal with focus restored, theme switching and persistence after reload, successful email copying and the CV download were checked. The email now fits at 320px. A final skip-link check stopped when Computer Use could not reliably determine the browser URL; a complete keyboard audit remains pending. A browser-extension connection error appeared in the console; no React hydration error was observed.
+The Computer Use skill allowed a desktop review of the DFA page and representative homepage and Contact checks at 320px and 400px. Mobile navigation, Escape dismissal with focus restored, theme switching and persistence after reload, successful email copying and the CV download were checked. A final skip-link check stopped when Computer Use could not reliably determine the browser URL; a complete keyboard audit remains pending. A browser-extension connection error appeared in the console; no React hydration error was observed.
 
 The hero animation stops after a four-second introduction. Thirty-one isolated checks against the actual interaction components passed, covering animation lifecycle and reduced motion, clipboard success/failure, stale asynchronous results and unmount cleanup. These checks use browser-API doubles; they do not replace a full browser audit.
 
@@ -42,3 +42,17 @@ The [project-page review](project-page-review.md) records the source checks and 
 Salma confirmed both the SHACL M1 TER project dates (March–May 2025) and the M1 education dates (September 2025–July 2026). Keep both as supplied; the timeline clarification is resolved.
 
 Contributions remain within project prose, with no separate role section. The PolicyGap PDF stays outside public files. No unsupported results, competition placements or hosted demos should be added.
+
+At Salma's request, About now precedes Projects in the page, section numbering
+and navigation. The mental arithmetic certificate is retained in the content
+data with `hidden: true` and is excluded from the visible credentials. Email
+addresses are no longer printed on the pages; Email me links and labelled
+Copy email buttons retain the course's contact option. This hides the address
+from display, not from the email link or client code.
+
+The updated homepage was checked in headless Chrome at 1440, 390 and 320 pixels,
+in both themes. Page/navigation order, section numbers, mobile menu behaviour,
+hidden certificate and absence of printed email were verified. Isolated
+clipboard success/failure checks confirmed copying and the LinkedIn fallback
+text. All ten inner pages retain the labelled footer contact controls without
+printing the address. These checks produced no page errors or horizontal overflow.

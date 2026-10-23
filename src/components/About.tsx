@@ -6,7 +6,7 @@ export default function About() {
   return (
     <section id="about" className="about-section">
       <div className="container">
-        <SectionTitle eyebrow="02 / About" title="My background" icon={<BookIcon />} />
+        <SectionTitle eyebrow="01 / About" title="My background" icon={<BookIcon />} />
         <div className="about-layout">
           <div className="about-copy">
             {profile.bio.split('\n\n').map((paragraph) => {

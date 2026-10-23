@@ -1,7 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import data from '../data/policyGapData.json';
+import { caseStudies } from '../data/caseStudies';
 import { computePolicyGapPriority } from '../lib/policyGapScoring';
 import { StudySection, Workflow } from './ProjectStudyContent';
+import { LinkExternalIcon } from './icons';
+
+const demo = caseStudies.policygap.demo;
+
+function DemoPlayer() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [started, setStarted] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    if (started) videoRef.current?.focus();
+  }, [started]);
+
+  const play = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+    setFailed(false);
+    setStarted(true);
+    try {
+      if (video.error) video.load();
+      await video.play();
+    } catch {
+      if (videoRef.current === video) setFailed(true);
+    }
+  };
+
+  return <>
+    <div className="policy-demo-player">
+      <video ref={videoRef} src={demo.src} controls={started} playsInline preload="none" poster={demo.poster} width={demo.width} height={demo.height}
+        tabIndex={started ? 0 : -1} aria-hidden={!started} aria-labelledby="demo-title" aria-describedby="demo-description"
+        onPlay={() => { setStarted(true); setFailed(false); }} onError={() => setFailed(true)}>
+        Your browser does not support embedded video. Use the Google Drive link below to watch the demo.
+      </video>
+      {!started && <button type="button" className="policy-demo-cover" onClick={play} aria-label="Play the 1-minute demo" aria-describedby="demo-description">
+        <img src={demo.poster} width={demo.width} height={demo.height} alt="" loading="lazy" decoding="async" />
+        <span className="policy-demo-play-label"><span aria-hidden>▶</span> Play demo · 1 min</span>
+      </button>}
+    </div>
+    {failed && <p className="policy-demo-error" role="status">The video couldn’t start. You can watch the same demo on Google Drive below.</p>}
+  </>;
+}
 
 function MethodFigure({ name, width, height, alt, caption, source, sourceLabel }: {
   name: string; width: number; height: number; alt: string; caption: string; source: string; sourceLabel: string;
@@ -73,6 +115,25 @@ export default function PolicyGapStudy() {
           <tbody>{data.frameworks.map((row) => <tr key={row.name}><th scope="row">{row.name}</th><td>{row.organisation}</td></tr>)}</tbody>
         </table>
       </div>
+    </StudySection>
+
+    <StudySection id="demo" title="Watch the 1-minute demo">
+      <p id="demo-description">A 60-second screen recording of PolicyGap, from uploading policy documents to reviewing assessment results. This recording has no audio.</p>
+      <figure className="policy-demo">
+        <DemoPlayer />
+        <figcaption>
+          <span>Recorded prototype walkthrough</span>
+          <a href={demo.backupUrl} className="text-link" target="_blank" rel="noopener noreferrer">Watch on Google Drive <LinkExternalIcon width={14} height={14} /></a>
+        </figcaption>
+      </figure>
+      <details className="figure-data policy-demo-walkthrough">
+        <summary>Read the demo walkthrough</summary>
+        <ol>
+          <li>Open a workspace and upload sample policy documents.</li>
+          <li>Start a NIST CSF assessment and follow its processing progress.</li>
+          <li>Review the assessment score, NIST function breakdown and control-level findings, including implementation statuses and priority gaps.</li>
+        </ol>
+      </details>
     </StudySection>
 
     <StudySection id="architecture" title="An application around the retrieval pipeline">
