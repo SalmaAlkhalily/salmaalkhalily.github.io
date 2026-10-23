@@ -1,7 +1,10 @@
 # SHACL interface capture
 
-The portfolio screenshots show the running JavaFX application, using the
-repository's building example. They are interface captures, not mock-ups.
+These notes record the earlier local JavaFX run and its building example.
+The page now displays clearer original PNG interface images from the updated
+private project documentation instead of these JPEG captures. The local results
+below still support the nine-finding example; they are not depicted in the new
+empty-state interface images.
 
 ## Source and inputs
 

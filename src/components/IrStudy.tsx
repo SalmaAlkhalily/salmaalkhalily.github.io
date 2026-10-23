@@ -1,8 +1,8 @@
 import results from '../data/irResults.json';
 import { StudySection, Workflow } from './ProjectStudyContent';
 
-function NotebookFigure({ name, width, height, alt, caption, section, downloads = false }: {
-  name: string; width: number; height: number; alt: string; caption: string; section: string; downloads?: boolean;
+function NotebookFigure({ name, width, height, alt, caption, downloads = false }: {
+  name: string; width: number; height: number; alt: string; caption: string; downloads?: boolean;
 }) {
   const base = `/images/projects/${name}`;
   return <figure className="report-figure">
@@ -12,7 +12,6 @@ function NotebookFigure({ name, width, height, alt, caption, section, downloads 
     <figcaption>{caption}
       <span className="figure-links">
         <a href={`${base}.png`} target="_blank" rel="noopener noreferrer">View full size</a>
-        <a href={results.source.notebookUrl} target="_blank" rel="noopener noreferrer">Notebook, {section}</a>
         {downloads && <><a href={`${base}.svg`} download>Download chart (SVG)</a><a href={`${base}.csv`} download>Download data (CSV)</a></>}
       </span>
     </figcaption>
@@ -24,7 +23,7 @@ export default function IrStudy() {
     <StudySection id="overview" title="Retrieve the papers a scientific article cites">
       <p>The query is a scientific paper. The task is to rank documents from a shared corpus of 20,000 papers, with relevance defined by the query paper’s citations. A paper can look topically similar and still fall outside the citation-based gold set.</p>
       <p>We completed this challenge as a three-person group project for the M1 Information Retrieval course at Université Paris-Saclay. I contributed throughout the project, from retrieval experiments to the final system. Our group ranked first at the submission deadline.</p>
-      <div className="case-callout"><h3>The challenge output</h3><p>Return exactly 100 ranked document IDs for each query in a JSON submission. The notebook evaluates on 100 public queries with gold citations, then generates a submission for a separate set of 100 held-out queries.</p></div>
+      <div className="case-callout"><h3>The challenge output</h3><p>Return exactly 100 ranked document IDs for each query in a JSON submission. We evaluated on 100 public queries with gold citations, then generates a submission for a separate set of 100 held-out queries.</p></div>
       <p>Available fields include title, abstract, full text, section boundaries, research domain, venue and year. We compared short title–abstract representations with body and full-text representations, then combined scores from different retrieval methods.</p>
     </StudySection>
 
@@ -53,7 +52,7 @@ export default function IrStudy() {
         { title: 'Normalise and optimise weights', text: 'Min–max scaling maps each signal to [0, 1] per query. Coordinate descent adjusts one non-negative weight at a time, renormalises the weight vector and keeps changes that improve public-set NDCG@10.' },
         { title: 'Rank and generate the submission', text: 'A weighted sum produces final document scores. The held-out pipeline rebuilds the signals, applies the learned weights and checks the top-100 JSON format.' },
       ]} />
-      <NotebookFigure name="ir-fusion-weights" width={1820} height={1066} section="§8.6" downloads
+      <NotebookFigure name="ir-fusion-weights" width={1820} height={1066} downloads
         alt="Eight active fusion weights: GTE-large 0.308, domain 0.228, full-query TF-IDF 0.120, BGE 0.119, title–abstract TF-IDF 0.095, full BM25 0.066, body BM25 0.042, venue 0.022."
         caption="Weights transcribed from the saved GTE-large run, rounded to three decimals. GTE-large has the largest weight, followed by domain matching. A weight is not an isolated measure of a signal’s contribution." />
       <details className="figure-data">
@@ -69,8 +68,8 @@ export default function IrStudy() {
     </StudySection>
 
     <StudySection id="results" title="Saved evaluation results">
-      <p>The selected run reaches NDCG@10 of 0.7501, Recall@100 of 0.9181 and MAP of 0.6656 on the 100 public queries. The table and chart below use saved notebook outputs; these experiments were not rerun for the portfolio.</p>
-      <NotebookFigure name="ir-retrieval-comparison" width={1820} height={1064} section="§7–8" downloads
+      <p>The selected run reaches NDCG@10 of 0.7501, Recall@100 of 0.9181 and MAP of 0.6656 on the 100 public queries. The table and chart below use saved experiment results; these experiments were not rerun for the portfolio.</p>
+      <NotebookFigure name="ir-retrieval-comparison" width={1820} height={1064} downloads
         alt="Public-query NDCG@10 comparison: TF-IDF 0.4841, tuned body BM25 0.5171, dense MiniLM 0.5073, RRF 0.5525, three-way interpolation 0.5916, domain-filtered TF-IDF 0.6423, eight-signal fusion 0.7501."
         caption="Selected retrieval experiments evaluated on the same 100 public queries. The fusion weights were also tuned on that public set; this chart is not a held-out test comparison." />
       <div className="case-table-wrap" role="region" aria-label="Retrieval model evaluation scores" tabIndex={0}>
@@ -84,10 +83,10 @@ export default function IrStudy() {
     </StudySection>
 
     <StudySection id="error-analysis" title="Finding the papers is only part of the problem">
-      <p>The notebook computes per-query NDCG@10 and recall, then inspects the weakest queries. Three queries have no citation-gold hit in the top ten; one has no gold hit anywhere in the top hundred. Looking at these separately distinguishes candidate-retrieval failures from ranking failures.</p>
-      <NotebookFigure name="ir-query-ndcg-distribution" width={790} height={490} section="§10.1"
+      <p>We examined per-query NDCG@10 and recall to identify the weakest queries. Three queries have no citation-gold hit in the top ten; one has no gold hit anywhere in the top hundred. Looking at these separately distinguishes candidate-retrieval failures from ranking failures.</p>
+      <NotebookFigure name="ir-query-ndcg-distribution" width={790} height={490}
         alt="Saved histogram of NDCG@10 across 100 queries, with a mean near 0.750, many high-scoring queries and a small group of low-scoring failures."
-        caption="Original saved notebook figure. The average hides variation across queries, including three with NDCG@10 equal to zero." />
+        caption="Original experiment figure. The average hides variation across queries, including three with NDCG@10 equal to zero." />
       <div className="case-table-wrap" role="region" aria-label="Three zero top-ten score examples" tabIndex={0}>
         <table className="case-table">
           <caption>All three examples have NDCG@10 = 0. Recall@100 shows whether the gold papers reached the candidate list.</caption>
@@ -106,12 +105,12 @@ export default function IrStudy() {
         <li>The public set has only 100 queries, and optimising weights on it can overfit. Small per-domain samples make some domain averages unstable.</li>
         <li>Citation-based gold labels define this challenge’s notion of relevance; they do not exhaust every scientifically useful or topically related paper.</li>
       </ul>
-      <p>The other notebooks explore differential evolution, five-fold cross-validation, ensembles and citation-context retrieval. Those are separate experiment branches, not extra components silently added to the eight-signal run above.</p>
+      <p>Other experiments explored differential evolution, five-fold cross-validation, ensembles and citation-context retrieval. The results shown here use the eight-signal fusion described above.</p>
       <details className="figure-data">
-        <summary>Source version and experiment labels</summary>
-        <p>This page uses repository commit <code>{results.source.commit.slice(0, 7)}</code>. The main notebook has older headings and plot labels referring to nine or ten signals, but its active fusion dictionary contains eight; the extra Nomic signal is commented out.</p>
-        <p>The saved held-out generation cell encodes title and abstract for GTE-large, while the public evaluation encodes full query text. The query representation changes between those two stages.</p>
-        <p>The saved score and weight outputs are used when nearby markdown discusses a different iteration. The 0.7547 competition score comes from the notebook notes, rather than a saved platform evaluation export.</p>
+        <summary>Evaluation scope</summary>
+        <p>The reported fusion uses eight signals. Other experiments explored additional signals, cross-validation and alternative fusion methods.</p>
+        <p>The public evaluation uses full query text, while held-out submission generation uses titles and abstracts for GTE-large. This difference limits direct comparison between the two stages.</p>
+        <p>The 0.7547 competition score was recorded in our experiment notes. It is separate from the saved public-query evaluation shown here.</p>
       </details>
     </StudySection>
   </>;

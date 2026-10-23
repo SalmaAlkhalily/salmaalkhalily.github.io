@@ -42,7 +42,7 @@ export default function Hero() {
 
           <p className="availability-note">
             <span className="status-dot" aria-hidden />
-            Seeking a 6-month final-year internship · 2027
+            Seeking a 6-month final-year internship · March 2027
           </p>
 
           <div className="hero-actions">

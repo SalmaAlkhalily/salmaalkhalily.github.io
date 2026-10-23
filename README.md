@@ -44,7 +44,7 @@ repositories are supplied.
 Project-page metadata lives in [src/data/caseStudies.ts](src/data/caseStudies.ts),
 with the report-based explanations in
 [src/components/ProjectStudyContent.tsx](src/components/ProjectStudyContent.tsx).
-Report links, buttons and citations appear only on the VLM research page.
+A single report button appears on the VLM research page.
 The SHACL and IR PDFs remain in `public/reports/` as unlinked source assets;
 their pages contain no academic-report download or mention. Project figures
 are in `public/images/projects/`. PolicyGap's source PDF is kept outside the
@@ -55,11 +55,15 @@ The human-review chart and accuracy table share the numbers in
 SHACL diagram, human-review chart (PNG/SVG) and CSV downloads, run
 `python scripts/generate-project-visuals.py` with matplotlib and PyMuPDF installed.
 
-The SHACL page also includes two captures of the running JavaFX app, in
-`public/images/projects/shacl-*.jpg`. The saved building keys generate 40 shapes;
-the nine-triple validation sample returns nine constraint findings. The gallery
-uses the original JPEG captures with full-size links. Source, runtime setup and
-sample details are in [the SHACL run notes](docs/shacl-interface-run.md).
+The SHACL page uses three original PNG interface images extracted from Salma's
+updated private documentation. They appear as full-width expandable stages in
+`src/components/ShaclInterfaceGallery.tsx`, with full-size image links and
+readable HTML descriptions. The older local-run JPEGs are no longer displayed.
+The page also includes a text-based workflow, property-mapping diagram and an
+HTML evaluation table for three datasets (40, 8 and 791 keys/shapes).
+The updated PDF stays outside the repository and is never linked on the page.
+The nine-finding building example remains backed by the earlier local run,
+documented in [the SHACL run notes](docs/shacl-interface-run.md).
 
 The VLM human-review section includes the supplied review flow, recreated in
 `src/components/HumanReviewFlow.tsx`. Its paired inputs, four checks, separate
@@ -67,7 +71,7 @@ review decision and combined CSV output use real text and the shared theme
 colours, with a stacked layout on smaller screens.
 
 The IR page uses the markdown, code and saved outputs of `IR_Challenge` at commit
-`9828a5a7ff94cef682af61774c65f3646d827586`. Its source links point to that snapshot.
+`9828a5a7ff94cef682af61774c65f3646d827586`. The project page links to the main repository; the recorded snapshot is kept for internal provenance.
 The comparison table and regenerated charts share `src/data/irResults.json`;
 run `python scripts/generate-ir-visuals.py` with matplotlib to rebuild the PNG/SVG
 charts and CSV downloads. The per-query distribution image is an original saved
@@ -83,7 +87,7 @@ source-distance features from text-only transformer inputs and documents the
 different dataset versions. No NLP notebooks run during the website build.
 
 The PolicyGap page follows the supplied technical documentation, version 1.0
-(June 2026), with code links pinned to commit
+(June 2026), with internal source provenance recorded at commit
 `3c4a4880eaa4ebb2eec0e6b235e6474a3375fb27`. Its architecture, pipeline, status
 table and review workflow are in `src/components/PolicyGapStudy.tsx`. Shared
 configuration and source references live in `src/data/policyGapData.json`.

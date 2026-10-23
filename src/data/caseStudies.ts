@@ -16,16 +16,14 @@ export interface CaseStudy {
   archive?: boolean;
   repo: string;
   report?: string;
-  reportPages?: number;
   demo?: { src: string; poster: string; width: number; height: number; backupUrl: string };
-  notebook?: string;
-  sourceIntro?: string;
-  sourceTitle?: string;
   additionalSources?: { label: string; url: string; detail?: string }[];
   technologies: string[];
   facts: { value: string; label: string }[];
   contents: { id: string; label: string }[];
 }
+
+const vlmTitle = 'Examining the Effect of Face Accessories in VLM Face Evaluation';
 
 export const caseStudies = {
   ...softwareStudies,
@@ -45,14 +43,7 @@ export const caseStudies = {
       height: 870,
       backupUrl: 'https://drive.google.com/file/d/1Z8wLoTA40ImgABdwph1qTX1In7jqzzrS/view',
     },
-    sourceTitle: 'Code & summer school',
-    sourceIntro: 'This case study follows the project’s technical documentation, version 1.0 from June 2026. The links below point to the public implementation and the summer school where we developed the competition project.',
-    additionalSources: [
-      { label: 'Assessment pipeline', url: policyGapData.source.pipelineUrl, detail: 'Document processing, batch retrieval and finding storage' },
-      { label: 'Scoring functions', url: policyGapData.source.scorerUrl, detail: 'Status scores, framework aggregation and gap priority' },
-      { label: 'Chunking implementation', url: policyGapData.source.chunkerUrl, detail: 'Character-based windows with word-aligned cuts' },
-      { label: 'AI Technologies Summer School 2026', url: 'https://ai.lnu.edu.ua/', detail: 'Programme and project competition' },
-    ],
+    additionalSources: [{ label: 'AI Technologies Summer School 2026', url: 'https://ai.lnu.edu.ua/', detail: 'Programme and project competition' }],
     technologies: ['Python', 'FastAPI', 'React', 'ChromaDB', 'Sentence Transformers', 'Groq', 'Llama 3.3', 'SQLAlchemy', 'SQLite', 'RAG'],
     facts: [
       { value: '3', label: 'framework families' },
@@ -67,7 +58,7 @@ export const caseStudies = {
       { id: 'scoring', label: 'Gap scoring' },
       { id: 'review', label: 'Human review & reports' },
       { id: 'limitations', label: 'Scope & lessons' },
-      { id: 'sources', label: 'Code & summer school' },
+      { id: 'sources', label: 'Resources' },
     ],
   },
   shacl: {
@@ -80,8 +71,6 @@ export const caseStudies = {
     supervisor: 'Professor Fatiha Sais',
     team: 'Individual research project',
     repo: 'https://github.com/SalmaAlkhalily/Key-Based-SHACL-Shape-Generation-and-Validation-for-RDF-Datasets-with-Property-Mapping-Support',
-    sourceTitle: 'Project code',
-    sourceIntro: 'The repository contains the RDF conversion, key discovery, shape generation and validation implementation.',
     technologies: ['Java', 'Apache Jena', 'SAKey', 'RDF', 'SHACL', 'SPARQL', 'JavaFX'],
     facts: [
       { value: '2', label: 'validation scenarios' },
@@ -91,17 +80,18 @@ export const caseStudies = {
     contents: [
       { id: 'overview', label: 'Overview' },
       { id: 'workflow', label: 'Workflow' },
-      { id: 'interface', label: 'Running application' },
+      { id: 'interface', label: 'Application interface' },
       { id: 'property-mapping', label: 'Property mapping' },
       { id: 'validation', label: 'Validation & outputs' },
+      { id: 'evaluation', label: 'Evaluation results' },
       { id: 'scope', label: 'Scope & limits' },
-      { id: 'sources', label: 'Project code' },
+      { id: 'sources', label: 'Resources' },
     ],
   },
   vlm: {
     path: '/projects/vlm-face-accessories.html',
-    title: 'How face accessories change VLM evaluation',
-    shortTitle: 'Face accessories & VLMs',
+    title: vlmTitle,
+    shortTitle: vlmTitle,
     category: 'M2 · Data Readiness and Evaluation in AI',
     introduction: 'A paired-image study of how glasses, caps and masks change vision-language model outputs for the same synthetic face, across attribute recognition and subjective occupation associations.',
     description: 'A group research project on 720 synthetic identities and 2,880 images, evaluating accessory effects in MiniCPM-V 4.6 and SigLIP 2. Human review, methods and results.',
@@ -109,7 +99,6 @@ export const caseStudies = {
     team: 'Group research project · 5 authors',
     repo: 'https://github.com/SalmaAlkhalily/examining-the-effect-of-face-accessories-on-vlm-evaluation',
     report: '/reports/vlm-face-accessories-report.pdf',
-    reportPages: 11,
     technologies: ['MiniCPM-V 4.6', 'SigLIP 2', 'FLUX.2', 'Python', 'Human review', 'Statistical analysis'],
     facts: [
       { value: '720', label: 'synthetic identities' },
@@ -122,7 +111,7 @@ export const caseStudies = {
       { id: 'human-review', label: 'Human review' },
       { id: 'results', label: 'Results' },
       { id: 'limitations', label: 'Limitations' },
-      { id: 'sources', label: 'Team, report & code' },
+      { id: 'sources', label: 'Resources' },
     ],
   },
   ir: {
@@ -131,15 +120,9 @@ export const caseStudies = {
     shortTitle: 'Scientific article retrieval',
     category: 'M1 · Information Retrieval course challenge',
     introduction: 'Retrieving cited scientific papers from a 20,000-document corpus by combining lexical matching, dense embeddings and research metadata.',
-    description: 'Scientific article retrieval challenge: sparse and dense baselines, eight-signal fusion, notebook results and error analysis. An M1 group project by Salma Alkhalily and teammates.',
+    description: 'Scientific article retrieval challenge: sparse and dense baselines, eight-signal fusion, evaluation results and error analysis. An M1 group project by Salma Alkhalily and teammates.',
     team: 'Group project · Team of 3',
     repo: irResults.source.repository,
-    notebook: irResults.source.notebookUrl,
-    sourceIntro: 'The main notebook contains the experiment markdown, implementation, saved scores and error-analysis figures used on this page. The other notebooks document additional iterations.',
-    additionalSources: [
-      { label: 'Alternative fusion and cross-validation notebook', url: 'https://github.com/naghamabuwarda/IR_Challenge/blob/9828a5a7ff94cef682af61774c65f3646d827586/challenge_clean.ipynb', detail: 'SPECTER2, differential evolution and ensemble experiments' },
-      { label: 'Citation-context notebook', url: 'https://github.com/naghamabuwarda/IR_Challenge/blob/9828a5a7ff94cef682af61774c65f3646d827586/challenge_reference_sentence.ipynb', detail: 'Reference-sentence retrieval experiments' },
-    ],
     technologies: ['Python', 'scikit-learn', 'Sentence Transformers', 'BM25', 'GTE-large', 'BGE-small', 'NumPy', 'Pandas'],
     facts: [
       { value: '20,000', label: 'candidate scientific papers' },
@@ -153,7 +136,7 @@ export const caseStudies = {
       { id: 'results', label: 'Results' },
       { id: 'error-analysis', label: 'Error analysis' },
       { id: 'limitations', label: 'Lessons & limits' },
-      { id: 'sources', label: 'Notebooks & code' },
+      { id: 'sources', label: 'Resources' },
     ],
   },
   nlp: {
@@ -162,18 +145,12 @@ export const caseStudies = {
     shortTitle: 'Human, AI & mixed text detection',
     category: 'M1 · Natural Language Processing course',
     introduction: 'Classifying English texts by authorship and estimating their human-written share, with classical machine learning, fine-tuned transformers and analysis of mixed-text errors.',
-    description: 'An M1 NLP group project comparing human, mixed and AI text classification and human-share regression. Notebook methods, saved results, charts and error analysis.',
+    description: 'An M1 NLP group project comparing human, mixed and AI text classification and human-share regression. Methods, saved results, charts and error analysis.',
     team: 'Group project · Team of 3',
     repo: nlpResults.source.repository,
-    notebook: nlpResults.source.notebookUrl,
-    sourceIntro: 'The main notebook contains the explanations, training code, test metrics and confusion matrices used on this page. We completed the project as Salma Alkhalily, Nagham Abuwarda and Ran Lu. The preparation and visualisation notebooks document the earlier data work.',
-    additionalSources: [
-      { label: 'Data preparation notebook', url: nlpResults.source.processingUrl, detail: 'English filtering, source pairing and cosine-distance construction' },
-      { label: 'Exploratory visualisation notebook', url: nlpResults.source.visualizationUrl, detail: 'Domains, generation models, prompts and distance distributions' },
-    ],
     technologies: ['Python', 'TF-IDF', 'scikit-learn', 'XGBoost', 'SMOTE', 'PyTorch', 'Hugging Face Transformers', 'DistilBERT', 'RoBERTa'],
     facts: [
-      { value: '27,107', label: 'texts in the main notebook' },
+      { value: '27,107', label: 'texts in the study' },
       { value: '3', label: 'authorship classes' },
       { value: '2', label: 'tasks: classification & regression' },
     ],
@@ -185,7 +162,7 @@ export const caseStudies = {
       { id: 'error-analysis', label: 'Mixed-text errors' },
       { id: 'regression', label: 'Human-share regression' },
       { id: 'limitations', label: 'Lessons & limits' },
-      { id: 'sources', label: 'Notebooks & code' },
+      { id: 'sources', label: 'Resources' },
     ],
   },
 } satisfies Record<string, CaseStudy>;

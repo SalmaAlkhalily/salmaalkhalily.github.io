@@ -45,8 +45,8 @@ function DemoPlayer() {
   </>;
 }
 
-function MethodFigure({ name, width, height, alt, caption, source, sourceLabel }: {
-  name: string; width: number; height: number; alt: string; caption: string; source: string; sourceLabel: string;
+function MethodFigure({ name, width, height, alt, caption }: {
+  name: string; width: number; height: number; alt: string; caption: string;
 }) {
   const base = `/images/projects/${name}`;
   return <figure className="report-figure">
@@ -56,7 +56,6 @@ function MethodFigure({ name, width, height, alt, caption, source, sourceLabel }
     <figcaption>{caption}
       <span className="figure-links">
         <a href={`${base}.png`} target="_blank" rel="noopener noreferrer">View full size</a>
-        <a href={source} target="_blank" rel="noopener noreferrer">{sourceLabel}</a>
         <a href={`${base}.svg`} download>Download chart (SVG)</a>
         <a href={`${base}.csv`} download>Download example data (CSV)</a>
       </span>
@@ -161,8 +160,7 @@ export default function PolicyGapStudy() {
       ]} />
       <MethodFigure name="policygap-chunking" width={1820} height={823}
         alt="Three illustrative 1600-character chunk windows: 0 to 1600, 1280 to 2880, and 2560 to 4160. Neighbouring windows share 320 characters, equivalent to the documented 80-token approximation."
-        caption="Nominal chunk windows from the documented 400/80-token configuration, using four characters per token. Actual lengths and offsets vary with word-aligned cuts. This is a method illustration."
-        source={data.source.chunkerUrl} sourceLabel="Chunking code" />
+        caption="Nominal chunk windows from the documented 400/80-token configuration, using four characters per token. Actual lengths and offsets vary with word-aligned cuts. This is a method illustration." />
       <p>Overlap keeps nearby context available across chunk boundaries. The sizes are estimates based on character length, so they should not be read as exact model-token counts.</p>
     </StudySection>
 
@@ -180,8 +178,7 @@ export default function PolicyGapStudy() {
       </div>
       <MethodFigure name="policygap-priority" width={1820} height={1015}
         alt="Formula chart with impact and weight fixed at one. As confidence increases from zero to one, priority for an unimplemented control rises from 0.5 to 1, and partial priority rises from 0.25 to 0.5. Implemented controls stay at zero. At confidence 0.9 the first two priorities are 0.95 and 0.475."
-        caption="An explanation of the formula, with impact and weight fixed at one. Not-applicable controls receive zero priority and are excluded from framework scoring. The curves are calculated examples."
-        source={data.source.scorerUrl} sourceLabel="Scoring code" />
+        caption="An explanation of the formula, with impact and weight fixed at one. Not-applicable controls receive zero priority and are excluded from framework scoring. The curves are calculated examples." />
       <PriorityExplorer />
       <p>The confidence factor ranges from 0.5 to 1. As a result, a low-confidence missing control retains some priority. A finding marked for human review receives zero implementation credit until a reviewer resolves it.</p>
     </StudySection>
@@ -205,12 +202,11 @@ export default function PolicyGapStudy() {
       </ul>
       <p>The supplied documentation explains the implementation but does not provide a labelled evaluation set or measured accuracy benchmark. The charts on this page explain the design; they are not experimental performance results.</p>
       <details className="figure-data">
-        <summary>Documentation and implementation versions</summary>
-        <p>The documentation is version {data.documentation.version}, dated {data.documentation.date}. Code links use repository commit <code>{data.source.commit.slice(0, 7)}</code>. The shared chunking configuration and gap-priority formula support both charts.</p>
-        <p>The versions differ in some settings: the documentation describes classification batches of 50 and a 20% keyword threshold, while the linked implementation uses batches of 15 and an 8% threshold. These values are configuration choices rather than measured quality results.</p>
-        <p>The linked pipeline processes classification batches sequentially. It retrieves up to five chunks per control, but the LLM prompt uses only the first two, truncated to 400 characters each, and truncates each requirement to 150 characters. Retrieval scope and prompt scope therefore differ.</p>
-        <p>The documented status design includes <code>needs_human_review</code>. In the linked classifier, parsed LLM results with that status are converted to <code>not_implemented</code> by the fallback. Reviewers can still inspect and override findings, but the fallback does not preserve a separate unresolved status.</p>
-        <p>The scoring helper defines a weighted framework score. The linked pipeline stores the overall assessment score as an unweighted mean of applicable finding scores. That aggregate is separate from the gap-priority formula illustrated above.</p>
+        <summary>Prototype limitations</summary>
+        <p>The charts illustrate the documented chunking and priority-scoring design. Configuration settings can vary between versions.</p>
+        <p>Up to five passages are retrieved per control, but only the first two are sent to the language model, with each excerpt limited to 400 characters and each requirement to 150 characters. Relevant context may therefore be omitted.</p>
+        <p>Unresolved model findings can fall back to a not-implemented status. Reviewers can inspect and override them, but unresolved cases are not consistently preserved as a separate status.</p>
+        <p>The overall assessment score averages applicable findings. It is separate from the gap-priority formula illustrated above.</p>
       </details>
     </StudySection>
   </>;

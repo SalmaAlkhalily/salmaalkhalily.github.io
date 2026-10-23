@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import projectResults from '../data/projectResults.json';
 import HumanReviewFlow from './HumanReviewFlow';
+import ShaclInterfaceGallery from './ShaclInterfaceGallery';
 
 export function StudySection({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return <section id={id} className="case-section" aria-labelledby={`${id}-title`}><h2 id={`${id}-title`}>{title}</h2>{children}</section>;
@@ -13,8 +14,8 @@ export function Workflow({ steps }: { steps: { title: string; text: string }[] }
   </li>)}</ol>;
 }
 
-function StudyFigure({ src, alt, caption, page, width, height, downloads = [] }: {
-  src: string; alt: string; caption: string; page?: number; width: number; height: number;
+function StudyFigure({ src, alt, caption, width, height, downloads = [] }: {
+  src: string; alt: string; caption: string; width: number; height: number;
   downloads?: { href: string; label: string }[];
 }) {
   return <figure className="report-figure">
@@ -24,7 +25,6 @@ function StudyFigure({ src, alt, caption, page, width, height, downloads = [] }:
     <figcaption>{caption}
       <span className="figure-links">
         <a href={src} target="_blank" rel="noopener noreferrer">View full size</a>
-        {page && <a href={`/reports/vlm-face-accessories-report.pdf#page=${page}`} target="_blank" rel="noopener noreferrer">Report, p. {page}</a>}
         {downloads.map((item) => <a href={item.href} key={item.href} download>{item.label}</a>)}
       </span>
     </figcaption>
@@ -47,7 +47,7 @@ function AccuracyChangesTable() {
     <summary>View all 18 accuracy changes as a table</summary>
     <div className="case-table-wrap" role="region" aria-label="All accessory accuracy changes" tabIndex={0}>
       <table className="case-table">
-        <caption>Changes from the original image, in percentage points, for 720 paired identities. Values transcribed from Figure 2; significance and confidence intervals remain in the original figure above.</caption>
+        <caption>Changes from the original image, in percentage points, for 720 paired identities. Significance and confidence intervals are shown in the chart above.</caption>
         <thead><tr><th scope="col">Attribute</th><th scope="col">Accessory</th><th scope="col">MiniCPM-V 4.6</th><th scope="col">SigLIP 2</th></tr></thead>
         <tbody>{projectResults.accuracyChanges.rows.map((row) => <tr key={`${row.attribute}-${row.accessory}`}>
           <th scope="row">{row.attribute}</th><td>{row.accessory}</td><td>{row.miniCPM.toFixed(1).replace('-', '−')}</td><td>{row.siglip.toFixed(1).replace('-', '−')}</td>
@@ -73,26 +73,12 @@ export function ShaclStudy() {
         { title: 'Generate SHACL shapes', text: 'Each discovered key becomes a node shape with property constraints. The generation uses either the original property names or their supplied mappings.' },
         { title: 'Validate the target dataset', text: 'Apache Jena checks the data graph against the shapes. The validation output identifies affected resources and keys, explains each violation and counts findings by constraint.' },
       ]} />
-      <details className="figure-data">
-        <summary>View the original key-discovery flowchart</summary>
-        <div className="figure-portrait">
-          <StudyFigure src="/images/projects/shacl-key-discovery.png" width={870} height={1132}
-            alt="Key-discovery flowchart: convert RDF to N-Triples if necessary, run SAKey, discard non-keys and retain almost keys."
-            caption="Key-discovery workflow. The project uses n = 1 and retains 0-almost keys for strict uniqueness constraints." />
-        </div>
-      </details>
     </StudySection>
 
-    <StudySection id="interface" title="The running application">
-      <p>These captures show the JavaFX application running locally with the building example included in the repository. Its 40 saved keys produced 40 SHACL shapes. The test sample contains nine triples describing four resources; validation returned nine findings.</p>
-      <div className="case-interface-gallery">
-        <StudyFigure src="/images/projects/shacl-shape-generation.jpg" width={679} height={754}
-          alt="JavaFX shape-generation tab showing saved building keys and the generated SHACL shapes in Turtle."
-          caption="SHACL shapes generated from the repository's saved building keys. The output includes property constraints and SPARQL checks for repeated key values." />
-        <StudyFigure src="/images/projects/shacl-validation-results.jpg" width={679} height={754}
-          alt="JavaFX validation tab showing the building test data, SHACL shapes and nine validation findings."
-          caption="Validation of the building sample returned nine findings. The output groups findings by constraint and identifies the affected resources." />
-      </div>
+    <StudySection id="interface" title="Explore the application interface">
+      <p>The JavaFX interface follows three stages: discover keys, generate shapes and validate data. Each screen below shows the controls before input files are loaded. The property-mapping mode adds a mapping file to adapt shapes to another vocabulary.</p>
+      <p>Expand a stage to see its interface, or open the image at full size.</p>
+      <ShaclInterfaceGallery />
     </StudySection>
 
     <StudySection id="property-mapping" title="Two ways to reuse a discovered key">
@@ -138,8 +124,25 @@ export function ShaclStudy() {
       </div>
     </StudySection>
 
+    <StudySection id="evaluation" title="From discovered keys to reusable shapes">
+      <p>I evaluated key discovery and shape generation on three RDF datasets. Each discovered key produced one SHACL shape. Validation used constructed subsets with duplicates, testing both original property names and mapped equivalents.</p>
+      <div className="case-table-wrap" role="region" aria-label="Key discovery and shape generation results" tabIndex={0}>
+        <table className="case-table">
+          <caption>Dataset size and generated keys and shapes in the project evaluation.</caption>
+          <thead><tr><th scope="col">Dataset</th><th scope="col">Triples</th><th scope="col">Properties</th><th scope="col">Keys</th><th scope="col">Shapes</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">YAGO Buildings</th><td>114,743</td><td>16</td><td>40</td><td>40</td></tr>
+            <tr><th scope="row">OAEI Restaurants1</th><td>1,130</td><td>7</td><td>8</td><td>8</td></tr>
+            <tr><th scope="row">Open Restaurant Applications</th><td>16,351</td><td>37</td><td>791</td><td>791</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Format-conversion checks preserved triple, property and class counts for Open Restaurant Applications and small FOAF Person examples. The restaurant dataset retained 16,351 triples, 37 properties and one class after conversion from RDF/XML to N-Triples.</p>
+      <p>These results describe the tested datasets. A generated shape still needs validation on each target dataset; the number of shapes alone does not measure data quality.</p>
+    </StudySection>
+
     <StudySection id="scope" title="Scope and limits of the implementation">
-      <p>The worked examples demonstrate the implemented workflow. They do not establish runtime performance at scale or an advantage over other shape-generation tools.</p>
+      <p>The evaluation covers three source datasets and small constructed validation subsets. It does not establish an advantage over other shape-generation tools or performance across all RDF datasets.</p>
       <ul>
         <li>The key-discovery setup assumes input instances belong to a single class.</li>
         <li>Property equivalences must be supplied before validating a dataset with different property names.</li>
@@ -155,10 +158,10 @@ export function VlmStudy() {
   return <>
     <StudySection id="overview" title="The same face, a different accessory">
       <p>Would a vision-language model give the same answer about a face after glasses, a cap or a mask were added? Our group studied whether these edits change attribute recognition, shift occupation associations and affect demographic groups differently.</p>
-      <p>This was a group assignment for the M2 Data Readiness and Evaluation in AI course at Université Paris-Saclay, supervised by Adrian Popescu. I worked on human review and the subjective track, and analysed data and evaluation results across both the subjective and objective tracks.</p>
-      <StudyFigure src="/images/projects/vlm-accessory-example.png" width={872} height={264} page={2}
+      <p>This was a group assignment for the M2 Data Readiness and Evaluation in AI course at Université Paris-Saclay, supervised by Adrian Popescu. I worked on human review and the subjective track, and analysed data and evaluation results across the subjective and objective tracks.</p>
+      <StudyFigure src="/images/projects/vlm-accessory-example.png" width={872} height={264}
         alt="One synthetic identity shown as an original portrait and with a generated mask, cap and glasses."
-        caption="One of the study’s synthetic identities and its three accessory edits, reproduced from Figure 1. The editing process aimed to preserve the rest of the portrait." />
+        caption="One of the study’s synthetic identities and its three accessory edits. The editing process aimed to preserve the rest of the portrait." />
     </StudySection>
 
     <StudySection id="experiment" title="A balanced, paired-image experiment">
@@ -175,16 +178,16 @@ export function VlmStudy() {
       </div>
       <div className="case-callout"><h3>What the subjective scores mean</h3><p>Job suitability cannot be determined from a face. These prompts audit the models’ stereotypes; they do not measure a person’s ability or support using such scores in recruitment.</p></div>
       <h3>Statistical analysis</h3>
-      <p>We used exact McNemar tests for paired accuracy changes, exact sign tests for subjective score shifts and Kruskal–Wallis tests for differences in effects between groups. Confidence intervals use 5,000 bootstrap resamples over identities. The report presents uncorrected tests and a Bonferroni sensitivity check.</p>
+      <p>We used exact McNemar tests for paired accuracy changes, exact sign tests for subjective score shifts and Kruskal–Wallis tests for differences in effects between groups. Confidence intervals use 5,000 bootstrap resamples over identities. We evaluated significance before correction and with a Bonferroni sensitivity check.</p>
       <p>A separate pilot of eight identities and 40 images tested the pipeline and prompts. Early MiniCPM-V 2.6 JSON answers often abstained or broke the format; the final setup used MiniCPM-V 4.6 with forced-choice letters. Pilot results were excluded from the main evaluation.</p>
     </StudySection>
 
     <StudySection id="human-review" title="Checking the generated images">
       <p>Reviewers compared a random subset of edits with their originals. Four checks covered accessory presence, natural placement, preservation of the portrait and visual defects. Each check allowed Yes, No or Uncertain, followed by an overall Accept, Reject or Uncertain decision.</p>
       <HumanReviewFlow />
-      <StudyFigure src="/images/projects/vlm-human-review.png" width={1748} height={867} page={4}
+      <StudyFigure src="/images/projects/vlm-human-review.png" width={1748} height={867}
         alt="Acceptance of reviewed generated edits: masks 89.1 percent, 270 of 303; caps 86.8 percent, 263 of 303; glasses 100 percent, 84 of 84."
-        caption="Acceptance in the reviewed subset. The remaining decisions combine rejected and uncertain cases; the report does not give separate counts. Chart recreated from section 4.2."
+        caption="Acceptance in the reviewed subset. The remaining decisions combine rejected and uncertain cases; separate counts are unavailable."
         downloads={[{ href: '/images/projects/vlm-human-review.svg', label: 'Download chart (SVG)' }, { href: '/images/projects/vlm-human-review.csv', label: 'Download data (CSV)' }]} />
       <div className="case-table-wrap" role="region" aria-label="Human review acceptance rates" tabIndex={0}>
         <table className="case-table">
@@ -200,7 +203,7 @@ export function VlmStudy() {
 
     <StudySection id="results" title="What changed when accessories were added">
       <h3>Masks produced the largest age-accuracy drop</h3>
-      <p>All 18 paired accuracy effects were negative; 13 were significant before correction and 10 remained significant after the report’s Bonferroni check. Masks reduced age accuracy by 17.2 percentage points for MiniCPM-V 4.6 and 17.6 points for SigLIP 2.</p>
+      <p>All 18 paired accuracy effects were negative; 13 were significant before correction and 10 remained significant after the Bonferroni check. Masks reduced age accuracy by 17.2 percentage points for MiniCPM-V 4.6 and 17.6 points for SigLIP 2.</p>
       <div className="case-table-wrap" role="region" aria-label="Age accuracy without accessories and with masks" tabIndex={0}>
         <table className="case-table">
           <caption>Age accuracy across the 720 identities. Changes are in percentage points.</caption>
@@ -211,17 +214,17 @@ export function VlmStudy() {
           </tbody>
         </table>
       </div>
-      <StudyFigure src="/images/projects/vlm-attribute-accuracy.png" width={1395} height={549} page={6}
+      <StudyFigure src="/images/projects/vlm-attribute-accuracy.png" width={1395} height={549}
         alt="Accuracy-change chart: masks lower age accuracy by 17.2 points for MiniCPM and 17.6 for SigLIP; caps also reduce ethnicity and gender accuracy."
-        caption="Figure 2: paired accuracy changes with 95% bootstrap confidence intervals. Stars denote exact McNemar tests: * p < 0.05, ** p < 0.01, *** p < 0.001; hollow points are not significant at 0.05." />
+        caption="Paired accuracy changes with 95% bootstrap confidence intervals. Stars denote exact McNemar tests: * p < 0.05, ** p < 0.01, *** p < 0.001; hollow points are not significant at 0.05." />
       <AccuracyChangesTable />
       <h3>Errors were directional and uneven across groups</h3>
       <p>With a cap, MiniCPM labelled 13.3% of women as male, compared with 1.1% without an accessory; SigLIP’s corresponding rates were 10.0% and 0.8%. Caps and masks caused the largest ethnicity-accuracy losses for identities labelled Indian in the source dataset. These are model errors against synthetic-dataset metadata.</p>
       <h3>Occupation scores followed accessory stereotypes</h3>
       <p>For SigLIP 2, a mask increased the neutral-adjusted nurse score for all 720 identities, by an average of 3.32 logits. A cap raised the construction-worker score for 716 identities. MiniCPM rated most originals as “very suitable”, creating a ceiling effect, but still showed a consistent glasses–software engineer association.</p>
-      <StudyFigure src="/images/projects/vlm-job-score-shifts.png" width={1395} height={399} page={7}
+      <StudyFigure src="/images/projects/vlm-job-score-shifts.png" width={1395} height={399}
         alt="Occupation-association heatmaps for MiniCPM and SigLIP. SigLIP masks increase nurse scores for every identity, and caps raise construction-worker scores for almost all identities."
-        caption="Figure 4: the first value is the net percentage rated higher minus lower; Δ is the mean score change. MiniCPM rating points and SigLIP logits are different units. Stars denote exact sign tests using the thresholds above; outlined cells mark stereotype-linked pairs." />
+        caption="The first value is the net percentage rated higher minus lower; Δ is the mean score change. MiniCPM rating points and SigLIP logits are different units. Stars denote exact sign tests using the thresholds above; outlined cells mark stereotype-linked pairs." />
     </StudySection>
 
     <StudySection id="limitations" title="How to interpret the findings">
@@ -232,7 +235,7 @@ export function VlmStudy() {
         <li><strong>Limited categories and prompts:</strong> the dataset uses four ethnicity labels, binary gender and three ages. These labels are not self-identification. The evaluation uses one fixed wording and option order per task.</li>
         <li><strong>Model and score limits:</strong> two open model families were evaluated, and MiniCPM’s high suitability ratings compress the available scale. Tests are reported without multiple-comparison correction, alongside a sensitivity check.</li>
       </ul>
-      <p>The report proposes broader model coverage, real photographs, a full-scale no-edit control, a human baseline and mitigation experiments as future work.</p>
+      <p>Future work includes broader model coverage, real photographs, a full-scale no-edit control, a human baseline and mitigation experiments.</p>
     </StudySection>
   </>;
 }

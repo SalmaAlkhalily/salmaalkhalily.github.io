@@ -64,7 +64,7 @@ export interface Project {
 }
 
 const availability =
-  '6-month final-year internship from 2027 in AI, ML, Data Science or Data Engineering';
+  '6-month final-year internship from March 2027 in AI, ML, Data Science or Data Engineering';
 
 const summerSchool = {
   name: 'AI Technologies Summer School 2026',
@@ -98,11 +98,13 @@ export const profile = {
 
 I earned my BSc in Information Technology Engineering at Damascus University, specialising in Software Engineering. My coursework included algorithms, data structures, databases, information retrieval, information systems security and web applications.
 
-At Blue Smart Apps, I built one Android app with Kotlin, Jetpack Compose and Firebase, from business requirements through design and implementation. My M1 Data Science studies covered machine learning, NLP, information retrieval and large-scale data processing. In M2, I study knowledge engineering, graph analytics, constraint programming, data mining, hybrid and explainable AI.
+At Blue Smart Apps, I built the ListedNearMe Android app with Kotlin, Jetpack Compose and Firebase, from business requirements through design and implementation. I also contributed to the iOS app using Swift and to the web version.
+
+My M1 Data Science studies covered machine learning, NLP, information retrieval and large-scale data processing. In M2, I study knowledge engineering, graph analytics, constraint programming, data mining, hybrid and explainable AI.
 
 Through my M1 programme, I attended the ${summerSchool.name}. Our four-person team developed PolicyGap for its project competition, using RAG to find gaps between policy objectives and supporting evidence.
 
-My other projects include the Scientific Article Information Retrieval Challenge, an NLP project on detecting human, AI-generated and mixed text, and SHACL-based RDF validation. I also contributed to a group research project examining how face accessories affect vision-language model evaluation. I'm seeking a six-month final-year internship from 2027 in AI, Machine Learning, Data Science or Data Engineering.`,
+My other projects include the Scientific Article Information Retrieval Challenge, an NLP project on detecting human, AI-generated and mixed text, and SHACL-based RDF validation. I also contributed to a group research project examining how face accessories affect vision-language model evaluation. I'm seeking a six-month final-year internship from March 2027 in AI, Machine Learning, Data Science or Data Engineering.`,
 };
 
 export const skills: SkillGroup[] = [
@@ -121,11 +123,11 @@ export const skills: SkillGroup[] = [
   },
   {
     category: 'Knowledge & Big Data',
-    items: ['Apache Spark', 'RDF', 'SHACL', 'Apache Jena', 'Information Retrieval'],
+    items: ['Apache Spark', 'Apache Hadoop', 'RDF', 'SPARQL', 'SHACL', 'Apache Jena', 'Information Retrieval'],
   },
   {
     category: 'Software Engineering',
-    items: ['Java', 'Kotlin', 'Laravel', 'REST APIs', 'Git'],
+    items: ['Java', 'Kotlin', 'Laravel', 'REST APIs', 'Git', 'Docker'],
   },
   {
     category: 'Mobile, Web & Desktop',
@@ -153,7 +155,7 @@ export const skills: SkillGroup[] = [
       'SQL',
       'Oracle',
       'MongoDB',
-      'Docker',
+      'Redis',
       'LaTeX',
     ],
   },
@@ -181,13 +183,13 @@ export const projects: Project[] = [
     pipeline: ['Policy documents', 'Embeddings', 'Vector search', 'LLM analysis', 'Gap report'],
   },
   {
-    title: 'Face accessories and VLM evaluation',
+    title: caseStudies.vlm.title,
     preview: 'vlm',
     caseStudy: caseStudies.vlm.path,
     context: 'M2 · Data Readiness and Evaluation in AI · Group research project',
     repo: 'https://github.com/SalmaAlkhalily/examining-the-effect-of-face-accessories-on-vlm-evaluation',
     description:
-      'We studied how caps, glasses and masks change vision-language model outputs for the same face. In this M2 group research project, I worked on human review and the subjective track, and analysed data and evaluation results across both tracks.',
+      'We studied how caps, glasses and masks change vision-language model outputs for the same face. In this M2 group research project, I worked on human review and the subjective track, and analysed data and evaluation results across the subjective and objective tracks.',
     resultLabel: 'Study scale',
     result: '720 identities · 2,880 images',
     tech: ['Vision-Language Models', 'Human Evaluation', 'Data Analysis', 'MiniCPM', 'SigLIP2'],
@@ -300,6 +302,7 @@ export const experience: ExperienceItem[] = [
     highlights: [
       'Designed and implemented functional and non-functional requirements from business stakeholders.',
       'Built the ListedNearMe Android app with Kotlin and Jetpack Compose, backed by Firebase and Firebase Functions.',
+      'Contributed to the ListedNearMe iOS app using Swift and to its web version.',
       'Integrated web APIs including Google Maps, Algolia and Google Analytics.',
     ],
   },
@@ -320,7 +323,7 @@ export const education: EducationItem[] = [
   },
   {
     degree: 'M1 Data Science',
-    field: 'Machine learning, NLP, large-scale distributed data processing, information retrieval',
+    field: 'Hands-on machine learning with scikit-learn, machine learning algorithms & hands-on NLP, mathematics for data science, large-scale distributed data processing, distributed systems for massive data management, information retrieval',
     institution: 'Université Paris-Saclay',
     period: 'Sep 2025 - Jul 2026',
     activity: {
@@ -331,7 +334,7 @@ export const education: EducationItem[] = [
   },
   {
     degree: 'BSc Information Technology Engineering',
-    field: 'Software Engineering · GPA 15.4/20',
+    field: 'Software Engineering · GPA 15.4/20 · Algorithms, data structures & databases, information retrieval systems, information systems security, web applications, programming languages',
     institution: 'Damascus University',
     period: 'Oct 2015 - Nov 2020',
   },

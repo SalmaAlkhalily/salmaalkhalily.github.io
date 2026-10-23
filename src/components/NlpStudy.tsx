@@ -1,8 +1,8 @@
 import results from '../data/nlpResults.json';
 import { StudySection, Workflow } from './ProjectStudyContent';
 
-function NotebookFigure({ name, width, height, alt, caption, section, downloads = false }: {
-  name: string; width: number; height: number; alt: string; caption: string; section: string; downloads?: boolean;
+function NotebookFigure({ name, width, height, alt, caption, downloads = false }: {
+  name: string; width: number; height: number; alt: string; caption: string; downloads?: boolean;
 }) {
   const base = `/images/projects/${name}`;
   return <figure className="report-figure">
@@ -12,7 +12,6 @@ function NotebookFigure({ name, width, height, alt, caption, section, downloads 
     <figcaption>{caption}
       <span className="figure-links">
         <a href={`${base}.png`} target="_blank" rel="noopener noreferrer">View full size</a>
-        <a href={results.source.notebookUrl} target="_blank" rel="noopener noreferrer">Notebook: {section}</a>
         {downloads ? <><a href={`${base}.svg`} download>Download chart (SVG)</a><a href={`${base}.csv`} download>Download data (CSV)</a></> : <a href={`${base}.csv`} download>Download counts (CSV)</a>}
       </span>
     </figcaption>
@@ -31,9 +30,9 @@ export default function NlpStudy() {
     </StudySection>
 
     <StudySection id="data" title="Preparing the data and inspecting class balance">
-      <p>The data preparation notebook starts from <code>{results.source.dataset}</code>, keeps English texts and pairs AI and mixed samples with human source texts through their topic IDs. The exploratory work examines writing domains, generation models, prompt types and semantic distance from the source.</p>
-      <p>The main training notebook loads 27,107 texts across the following splits. AI-generated examples make up about a quarter of each split, with human and mixed texts accounting for most of the remainder.</p>
-      <div className="case-table-wrap" role="region" aria-label="Main notebook dataset split and class counts" tabIndex={0}>
+      <p>We started from <code>{results.source.dataset}</code>, kept English texts and paired AI and mixed samples with human source texts through their topic IDs. The exploratory work examines writing domains, generation models, prompt types and semantic distance from the source.</p>
+      <p>The study uses 27,107 texts across the following splits. AI-generated examples make up about a quarter of each split, with human and mixed texts accounting for most of the remainder.</p>
+      <div className="case-table-wrap" role="region" aria-label="Study dataset split and class counts" tabIndex={0}>
         <table className="case-table">
           <caption>Counts from the main notebook’s saved class-distribution output, before training-set oversampling.</caption>
           <thead><tr><th scope="col">Split</th><th scope="col">Human</th><th scope="col">Mixed</th><th scope="col">AI</th><th scope="col">Total</th></tr></thead>
@@ -57,8 +56,8 @@ export default function NlpStudy() {
     </StudySection>
 
     <StudySection id="classification" title="Classification results on the test split">
-      <p>Tuned XGBoost has the highest saved macro F1, at 0.9121, with 92.03% accuracy on 2,711 test texts. RoBERTa leads the two text-only transformers with a macro F1 of 0.8436. These are saved notebook results; the models were not retrained for this page.</p>
-      <NotebookFigure name="nlp-classification-comparison" width={1820} height={889} section="baseline and embedding model evaluation" downloads
+      <p>Tuned XGBoost has the highest saved macro F1, at 0.9121, with 92.03% accuracy on 2,711 test texts. RoBERTa leads the two text-only transformers with a macro F1 of 0.8436. These are saved evaluation results; the models were not retrained for this page.</p>
+      <NotebookFigure name="nlp-classification-comparison" width={1820} height={889} downloads
         alt="Test macro F1: tuned XGBoost 0.9121, SVM 0.8796, logistic regression 0.8564, RoBERTa 0.8436, DistilBERT 0.8157. Classical models use TF-IDF plus source distance; transformers use text only."
         caption="Macro F1 gives equal weight to human, mixed and AI classes. Colours distinguish the input features used by each model family." />
       <div className="case-table-wrap" role="region" aria-label="Test classification metrics for five models" tabIndex={0}>
@@ -71,10 +70,10 @@ export default function NlpStudy() {
     </StudySection>
 
     <StudySection id="error-analysis" title="Where mixed and generated writing overlap">
-      <p>In the tuned XGBoost run, 100 mixed texts are predicted as AI and 109 AI texts are predicted as mixed. Together, these account for 209 of the 216 classification errors. The notebook inspects individual examples from both directions, as well as the few AI and mixed texts classified as human.</p>
-      <NotebookFigure name="nlp-xgboost-confusion" width={661} height={490} section="XGBoost error analysis"
+      <p>In the tuned XGBoost run, 100 mixed texts are predicted as AI and 109 AI texts are predicted as mixed. Together, these account for 209 of the 216 classification errors. We inspected examples from both directions, as well as the few AI and mixed texts classified as human.</p>
+      <NotebookFigure name="nlp-xgboost-confusion" width={661} height={490}
         alt="Tuned XGBoost confusion matrix. Actual human: 1008 human, 0 mixed, 0 AI. Actual mixed: 6 human, 914 mixed, 100 AI. Actual AI: 1 human, 109 mixed, 573 AI."
-        caption="Original saved notebook figure. Rows are true classes and columns are predictions; most errors occur between mixed and AI text." />
+        caption="Original experiment figure. Rows are true classes and columns are predictions; most errors occur between mixed and AI text." />
       <details className="figure-data">
         <summary>View the confusion matrix as a table</summary>
         <div className="case-table-wrap" role="region" aria-label="Tuned XGBoost confusion matrix counts" tabIndex={0}>
@@ -91,7 +90,7 @@ export default function NlpStudy() {
     <StudySection id="regression" title="Estimating how much of a text is human-written">
       <p>For mixed texts, the target is derived from the annotated AI character intervals: human-written share equals one minus the AI character count divided by total text length. Pure human and pure AI examples receive targets of 1 and 0.</p>
       <p>We compared weighted Ridge regression, tuned XGBoost regression and a RoBERTa regression head. Training weights use ten bins over the target range to give more weight to sparsely represented ratios. Predictions are clipped to [0, 1] for evaluation.</p>
-      <NotebookFigure name="nlp-regression-comparison" width={1820} height={781} section="regression model comparison" downloads
+      <NotebookFigure name="nlp-regression-comparison" width={1820} height={781} downloads
         alt="Test RMSE, lower is better: tuned XGBoost 0.1720, RoBERTa 0.1767, Ridge regression 0.2295. XGBoost and Ridge use TF-IDF plus source distance; RoBERTa uses text only."
         caption="Root mean squared error on the human-share target. The different input features also apply to this regression comparison." />
       <div className="case-table-wrap" role="region" aria-label="Test regression metrics for three models" tabIndex={0}>
@@ -112,11 +111,11 @@ export default function NlpStudy() {
         <li>The transformer logs show rising validation loss after epoch two, despite falling training loss. Validation-based checkpoint selection helps avoid selecting the final epoch automatically.</li>
       </ul>
       <details className="figure-data">
-        <summary>Source versions and evaluation scope</summary>
-        <p>This page uses commit <code>{results.source.commit.slice(0, 7)}</code>. The preparation notebook saves an earlier split of 13,492 / 1,687 / 1,687 examples, while the main notebook loads 21,685 / 2,711 / 2,711. The tables here consistently use the main notebook’s saved counts and scores.</p>
-        <p>The preparation code uses random row splits, so it does not establish separation by topic or source text. XGBoost classification cross-validation also follows SMOTE resampling; applying resampling inside each fold would give a cleaner tuning estimate.</p>
-        <p>The later transformer hyperparameter-search and final combined-comparison cells are commented out. This page compares the five classifiers with saved individual test outputs and makes no claim of an additional tuned transformer run.</p>
-        <p>The human-share function uses fallback values when mixed-text interval parsing fails. Its regression scores evaluate that constructed target. Generalisation to other languages, domains and unseen generation models would need further evaluation.</p>
+        <summary>Evaluation scope</summary>
+        <p>The tables use the final study splits of 21,685 / 2,711 / 2,711 texts and their saved evaluation results.</p>
+        <p>Random row splits do not establish separation by topic or source text. Classification cross-validation also follows SMOTE resampling; applying resampling separately within each fold would give a cleaner tuning estimate.</p>
+        <p>The comparison covers five classifiers with saved test outputs. It does not include an additional tuned transformer run.</p>
+        <p>The human-share target uses fallback values when mixed-text proportions cannot be parsed. Its regression scores evaluate that constructed target. Generalisation to other languages, domains and unseen generation models needs further evaluation.</p>
       </details>
     </StudySection>
   </>;
