@@ -66,11 +66,6 @@ export interface Project {
 const availability =
   '6-month final-year internship from March 2027 in AI, ML, Data Science or Data Engineering';
 
-const summerSchool = {
-  name: 'AI Technologies Summer School 2026',
-  url: 'https://ai.lnu.edu.ua/',
-};
-
 export const profile = {
   name: 'Salma Alkhalily',
   title: 'AI & Data Science Engineer',
@@ -78,33 +73,18 @@ export const profile = {
     'I build machine learning and NLP systems, with a focus on information retrieval, RAG and knowledge graphs.',
   location: 'Paris, France',
   availability,
+  internshipInterests:
+    "I'm most interested in machine learning, NLP, information retrieval and RAG, or knowledge graphs, and I'm also open to other roles in AI, data science and data engineering.",
   email: 'salma.alkhalily96@gmail.com',
   cv: '/Salma-Alkhalily-CV.pdf',
   github: 'https://github.com/SalmaAlkhalily',
   linkedin: 'https://www.linkedin.com/in/salmaalkhalily',
-  summerSchool,
   facts: [
     { label: 'Studying', value: 'M2 Data, Knowledge & Hybrid AI (DKAI), Université Paris-Saclay' },
     { label: 'Focus', value: 'Machine Learning · NLP · RAG · Knowledge Graphs' },
     { label: 'Open to', value: availability },
     { label: 'Languages', value: 'Arabic (native) · English · French' },
   ],
-  focusAreas: [
-    { title: 'Machine learning & NLP', description: 'Text classification, regression and model evaluation.' },
-    { title: 'Information retrieval & RAG', description: 'Retrieving scientific papers and grounding policy analysis in evidence.' },
-    { title: 'Knowledge & hybrid AI', description: 'Knowledge graphs, constraint programming and explainable AI.' },
-  ],
-  bio: `I'm Salma, an M2 student in Data, Knowledge and Hybrid Artificial Intelligence (DKAI) at Université Paris-Saclay, based in Paris. My background includes 2+ years in software development and implementation, working on web, mobile and desktop applications.
-
-I earned my BSc in Information Technology Engineering at Damascus University, specialising in Software Engineering. My coursework included algorithms, data structures, databases, information retrieval, information systems security and web applications.
-
-At Blue Smart Apps, I built the ListedNearMe Android app with Kotlin, Jetpack Compose and Firebase, from business requirements through design and implementation. I also contributed to the iOS app using Swift and to the web version.
-
-My M1 Data Science studies covered machine learning, NLP, information retrieval and large-scale data processing. In M2, I study knowledge engineering, graph analytics, constraint programming, data mining, hybrid and explainable AI.
-
-Through my M1 programme, I attended the ${summerSchool.name}. Our four-person team developed PolicyGap for its project competition, using RAG to find gaps between policy objectives and supporting evidence.
-
-My other projects include the Scientific Article Information Retrieval Challenge, an NLP project on detecting human, AI-generated and mixed text, and SHACL-based RDF validation. I also contributed to a group research project examining how face accessories affect vision-language model evaluation. I'm seeking a six-month final-year internship from March 2027 in AI, Machine Learning, Data Science or Data Engineering.`,
 };
 
 export const skills: SkillGroup[] = [
@@ -310,7 +290,10 @@ export const experience: ExperienceItem[] = [
     role: 'Freelance Software Engineer',
     company: 'Freelance',
     period: 'Mar 2020 – Sep 2022',
-    highlights: ['Developed desktop applications using Java.'],
+    links: [{ label: 'Phone Generator project', url: caseStudies.phone.path }],
+    highlights: [
+      'Developed Java desktop applications for clients, such as Phone Generator, which generates sequential phone-number lists and exports them as vCard contacts.',
+    ],
   },
 ];
 

@@ -59,7 +59,11 @@ export default function Experience() {
               </ul>
               {item.links && (
                 <div className="project-links">
-                  {item.links.map((link) => (
+                  {item.links.map((link) => link.url.startsWith('/') ? (
+                    <a key={link.url} href={link.url}>
+                      {link.label} <span aria-hidden>→</span>
+                    </a>
+                  ) : (
                     <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
                       <LinkExternalIcon /> {link.label}
                     </a>

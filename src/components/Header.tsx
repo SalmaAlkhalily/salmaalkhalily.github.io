@@ -4,10 +4,9 @@ import { profile } from '../data/portfolio';
 import { DownloadIcon } from './icons';
 
 const NAV = [
-  { href: '#about', label: 'About' },
-  { href: '#projects', label: 'Projects' },
   { href: '#experience', label: 'Experience' },
   { href: '#education', label: 'Education' },
+  { href: '#projects', label: 'Projects' },
   { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },
 ];

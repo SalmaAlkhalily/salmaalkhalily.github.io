@@ -127,7 +127,7 @@ for (const [pathname, page] of files) {
 
 const { html } = files.get('/');
 assert.match(html, /<h1\b[^>]*>Salma Alkhalily<\/h1>/, 'The name must exist before JavaScript runs.');
-for (const section of ['about', 'projects', 'education', 'experience', 'skills', 'contact']) {
+for (const section of ['experience', 'education', 'projects', 'skills', 'contact']) {
   assert.ok(html.includes(`<section id="${section}"`), `Missing prerendered section: ${section}`);
 }
 assert.ok(html.includes(`href="${github}"`), 'The GitHub profile must be linked in HTML.');

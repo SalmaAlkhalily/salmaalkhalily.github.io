@@ -16,8 +16,13 @@ npm run preview  # preview the production build
 
 ## Editing Content
 
-All personal content (bio, skills, highlights, experience, education, links) lives in
+All personal content (profile, skills, highlights, experience, education, links) lives in
 [src/data/portfolio.ts](src/data/portfolio.ts).
+
+The one-page CV at `public/Salma-Alkhalily-CV.pdf` is generated from
+[scripts/generate-cv.py](scripts/generate-cv.py). Edit its content there and run
+`python scripts/generate-cv.py` with ReportLab installed; the script stops if the
+CV no longer fits on one page.
 
 The homepage features five AI and knowledge engineering projects. Earlier software
 projects are on `/archive.html`. The SHACL and VLM projects link to detailed pages
@@ -115,8 +120,9 @@ visible contact and CV links, and a separate archive. Contributions stay within
 each project description. All five projects link to longer case studies, with
 repository links available alongside them.
 
-About follows the introduction, with selected projects next. Navigation links
-and the numbered section labels follow the same order.
+Experience and Education follow the introduction, with selected projects next.
+Navigation links follow the same order. The introduction states the internship
+search and the areas of interest without limiting it to them.
 The main skills list keeps AI, knowledge/data methods, software engineering and
 languages visible; a native disclosure holds the additional development and data
 tools. The navigation follows the same order.

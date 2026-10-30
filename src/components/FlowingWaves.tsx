@@ -61,7 +61,8 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
         const frequency = ((1.1 + p * 0.5) * Math.PI * 2) / Math.max(width, 1);
         const phase = phaseTime * (0.00022 + p * 0.00012) + i * 0.75;
 
-        ctx.globalAlpha = 0.1 + (1 - p) * 0.22;
+        // Kept faint: the lines pass behind the hero text and links.
+        ctx.globalAlpha = 0.06 + (1 - p) * 0.14;
         ctx.beginPath();
         for (let x = 0; x <= width + 8; x += 8) {
           const y =

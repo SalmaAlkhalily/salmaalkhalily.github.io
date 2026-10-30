@@ -40,10 +40,13 @@ export default function Hero() {
             </li>
           </ul>
 
-          <p className="availability-note">
-            <span className="status-dot" aria-hidden />
-            Seeking a 6-month final-year internship · March 2027
-          </p>
+          <div className="availability">
+            <p className="availability-note">
+              <span className="status-dot" aria-hidden />
+              Seeking a 6-month final-year internship · March 2027
+            </p>
+            <p className="availability-interests">{profile.internshipInterests}</p>
+          </div>
 
           <div className="hero-actions">
             <a href="#projects" className="btn btn-primary">
