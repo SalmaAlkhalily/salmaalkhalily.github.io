@@ -5,11 +5,10 @@ import { getStaticPages } from '../dist-ssr/entry-server.js';
 const output = new URL('../dist/', import.meta.url);
 const homepage = 'https://salmaalkhalily.github.io/';
 const github = 'https://github.com/SalmaAlkhalily';
-const archivePaths = ['/projects/ouramazone.html', '/projects/internet-download-manager.html', '/projects/automate-dfa.html', '/projects/phone-generator.html'];
+const archivePaths = ['/projects/ai-text-detection.html', '/projects/ouramazone.html', '/projects/internet-download-manager.html', '/projects/automate-dfa.html', '/projects/phone-generator.html'];
 const expectedPaths = [
   '/', '/archive.html', '/projects/policygap.html', '/projects/shacl-validation.html',
   '/projects/vlm-face-accessories.html', '/projects/scientific-article-retrieval.html',
-  '/projects/ai-text-detection.html',
   ...archivePaths,
 ];
 const pages = getStaticPages();
@@ -127,7 +126,7 @@ for (const [pathname, page] of files) {
 
 const { html } = files.get('/');
 assert.match(html, /<h1\b[^>]*>Salma Alkhalily<\/h1>/, 'The name must exist before JavaScript runs.');
-for (const section of ['experience', 'education', 'projects', 'skills', 'contact']) {
+for (const section of ['about', 'experience', 'education', 'projects', 'skills', 'contact']) {
   assert.ok(html.includes(`<section id="${section}"`), `Missing prerendered section: ${section}`);
 }
 assert.ok(html.includes(`href="${github}"`), 'The GitHub profile must be linked in HTML.');
@@ -144,7 +143,7 @@ for (const path of expectedPaths.filter((path) => path.startsWith('/projects/') 
   assert.ok(html.includes(`href="${path}"`), `Missing case-study link: ${path}`);
 }
 for (const path of archivePaths) assert.ok(files.get('/archive.html').html.includes(`href="${path}"`), `Missing archive case-study link: ${path}`);
-assert.equal([...html.matchAll(/class="project-result"/g)].length, 5, 'Each featured project needs a labelled result or scope.');
+assert.equal([...html.matchAll(/class="project-result"/g)].length, 4, 'Each featured project needs a labelled result or scope.');
 assert.ok(html.includes('href="/Salma-Alkhalily-CV.pdf"'), 'Missing CV link.');
 
 const robots = await readFile(new URL('robots.txt', output), 'utf8');

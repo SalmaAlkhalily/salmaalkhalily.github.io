@@ -7,8 +7,8 @@ export default function Projects() {
   return (
     <section id="projects">
       <div className="container">
-        <SectionTitle eyebrow="Selected work" title="Projects"
-          subtitle="Five projects in retrieval, model evaluation and knowledge engineering."
+        <SectionTitle eyebrow="Achieved projects" title="Projects"
+          subtitle="Four projects in retrieval, model evaluation and knowledge engineering."
           icon={<StarIcon />} />
         <div className="project-list">
           {projects.map((project, index) => (
@@ -33,6 +33,7 @@ export default function Projects() {
                 </ul>
                 <div className="project-links">
                   {project.caseStudy && <a href={project.caseStudy} aria-label={`Read about ${project.title}`}>Read project <span aria-hidden>→</span></a>}
+                  {project.demo && <a href={project.demo} aria-label={`Watch the 1-minute ${project.title} demo`}><span aria-hidden>▶</span> Watch the 1-minute demo</a>}
                   {project.repo && <a href={project.repo} target="_blank" rel="noopener noreferrer" aria-label={`View code for ${project.title}`}>
                     <GitHubIcon /> View repository
                   </a>}
@@ -50,7 +51,7 @@ export default function Projects() {
           ))}
         </div>
         <a href="/archive.html" className="archive-link">
-          <span><span className="eyebrow">More to explore</span><strong>Earlier software projects</strong></span>
+          <span><span className="eyebrow">More to explore</span><strong>An NLP project and earlier software</strong></span>
           <span className="text-link">View the archive <LinkExternalIcon width={18} height={18} /></span>
         </a>
       </div>

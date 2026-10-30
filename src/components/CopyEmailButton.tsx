@@ -33,11 +33,12 @@ export default function CopyEmailButton({ compact = false }: { compact?: boolean
   };
 
   return <>
+    {/* The full button shows the address itself, so it is visible and copies in one click. */}
     <button type="button" className={compact ? 'copy-email-icon' : 'btn btn-outline'} onClick={copy}
-      aria-label={compact ? (copied ? 'Email address copied' : 'Copy email address') : undefined}
-      title={compact ? 'Copy email address' : undefined}>
+      aria-label={compact ? (copied ? 'Email address copied' : 'Copy email address') : `Copy email address ${profile.email}`}
+      title="Copy email address">
       {copied ? <CheckIcon width={16} height={16} /> : <CopyIcon width={16} height={16} />}
-      {!compact && (copied ? 'Copied' : 'Copy email')}
+      {!compact && (copied ? 'Copied' : profile.email)}
     </button>
     <span className={status === 'failed' ? 'copy-email-feedback' : 'sr-only'} role="status">
       {copied ? 'Email address copied to clipboard' : status === 'failed' ? 'Couldn’t copy. Use Email me or contact me on LinkedIn.' : ''}

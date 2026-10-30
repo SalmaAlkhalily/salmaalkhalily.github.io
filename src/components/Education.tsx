@@ -45,7 +45,7 @@ export default function Education() {
                 >
                   <div
                     style={{
-                      fontFamily: 'var(--font-mono)',
+                      fontFamily: 'var(--font-meta)',
                       fontSize: 'var(--text-xs)',
                       color: 'var(--color-accent)',
                       marginBottom: '0.25rem',
@@ -145,7 +145,7 @@ export default function Education() {
                     {c.issuer && (
                       <div
                         style={{
-                          fontFamily: 'var(--font-mono)',
+                          fontFamily: 'var(--font-meta)',
                           fontSize: 'var(--text-xs)',
                           color: 'var(--color-text-muted)',
                           marginTop: '0.2rem',
@@ -271,7 +271,7 @@ export default function Education() {
                       {p.venue && (
                         <div
                           style={{
-                            fontFamily: 'var(--font-mono)',
+                            fontFamily: 'var(--font-meta)',
                             fontSize: 'var(--text-xs)',
                             color: 'var(--color-text-muted)',
                             marginTop: '0.2rem',

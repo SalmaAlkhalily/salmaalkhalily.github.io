@@ -1,6 +1,7 @@
 import { profile } from '../data/portfolio';
 import FlowingWaves from './FlowingWaves';
-import { DownloadIcon, GitHubIcon, LinkedInIcon } from './icons';
+import HeroGraph from './HeroGraph';
+import { ArrowDownIcon, DownloadIcon, GitHubIcon, LinkedInIcon } from './icons';
 
 const initials = profile.name
   .split(' ')
@@ -10,11 +11,13 @@ const initials = profile.name
 export default function Hero() {
   return (
     <section id="top" className="hero">
-      <FlowingWaves />
+      <div className="hero-waves">
+        <FlowingWaves />
+      </div>
 
       <div className="container grid hero-grid">
         <div className="span-7">
-          <p className="eyebrow hero-intro">M2 DKAI student · Université Paris-Saclay</p>
+          <p className="eyebrow hero-intro">M2 Data, Knowledge &amp; Hybrid AI · Université Paris-Saclay</p>
           <h1 style={{ margin: '0 0 0.6rem' }}>{profile.name}</h1>
           <p className="hero-role">{profile.title}</p>
           <p className="hero-description">{profile.tagline}</p>
@@ -50,7 +53,7 @@ export default function Hero() {
 
           <div className="hero-actions">
             <a href="#projects" className="btn btn-primary">
-              View projects <span aria-hidden>↓</span>
+              View projects <ArrowDownIcon width={16} height={16} />
             </a>
             <a href={`mailto:${profile.email}`} className="btn btn-outline">
               Email me
@@ -59,19 +62,16 @@ export default function Hero() {
         </div>
 
         <aside className="profile-panel span-5">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <span className="monogram" aria-hidden>
-              {initials}
-            </span>
-            <div>
-              <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 600, fontSize: 'var(--text-lg)' }}>
-                At a glance
-              </div>
-              <div style={{ color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)' }}>{profile.location}</div>
+          <HeroGraph initials={initials} />
+          <div className="profile-panel-heading">
+            <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 600, fontSize: 'var(--text-lg)' }}>
+              At a glance
             </div>
+            <div style={{ color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)' }}>{profile.location}</div>
           </div>
+          {/* The graph above already names the focus areas. */}
           <dl className="facts">
-            {profile.facts.filter((f) => f.label !== 'Open to').map((f) => (
+            {profile.facts.filter((f) => f.label !== 'Open to' && f.label !== 'Focus').map((f) => (
               <div key={f.label}>
                 <dt>{f.label}</dt>
                 <dd>{f.value}</dd>

@@ -1,6 +1,5 @@
 // Portfolio summary content; detailed project pages are in caseStudies.ts.
 import { caseStudies } from './caseStudies';
-import nlpResults from './nlpResults.json';
 
 export interface ExperienceItem {
   role: string;
@@ -59,6 +58,8 @@ export interface Project {
   pipeline?: string[];
   repo?: string;
   live?: string;
+  /** Recorded demo of the working application. */
+  demo?: string;
   caseStudy?: string;
   event?: { label: string; url: string };
 }
@@ -85,6 +86,22 @@ export const profile = {
     { label: 'Open to', value: availability },
     { label: 'Languages', value: 'Arabic (native) · English · French' },
   ],
+  // Short About section: one paragraph per array, with optional inline links.
+  about: [
+    [
+      "I'm Salma Alkhalily, an M2 student in Data, Knowledge and Hybrid Artificial Intelligence (DKAI) at Université Paris-Saclay. From 2020 to 2023 I worked as a software engineer at Blue Smart Apps, where I built the ListedNearMe Android app with Kotlin and Firebase.",
+    ],
+    [
+      'During my M1 in Data Science I moved into machine learning and NLP. My three-person team ranked first at the submission deadline of a ',
+      { text: 'scientific-article retrieval challenge', href: caseStudies.ir.path },
+      ', and at the AI Technologies Summer School 2026 I wrote the full codebase for ',
+      { text: 'PolicyGap', href: caseStudies.policygap.path },
+      ', a RAG tool that checks policy evidence against NIST, ISO and CIS requirements.',
+    ],
+    [
+      'Machine learning, knowledge graphs and constraint programming are also what I explore in my own time.',
+    ],
+  ] as (string | { text: string; href: string })[][],
 };
 
 export const skills: SkillGroup[] = [
@@ -154,6 +171,7 @@ export const projects: Project[] = [
     context: 'M1 · AI Technologies Summer School · Team of 4',
     event: { label: 'Summer school', url: 'https://ai.lnu.edu.ua/' },
     repo: 'https://github.com/SalmaAlkhalily/ai-compliance',
+    demo: `${caseStudies.policygap.path}#demo`,
     period: 'Jun 2026 - Jul 2026',
     description:
       'PolicyGap uses retrieval-augmented generation to find gaps between policy objectives and supporting evidence. I wrote the complete codebase, from embeddings and vector search to LLM analysis and structured reports, for our four-person team at the M1 summer school project competition.',
@@ -174,20 +192,6 @@ export const projects: Project[] = [
     result: '720 identities · 2,880 images',
     tech: ['Vision-Language Models', 'Human Evaluation', 'Data Analysis', 'MiniCPM', 'SigLIP2'],
     pipeline: ['Portraits + accessories', 'VLM evaluation', 'Human review', 'Subjective + objective analysis'],
-  },
-  {
-    title: 'Detecting Human, AI-Generated and Mixed Text',
-    preview: 'nlp',
-    caseStudy: caseStudies.nlp.path,
-    context: 'M1 · Natural Language Processing · Group project',
-    repo: 'https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection',
-    period: 'Jan 2026 - Feb 2026',
-    description:
-      'Our M1 NLP group compared classical models with transformers to classify human, AI-generated and mixed text and estimate the human-written share. We shared the work, including class balancing, model tuning and error analysis.',
-    resultLabel: 'Saved test result',
-    result: `${nlpResults.classification.find((row) => row.model === 'Tuned XGBoost')!.f1Macro.toFixed(4)} macro F1 · TF-IDF + source distance`,
-    tech: ['Python', 'NLP', 'TF-IDF', 'Transformers', 'PyTorch', 'scikit-learn'],
-    pipeline: ['Text', 'TF-IDF + transformers', 'Class: human, AI, mixed', 'Human-written share'],
   },
   {
     title: 'Scientific Article Information Retrieval Challenge',
@@ -219,6 +223,14 @@ export const projects: Project[] = [
 ];
 
 export const projectArchive: Project[] = [
+  {
+    title: 'Detecting Human, AI-Generated and Mixed Text',
+    caseStudy: caseStudies.nlp.path,
+    repo: 'https://github.com/SalmaAlkhalily/NLP-Project-AI-Detection',
+    period: 'Jan 2026 - Feb 2026',
+    description: 'M1 NLP group project comparing classical models with transformers to classify human, AI-generated and mixed text and estimate the human-written share.',
+    tech: ['Python', 'NLP', 'TF-IDF', 'Transformers', 'PyTorch', 'scikit-learn'],
+  },
   {
     title: 'ListedNearMe',
     live: 'https://listednearme.com/',

@@ -24,11 +24,11 @@ All personal content (profile, skills, highlights, experience, education, links)
 run `python scripts/generate-cv.py` (it needs ReportLab). The script stops with an
 error if the CV no longer fits on one page.
 
-The homepage features five AI and knowledge engineering projects. Earlier software
-projects are on `/archive.html`. The SHACL and VLM projects link to detailed pages
+The homepage features four AI and knowledge engineering projects. The NLP project
+and earlier software projects are on `/archive.html`. The SHACL and VLM projects link to detailed pages
 at `/projects/shacl-validation.html` and `/projects/vlm-face-accessories.html`.
 The IR challenge has a notebook-based page at `/projects/scientific-article-retrieval.html`.
-The NLP project has one at `/projects/ai-text-detection.html`.
+The archived NLP project has one at `/projects/ai-text-detection.html`.
 PolicyGap has a documentation-based page at `/projects/policygap.html`.
 The summer-school participation and PolicyGap competition entries link to the
 original certificate images saved from Salma's LinkedIn attachments in
@@ -115,24 +115,29 @@ verification details.
 
 The layout follows [Joseph Rollin's portfolio course](https://portfoliocourse-josephrollin.framer.website/)
 and takes inspiration from [Brittany Chiang's portfolio](https://brittanychiang.com/):
-a one-line introduction, five selected projects with short summaries and previews,
+a one-line introduction, four selected projects with short summaries and previews,
 visible contact and CV links, and a separate archive. Contributions stay within
-each project description. All five projects link to longer case studies, with
+each project description. All four projects link to longer case studies, with
 repository links available alongside them.
 
-Experience and Education follow the introduction, with selected projects next.
-Navigation links follow the same order. The introduction also says which
-internships Salma is most interested in, while staying open to others.
+A short About section (three paragraphs, in `profile.about`) follows the
+introduction, then Experience, Education and selected projects. Navigation links
+follow the same order. The introduction also says which internships Salma is most
+interested in, while staying open to others.
 The main skills list keeps AI, knowledge/data methods, software engineering and
 languages visible; a native disclosure holds the additional development and data
-tools. The navigation follows the same order.
+tools.
 
 The [case-study guidance](https://portfoliocourse-josephrollin.framer.website/services/show-projects-as-case-studies)
 informs the short project summaries, stack tags and labelled results or study scope.
 The previews use an original report figure, property-mapping and retrieval diagrams,
 and saved metrics from the shared project data. They are implemented in
-`src/components/ProjectPreview.tsx` with HTML/CSS and lazy-loaded images, including
-the supplied PolicyGap logo. The same logo appears on the PolicyGap detail page.
+`src/components/ProjectPreview.tsx` with HTML/CSS and lazy-loaded images.
+Following the [image guidance](https://portfoliocourse-josephrollin.framer.website/services/ongoing-maintenance),
+the PolicyGap preview is a browser-window mockup around a dashboard capture from
+the recorded demo, with the supplied logo as its tab icon. Run
+`python scripts/generate-policygap-mockup.py` with Pillow to recrop it from the
+demo poster. The full logo appears on the PolicyGap detail page.
 Responsive 320px and 640px lossless WebP versions reduce its download size; the
 supplied PNG remains the fallback. Run `python scripts/optimize-policygap-logo.py`
 with Pillow to regenerate them and check the decoded pixels.
@@ -141,13 +146,17 @@ stay visible beside those scores.
 
 Following the [contact guidance](https://portfoliocourse-josephrollin.framer.website/services/the-site-itself-is-proof),
 the introduction, Contact and footer offer an Email me link. Contact and the
-footer also provide a labelled Copy email button, with GitHub, LinkedIn, a PDF
-CV and internship availability nearby. The address is hidden from visible text
-at Salma's request; it remains in the email links and clipboard action. Keyboard focus, reduced
+footer also show the email address on a button that copies it in one click, with
+GitHub, LinkedIn, a PDF CV and internship availability nearby. Keyboard focus, reduced
 motion support, light/dark contrast and responsive layouts follow the
 [site guidance](https://portfoliocourse-josephrollin.framer.website/services/personality-should-demonstrate-skill).
-The serif/sans type scale and plum/sage palette are retained. No invented project
-metrics or separate contribution sections are added.
+The [typography page](https://portfoliocourse-josephrollin.framer.website/services/property-management)
+asks for an original typeface instead of an overused one and links the Pousse ta
+fonte directory, so headings use Erode, a free serif from Fontshare (one of the
+foundries listed there). Body text uses Switzer from the same foundry. Fontshare
+serves both fonts, because its license does not allow committing the font files. The
+type scale and plum/sage palette are unchanged. No invented project metrics or separate
+contribution sections are added.
 
 Detailed project components load only on project routes. The server still renders
 their full content during the build, and the client waits for the matching
@@ -170,7 +179,13 @@ runs the same verifier before uploading its artifact.
 The production build prerenders the React components into HTML, including the full
 portfolio and GitHub profile links. JavaScript then adds interactivity. Canonical
 and profile metadata in `index.html` connect this site to Salma Alkhalily's public
-profiles. Keep that metadata in sync when changing the profile name or links.
+profiles. The Person data also gives her job title, Paris location, university,
+topics and languages, which helps Google tell her apart from people with similar
+names. Keep that metadata in sync when changing the profile name or links.
+
+Shared links show `public/images/social-card.png` (1200 x 630) as their preview
+image. Run `python scripts/generate-social-card.py` with Pillow after changing the
+name, title or programme; it downloads Erode from Fontshare while it runs.
 
 `public/robots.txt` allows crawling and advertises `public/sitemap.xml`, which lists
 the homepage, project archive and nine project studies. These files help discovery;

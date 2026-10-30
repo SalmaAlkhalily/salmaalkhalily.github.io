@@ -147,6 +147,7 @@ export const caseStudies = {
     introduction: 'Classifying English texts by authorship and estimating their human-written share, with classical machine learning, fine-tuned transformers and analysis of mixed-text errors.',
     description: 'An M1 NLP group project comparing human, mixed and AI text classification and human-share regression. Methods, saved results, charts and error analysis.',
     team: 'Group project · Team of 3',
+    archive: true,
     repo: nlpResults.source.repository,
     technologies: ['Python', 'TF-IDF', 'scikit-learn', 'XGBoost', 'SMOTE', 'PyTorch', 'Hugging Face Transformers', 'DistilBERT', 'RoBERTa'],
     facts: [
@@ -182,7 +183,7 @@ export function getPageMetadata(pathname: string) {
     return { pathname: study.path, title: `${study.shortTitle} | Salma Alkhalily`, description: study.description, url: `${origin}${study.path}`, kind: 'Article' };
   }
   if (pathname === '/archive.html') {
-    return { pathname, title: 'Project archive | Salma Alkhalily', description: 'Earlier mobile, web and desktop software projects by Salma Alkhalily.', url: `${origin}${pathname}`, kind: 'CollectionPage' };
+    return { pathname, title: 'Project archive | Salma Alkhalily', description: 'An NLP project and earlier mobile, web and desktop software projects by Salma Alkhalily.', url: `${origin}${pathname}`, kind: 'CollectionPage' };
   }
   return {
     pathname: '/', title: 'Salma Alkhalily | AI & Data Science Portfolio',

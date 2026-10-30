@@ -7,8 +7,8 @@ export default function ProjectArchive() {
       <div className="container">
         <a href="/#projects" className="text-link archive-back">Back to selected projects</a>
         <p className="eyebrow">The archive</p>
-        <h1>Earlier software projects</h1>
-        <p className="archive-lead">Mobile, web and desktop applications I have worked on.</p>
+        <h1>More projects</h1>
+        <p className="archive-lead">An NLP course project and earlier mobile, web and desktop applications I have worked on.</p>
         <ul className="archive">
           {projectArchive.map((project) => <li key={project.title}>
             <div className="archive-title">

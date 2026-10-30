@@ -2,7 +2,6 @@ import type { Project } from '../data/portfolio';
 import irResults from '../data/irResults.json';
 import nlpResults from '../data/nlpResults.json';
 import { CheckIcon } from './icons';
-import PolicyGapLogo from './PolicyGapLogo';
 
 function ScoreBars({ label, rows }: { label: string; rows: { name: string; value: number }[] }) {
   return <div className="preview-scores">
@@ -17,8 +16,19 @@ function ScoreBars({ label, rows }: { label: string; rows: { name: string; value
 function PreviewContent({ kind }: { kind: Project['preview'] }) {
   switch (kind) {
     case 'policygap':
-      return <div className="preview-policy-logo">
-        <PolicyGapLogo variant="preview" alt="PolicyGap logo: a shield, policy checklist and magnifying glass." />
+      return <div className="preview-browser">
+        <div className="preview-browser-bar" aria-hidden>
+          <span className="preview-browser-dots"><i /><i /><i /></span>
+          <span className="preview-browser-title">
+            <img src="/images/projects/policygap-logo-320.webp" width={16} height={16} alt="" />
+            PolicyGap · Assessment
+          </span>
+        </div>
+        <img className="preview-browser-shot" src="/images/projects/policygap-dashboard-960.webp"
+          srcSet="/images/projects/policygap-dashboard-480.webp 480w, /images/projects/policygap-dashboard-960.webp 960w"
+          sizes="(max-width: 460px) calc(100vw - 40px), (max-width: 768px) 420px, 320px"
+          width={960} height={584} loading="lazy" decoding="async"
+          alt="PolicyGap dashboard from the recorded demo: overall compliance score, scores by NIST function, status breakdown and top priority gaps." />
       </div>;
     case 'vlm':
       return <div className="preview-vlm">
@@ -52,7 +62,7 @@ function PreviewContent({ kind }: { kind: Project['preview'] }) {
 }
 
 const captions = {
-  policygap: 'PolicyGap · AI-powered compliance intelligence',
+  policygap: 'Dashboard from the recorded PolicyGap demo',
   vlm: 'Synthetic portraits from our report',
   nlp: 'TF-IDF + paired-source distance',
   ir: '100 queries; fusion tuned on this set',

@@ -136,6 +136,15 @@ export function DownloadIcon(props: IconProps) {
   );
 }
 
+export function ArrowDownIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 5v14" />
+      <path d="m6 13 6 6 6-6" />
+    </svg>
+  );
+}
+
 /* ------------ Brand icons ------------ */
 
 export function GitHubIcon(props: IconProps) {

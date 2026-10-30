@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
 /**
- * Hero background: layered, slowly flowing wave lines in the primary color.
+ * Hero decoration: layered, slowly flowing wave lines in the primary color,
+ * filling the band below the hero text so no text sits on top of them.
  * A four-second introduction, then static art. Pauses off-screen and respects
  * prefers-reduced-motion without restarting on resize, theme or visibility changes.
  */
@@ -56,13 +57,13 @@ export default function FlowingWaves({ lines = 8 }: { lines?: number }) {
 
       for (let i = 0; i < lines; i++) {
         const p = i / Math.max(1, lines - 1);
-        const baseY = height * (0.58 + p * 0.3);
-        const amplitude = 16 + p * 28;
+        // Lines stay between about 20% and 100% of the band's height.
+        const baseY = height * (0.3 + p * 0.45);
+        const amplitude = height * (0.06 + p * 0.1);
         const frequency = ((1.1 + p * 0.5) * Math.PI * 2) / Math.max(width, 1);
         const phase = phaseTime * (0.00022 + p * 0.00012) + i * 0.75;
 
-        // Kept faint: the lines pass behind the hero text and links.
-        ctx.globalAlpha = 0.06 + (1 - p) * 0.14;
+        ctx.globalAlpha = 0.1 + (1 - p) * 0.22;
         ctx.beginPath();
         for (let x = 0; x <= width + 8; x += 8) {
           const y =
