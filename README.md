@@ -165,15 +165,6 @@ metadata, local links and fragments, image dimensions/alt attributes, label
 references, sitemap and the permitted public PDF files. The deployment workflow
 runs the same verifier before uploading its artifact.
 
-### Editing the writing
-
-The [Humanizer skill](.agents/skills/humanizer/SKILL.md) is installed for this
-project. Use `$humanizer` when revising portfolio text. Keep personal details,
-technical claims, team contributions, results and repository links accurate.
-
-Source: [blader/humanizer](https://github.com/blader/humanizer), version 3.1.0,
-commit `8c307f367c91bd974002f10f2be2965d642c13df` (MIT license).
-
 ## Search visibility
 
 The production build prerenders the React components into HTML, including the full

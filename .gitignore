@@ -33,3 +33,7 @@ dist-ssr
 
 # Private CV files
 cv/
+
+# Local writing skills (kept on this computer only)
+.agents/
+.claude/
