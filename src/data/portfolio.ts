@@ -74,7 +74,7 @@ export const profile = {
   location: 'Paris, France',
   availability,
   internshipInterests:
-    "I'm most interested in machine learning, NLP, information retrieval and RAG, or knowledge graphs, and I'm also open to other roles in AI, data science and data engineering.",
+    "I'm most interested in machine learning, NLP, information retrieval and RAG, and knowledge graphs, but I'm also open to other roles in AI, data science and data engineering.",
   email: 'salma.alkhalily96@gmail.com',
   cv: '/Salma-Alkhalily-CV.pdf',
   github: 'https://github.com/SalmaAlkhalily',
@@ -292,7 +292,7 @@ export const experience: ExperienceItem[] = [
     period: 'Mar 2020 – Sep 2022',
     links: [{ label: 'Phone Generator project', url: caseStudies.phone.path }],
     highlights: [
-      'Developed Java desktop applications for clients, such as Phone Generator, which generates sequential phone-number lists and exports them as vCard contacts.',
+      'Developed Java desktop applications for clients, such as Phone Generator, a tool that creates sequential phone-number lists and exports them as vCard contacts.',
     ],
   },
 ];

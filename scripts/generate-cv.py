@@ -206,7 +206,7 @@ entry(main, B("Software Engineer | Blue Smart Apps"), "Remote, Damascus | Apr 20
 entry(main, B("Freelance Software Engineer"), "Mar 2020 - Sep 2022", [
     ["Developed Java desktop applications for clients, such as ",
      link("Phone Generator", f"{SITE}/projects/phone-generator.html"),
-     ", which generates phone-number lists as vCard contacts."],
+     ", which exports phone-number lists as vCard contacts."],
 ], ENTRY_GAP)
 
 main.heading("PROJECTS", SECTION_GAP)
